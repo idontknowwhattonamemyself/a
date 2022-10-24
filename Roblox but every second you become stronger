@@ -1,0 +1,41 @@
+if game.PlaceId == 8084034728 then
+		local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Statue Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Statue Hub"})
+local Tab = Window:MakeTab({
+	Name = "Farming",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local b = Instance.new("Folder", game:GetService("Workspace"))
+for i, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+    if v.Name == "Borders" or v.Parent == game:GetService("Workspace").OldRoblox and v:FindFirstChild("SurfaceGui") then
+        v.Parent = b
+        end
+    end
+
+Tab:AddToggle({
+	Name = "Auto Gems",
+	Default = false,
+	Callback = function(Value)
+		af = Value
+	end    
+})
+Tab:AddToggle({
+	Name = "No Barriers",
+	Default = false,
+	Callback = function(Value)
+	    if Value  == true then
+		b.Parent = nil
+		else
+		    b.Parent = game:GetService("Workspace")
+		end
+	end    
+})
+game:GetService("RunService").Heartbeat:Connect(function()
+for i, v in pairs(game:GetService("Workspace").Gems:GetChildren()) do
+    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.PrimaryPart  and v.Transparency ~= 1 and af == true then
+       game.Players.LocalPlayer.Character.PrimaryPart.CFrame = v.CFrame
+        end
+end
+end)
+		end
