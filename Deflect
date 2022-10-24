@@ -1,0 +1,65 @@
+if game.PlaceId == 10889408214 then
+	local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+	local Window = OrionLib:MakeWindow({Name = "Statue Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Statue Hub"})
+	local ad
+	local sd
+	local Tab = Window:MakeTab({
+		Name = "Main",
+		Icon = "rbxassetid://4483345998",
+		PremiumOnly = false
+	})
+	local Speed = Tab:AddToggle({
+		Name = "Auto Deflect",
+		Default = false,
+		Callback = function(Value)
+		ad = Value
+		end    
+	})
+	
+	local deflectdist = 15
+
+	
+	game:GetService("RunService").RenderStepped:Connect(function()
+	if ad == true and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart and game:GetService("Workspace").Ball and game:GetService("Workspace").Ball.Main and (game:GetService("Workspace").Ball.Main.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < deflectdist then
+		
+		local args = {
+		[1] = "Deflect",
+		[2] = Vector3.new(100,5,100)
+	}
+	
+	game:GetService("Players").LocalPlayer.Character.Deflection.Remote:FireServer(unpack(args))
+	
+		end
+	end)
+
+
+local Speed = Tab:AddToggle({
+	Name = "Smart Deflect",
+	Default = false,
+	Callback = function(Value)
+	sd = Value
+	
+	end    
+})
+
+game:GetService("RunService").Heartbeat:Connect(function()
+	if sd == true and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart and game:GetService("Workspace").Ball and game:GetService("Workspace").Ball.Main then
+if game:GetService("Workspace").Ball.Power.Value > 70 then
+deflectdist = 15
+elseif game:GetService("Workspace").Ball.Power.Value > 80 then
+	deflectdist = 22
+	elseif game:GetService("Workspace").Ball.Power.Value < 85 then
+	deflectdist = 25
+
+elseif game:GetService("Workspace").Ball.Power.Value < 60 then
+	deflectdist = 20
+end
+if _G.debug == true then
+rconsoleprint([[
+
+Current Deflect Distance is: ]]..deflectdist)
+end
+
+	end
+end)
+end
