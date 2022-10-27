@@ -37,12 +37,7 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-OrionLib:MakeNotification({
-	Name = "Loaded",
-	Content = "Successfully Loaded Nic Hub",
-	Image = "rbxassetid://4483345998",
-	Time = 5
-})
+
 Tab:AddToggle({
 	Name = "Auto Farm",
 	Default = false,
@@ -77,8 +72,9 @@ local mouse = game.Players.LocalPlayer:GetMouse()
 local VIM = game:GetService("VirtualInputManager")
 game:GetService("RunService").Heartbeat:Connect(function()
 if ac == true then
-VIM:SendMouseButtonEvent(mouse.X,mouse.Y,0,true,game,1)
-VIM:SendMouseButtonEvent(mouse.X,mouse.Y,0,false,game,1)
+mouse = game.Players.LocalPlayer:GetMouse()
+VIM:SendMouseButtonEvent(mouse.X,mouse.Y,0,true,game,0)
+VIM:SendMouseButtonEvent(mouse.X,mouse.Y,0,false,game,0)
 end
 end)
 
