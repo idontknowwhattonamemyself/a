@@ -33,6 +33,22 @@ local args = {
 
 }
 
+Tab:AddButton({
+	Name = "Inf Blocks",
+	Callback = function()
+      		
+
+local args = {
+    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
+    [2] = math.huge
+
+}
+
+game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
+
+
+
+}
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
 elseif  PlankForce == true and game:GetService("Players").LocalPlayer.PlayerGui.TimeLeftQuestion and game:GetService("Players").LocalPlayer.PlayerGui.TimeLeftQuestion.Enabled == true  and game:GetService("Players").LocalPlayer.PlayerGui.TimeLeftQuestion.SubmitAlready.Value == false and  game:GetService("ReplicatedStorage").HintAnswer.Value ~= "" then
 	local args = {
