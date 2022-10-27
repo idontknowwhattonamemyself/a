@@ -283,11 +283,11 @@ game:GetService("RunService").Heartbeat:Connect(function()
         end
 end)
 game:GetService("RunService").Heartbeat:Connect(function()
-if task.wait(3) and ab == true and tycoon ~= "None" and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart  then
-    for i, v in pairs(tycoon.Buttons:GetDescendants()) do
-        if v.Name == "TouchInterest" then
-            firetouchinterest(v.Parent, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
-                        firetouchinterest(v.Parent, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
+if task.wait(1) and ab == true and tycoon ~= "None" and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart  then
+    for i, v in pairs(tycoon.Buttons:GetChildren()) do
+        if v:FindFirstChild("Head") then
+            firetouchinterest(v.Head, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
+                        firetouchinterest(v.Head, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
 
             end
         end
