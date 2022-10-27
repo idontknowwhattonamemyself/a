@@ -33,17 +33,6 @@ local args = {
 
 }
 
-Tab:AddButton({
-	Name = "Inf Blocks",
-	Callback = function()
-      		local args = {
-    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
-    [2] = 9200000000000000000
-}
-
-game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
-  	end    
-})
 
 
 
@@ -61,6 +50,17 @@ elseif  PlankForce == true and game:GetService("Players").LocalPlayer.PlayerGui.
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
 	
       		        end
+  	end    
+})
+Tab:AddButton({
+	Name = "Inf Blocks",
+	Callback = function()
+      		local args = {
+    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
+    [2] = 9200000000000000000
+}
+
+game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
   	end    
 })
 
