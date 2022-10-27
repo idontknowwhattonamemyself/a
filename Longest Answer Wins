@@ -46,7 +46,7 @@ local args = {
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
 
 
-}
+})
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
 elseif  PlankForce == true and game:GetService("Players").LocalPlayer.PlayerGui.TimeLeftQuestion and game:GetService("Players").LocalPlayer.PlayerGui.TimeLeftQuestion.Enabled == true  and game:GetService("Players").LocalPlayer.PlayerGui.TimeLeftQuestion.SubmitAlready.Value == false and  game:GetService("ReplicatedStorage").HintAnswer.Value ~= "" then
 	local args = {
