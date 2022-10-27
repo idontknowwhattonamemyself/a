@@ -38,7 +38,7 @@ Tab:AddButton({
 	Callback = function()
       		local args = {
     [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
-    [2] = 9223362036854775807
+    [2] = 9200000000000000000
 }
 
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
