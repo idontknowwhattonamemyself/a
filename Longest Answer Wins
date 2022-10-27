@@ -124,45 +124,7 @@ Tab:AddToggle({
 	aw = awtog
 	end    
 })
-Tab:AddToggle({
-	Name = "Plank Force",
-	Default = false,
-	Callback = function(PlankForceToggle)
-		PlankForce = PlankForceToggle
-	end    
-})
-Tab:AddSlider({
-	Name = "Plank Amount",
-	Min = 0,
-	Max = 10000000,
-	Default = 20,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "Planks",
-	Callback = function(PlankAmtSlider)
-	PlankForceamt = PlankAmtSlider
 
-	end    
-})
-local hook
-hook = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
-    local Args = {...}
-   
-    local method = getnamecallmethod()
-    if PlankForce == true and  self.Name == "SubmittedAnswer" and method == "FireServer"  and not checkcaller() then
-
-     if (Args[2]) then
-         Args[2] = PlankForceamt
-        
-
-end;
-
-       return hook(self, table.unpack(Args));
-
-    end
-    return hook(self, ...)
-    
-end))
 local watertouch
 game:GetService("RunService").Heartbeat:Connect(function()  if  game:GetService("Workspace"):FindFirstChild("Water") and WaterDisabled == true then
 
