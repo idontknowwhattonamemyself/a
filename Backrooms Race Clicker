@@ -50,6 +50,37 @@ Tab:AddToggle({
 		af = Value
 	end    
 })
+local ac
+local clicker = Tab:AddToggle({
+	Name = "Auto Clicker",
+	Default = false,
+	Callback = function(Value)
+ac = Value
+end    
+})
+
+Tab:AddBind({
+	Name = "Auto Click",
+	Default = Enum.KeyCode.T,
+	Hold = false,
+	Callback = function()
+	if ac == true then
+    clicker:Set(false)
+    else
+        clicker:Set(true)
+    end
+	end    
+})
+
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+local VIM = game:GetService("VirtualInputManager")
+game:GetService("RunService").Heartbeat:Connect(function()
+if ac == true then
+VIM:SendMouseButtonEvent(mouse.X,mouse.Y,0,true,game,1)
+VIM:SendMouseButtonEvent(mouse.X,mouse.Y,false,game,1)
+end
+end)
 
 game:GetService("RunService").RenderStepped:Connect(function()
     if af == true then
