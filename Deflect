@@ -20,14 +20,14 @@ if game.PlaceId == 10889408214 then
 	
 	game:GetService("RunService").RenderStepped:Connect(function()
 	if ad == true and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart and game:GetService("Workspace").Ball and game:GetService("Workspace").Ball.Main  then
-		if game:GetService("Workspace").Ball.Power < 65 and (game:GetService("Workspace").Ball.Main.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 20 then
+		if game:GetService("Workspace").Ball.Power.Value < 65 and (game:GetService("Workspace").Ball.Main.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 20 then
 		local args = {
 		[1] = "Deflect",
 		[2] = Vector3.new(0.5,0,.23)
 	}
 	
 	game:GetService("Players").LocalPlayer.Character.Deflection.Remote:FireServer(unpack(args))
-		elseif  game:GetService("Workspace").Ball.Power > 65 and (game:GetService("Workspace").Ball.Main.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30  then
+		elseif  game:GetService("Workspace").Ball.Power.Value > 65 and (game:GetService("Workspace").Ball.Main.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 30  then
 		    
     local args = {
 		[1] = "Deflect",
