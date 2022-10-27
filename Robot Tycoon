@@ -278,12 +278,12 @@ end
 })
 
 game:GetService("RunService").Heartbeat:Connect(function()
-    if au == true and task.wait() then
+    if  task.wait() and au == true then
         upgradea()
         end
 end)
 game:GetService("RunService").Heartbeat:Connect(function()
-if ab == true and tycoon ~= "None" and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart and task.wait(1) then
+if task.wait(3) and ab == true and tycoon ~= "None" and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart  then
     for i, v in pairs(tycoon.Buttons:GetDescendants()) do
         if v.Name == "TouchInterest" then
             firetouchinterest(v.Parent, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
