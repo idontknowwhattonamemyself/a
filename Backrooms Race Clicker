@@ -78,7 +78,7 @@ local VIM = game:GetService("VirtualInputManager")
 game:GetService("RunService").Heartbeat:Connect(function()
 if ac == true then
 VIM:SendMouseButtonEvent(mouse.X,mouse.Y,0,true,game,1)
-VIM:SendMouseButtonEvent(mouse.X,mouse.Y,false,game,1)
+VIM:SendMouseButtonEvent(mouse.X,mouse.Y,0,false,game,1)
 end
 end)
 
