@@ -278,7 +278,7 @@ end
 })
 
 game:GetService("RunService").Heartbeat:Connect(function()
-    if  task.wait() and au == true then
+    if  task.wait(1) and au == true then
         upgradea()
         end
 end)
