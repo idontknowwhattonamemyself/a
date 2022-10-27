@@ -40,8 +40,7 @@ Tab:AddButton({
 
 local args = {
     [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
-    [2] = math.huge
-
+    [2] = 9222000000000000000
 }
 
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
