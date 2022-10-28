@@ -62,6 +62,7 @@ init:AddButton({
 
 			end
 	})
+	
 		Tab:AddToggle({
 			Name = "Auto Blend",
 			Default = false,
@@ -76,6 +77,21 @@ init:AddButton({
 			Default = false,
 			Callback = function(Value)
 				fc = Value
+
+			end
+	})
+	local ws = Instance.new("ScreenGui")
+ws.Parent = game:GetService("CoreGui")
+local wsf = Instance.new("Frame")
+wsf.Parent = ws
+wsf.BackgroundColor3 = Color3.new(355,355,355)
+wsf.Size = UDim2.new(100,100,100)
+ws.Enabled = false
+	Tab:AddToggle({
+			Name = "White Screen/ Anti Lag",
+			Default = false,
+			Callback = function(Value)
+				ws.Enabled = Value
 
 			end
 	})
