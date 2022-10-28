@@ -89,7 +89,39 @@ be:AddButton({
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
   	end    
 })
+be:AddButton({
+	Name = "10m Blocks",
+	Callback = function()
+      		local args = {
+    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
+    [2] = 10000000
+}
 
+game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
+  	end    
+})
+be:AddButton({
+	Name = "100m Blocks",
+	Callback = function()
+      		local args = {
+    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
+    [2] = 100000000
+}
+
+game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
+  	end    
+})
+be:AddButton({
+	Name = "1b Blocks",
+	Callback = function()
+      		local args = {
+    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
+    [2] = 1000000000
+}
+
+game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
+  	end    
+})
 m:AddDropdown({
 	Name = "Plank Skin",
 	Default = "blue",
