@@ -53,7 +53,7 @@ lga = Value
 	end    
 })
 S:AddToggle({
-	Name = "Loop Nuke",
+	Name = "Loop Nuke (free)",
 	Default = false,
 	Callback = function(Value)
 ln = Value
@@ -72,6 +72,45 @@ if lga == true then
 end
 
 end)
+game:GetService("RunService").Heartbeat:Connect(function()
+	if lga == true then 
+		local args = {
+			[1] = "Gems",
+			[2] = 0,
+			[3] = game:GetService("ReplicatedStorage").Shop.Gift
+		}
+		
+		game:GetService("ReplicatedStorage").ShopEvent:FireServer(unpack(args))
+		
+	end
+	
+	end)
+	game:GetService("RunService").Heartbeat:Connect(function()
+		if lga == true then 
+			local args = {
+				[1] = "Gems",
+				[2] = 0,
+				[3] = game:GetService("ReplicatedStorage").Shop.Gift
+			}
+			
+			game:GetService("ReplicatedStorage").ShopEvent:FireServer(unpack(args))
+			
+		end
+		
+		end)
+		game:GetService("RunService").Heartbeat:Connect(function()
+			if lga == true then 
+				local args = {
+					[1] = "Gems",
+					[2] = 0,
+					[3] = game:GetService("ReplicatedStorage").Shop.Gift
+				}
+				
+				game:GetService("ReplicatedStorage").ShopEvent:FireServer(unpack(args))
+				
+			end
+			
+			end)
 game:GetService("RunService").Heartbeat:Connect(function()
 	if ln == true then 
 		local args = {
