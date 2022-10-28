@@ -105,7 +105,7 @@ end)
 if ac == true and task.wait(1.2) then
 	
        for i, v in pairs(plot:GetDescendants()) do
-           if v.Name == "OpenDoorPrompt" and v.Parent.Parent.Parent.Parent == plot.CratePackager then
+           if v.Name == "OpenDoorPrompt" and v.Parent.Parent.Parent.Parent == plot.CratePackager and task.wait(1.5) then
                if game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart then
                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.Parent.CFrame + Vector3.new(-1,2,2)
                fireproximityprompt(v)
