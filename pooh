@@ -92,7 +92,19 @@ local ar
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
 	end    
 })
-
+local ii
+Tab:AddToggle({
+	Name = "Insta Interact",
+	Default = false,
+	Callback = function(Value)
+ii = Value
+	end    
+})
+game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(interactprompt)
+	if ii == true then
+				fireproximityprompt(interactprompt, 1)
+		end
+	end)
 R:AddToggle({
 	Name = "Esp Pooh",
 	Default = false,
