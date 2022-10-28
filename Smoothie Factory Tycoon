@@ -119,7 +119,7 @@ end)
 if ab == true and task.wait(.8) then
 		
        for i, v in pairs(plot:GetDescendants()) do
-           if v.Name == "ActivateBlender" then
+           if v.Name == "ActivateBlender" and task.wait(.5) then
                if game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart then
                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.Parent.CFrame + Vector3.new(-1,2,2)
                fireproximityprompt(v)
