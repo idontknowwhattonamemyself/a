@@ -15,7 +15,11 @@ local m = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
-
+local be = Window:MakeTab({
+	Name = "Block Exploit",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 Tab:AddButton({
 	Name = "Answer Question",
 	Callback = function()
@@ -52,7 +56,7 @@ game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
       		        end
   	end    
 })
-Tab:AddButton({
+be:AddButton({
 	Name = "50k Blocks",
 	Callback = function()
       		local args = {
@@ -63,7 +67,7 @@ Tab:AddButton({
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
   	end    
 })
-Tab:AddButton({
+be:AddButton({
 	Name = "100k Blocks",
 	Callback = function()
       		local args = {
@@ -74,7 +78,7 @@ Tab:AddButton({
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
   	end    
 })
-Tab:AddButton({
+be:AddButton({
 	Name = "1m Blocks",
 	Callback = function()
       		local args = {
