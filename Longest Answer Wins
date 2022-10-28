@@ -53,11 +53,33 @@ game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
   	end    
 })
 Tab:AddButton({
-	Name = "Inf Blocks",
+	Name = "50k Blocks",
 	Callback = function()
       		local args = {
     [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
-    [2] = 9200000000000000000
+    [2] = 50000
+}
+
+game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
+  	end    
+})
+Tab:AddButton({
+	Name = "100k Blocks",
+	Callback = function()
+      		local args = {
+    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
+    [2] = 100000
+}
+
+game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
+  	end    
+})
+Tab:AddButton({
+	Name = "1m Blocks",
+	Callback = function()
+      		local args = {
+    [1] = game:GetService("ReplicatedStorage").HintAnswer.Value,
+    [2] = 1000000
 }
 
 game:GetService("ReplicatedStorage").SubmittedAnswer:FireServer(unpack(args))
