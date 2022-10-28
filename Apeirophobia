@@ -21,6 +21,12 @@ ESP:AddObjectListener(game:GetService("Workspace").Entities, {
     IsEnabled = "Cman" 
 })
 ESP:AddObjectListener(game:GetService("Workspace").Entities, { 
+    Name = "Partygoer", 
+    CustomName = "Partygoer", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "PG" 
+})
+ESP:AddObjectListener(game:GetService("Workspace").Entities, { 
     Name = "Starfish", 
     CustomName = "Starfish", 
     Color = Color3.fromRGB(350,0,0),
@@ -75,6 +81,68 @@ ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, {
     Color = Color3.fromRGB(350,0,0),
     IsEnabled = "CB" 
 })
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "Painting1", 
+    CustomName = "Painting #1", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "P1" 
+})
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "Painting2", 
+    CustomName = "Painting #2", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "P2" 
+})
+
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "Painting3", 
+    CustomName = "Painting #3", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "P3" 
+})
+
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "StarButton", 
+    CustomName = "Star Button", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "SB" 
+})
+
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "PartyPlushie", 
+    CustomName = "Plushie", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "PP" 
+})
+
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "paper0", 
+    CustomName = "Paper", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "P" 
+})
+
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "WireCutters", 
+    CustomName = "Wire Cutters", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "WC" 
+})
+
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "ScrewDriver", 
+    CustomName = "ScrewDriver", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "SD" 
+})
+ESP.P = false
+Esp.PP = false
+ESP.WC = false
+ESP.SB = false
+ESP.SB = false
+ESP.P1 = false
+ESP.P2 = false
+ESP.P3 = false
 ESP.Howler = false
 ESP.Hound = false
 ESP.Cman = false
@@ -85,6 +153,7 @@ ESP.PB = false
 ESP.SW = true
 ESP.Key = true
 ESP.SM = false
+ESP.PG = false
 ESP.CB = false
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Statue Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Statue Hub"})
@@ -156,6 +225,29 @@ R:AddToggle({
 	Default = false,
 	Callback = function(Value)
 		ESP.Cores = Value
+	end    
+})
+R:AddToggle({
+	Name = "Esp Wire Cutters",
+	Default = false,
+	Callback = function(Value)
+		ESP.WC = Value
+	end    
+})
+R:AddToggle({
+	Name = "Esp Paintings",
+	Default = false,
+	Callback = function(Value)
+		ESP.P1 = Value
+		ESP.P2 = Value
+		ESP.P3 = Value
+	end    
+})
+R:AddToggle({
+	Name = "Esp ScrewDriver",
+	Default = false,
+	Callback = function(Value)
+		ESP.SD = Value
 	end    
 })
 
