@@ -102,7 +102,7 @@ end
 end)
 
 	game:GetService("RunService").Heartbeat:Connect(function()
-if ac == true and task.wait(1.2) then
+if task.wait(2.5) ac == true  then
 	
        for i, v in pairs(plot:GetDescendants()) do
            if v.Name == "OpenDoorPrompt" and v.Parent.Parent.Parent.Parent == plot.CratePackager and task.wait(1.5) then
