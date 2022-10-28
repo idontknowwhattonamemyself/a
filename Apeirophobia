@@ -108,12 +108,7 @@ ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, {
     IsEnabled = "SB" 
 })
 
-ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
-    Name = "PartyPlushie", 
-    CustomName = "Plushie", 
-    Color = Color3.fromRGB(350,0,0),
-    IsEnabled = "PP" 
-})
+
 
 ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
     Name = "paper0", 
@@ -135,8 +130,14 @@ ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, {
     Color = Color3.fromRGB(350,0,0),
     IsEnabled = "SD" 
 })
+ESP:AddObjectListener(game:GetService("Workspace").Ignored.Interacts, { 
+    Name = "PartyPlushie", 
+    CustomName = "Plushie", 
+    Color = Color3.fromRGB(350,0,0),
+    IsEnabled = "PP" 
+})
 ESP.P = false
-Esp.PP = false
+ESP.PP = false
 ESP.WC = false
 ESP.SB = false
 ESP.SB = false
