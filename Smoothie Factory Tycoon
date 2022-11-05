@@ -118,11 +118,9 @@ end
 end)
 
 	game:GetService("RunService").Heartbeat:Connect(function()
-	if task.wait(5) then
-if  ac == true  then
-	
+if  ac == true and  plot.CratePackager:FindFirstChild("Crate") and 	#plot.CratePackager.Crate.Jars:GetChildren() == 8 then
        for i, v in pairs(plot:GetDescendants()) do
-           if v.Name == "OpenDoorPrompt" and v.Parent.Parent.Parent.Parent == plot.CratePackager and task.wait(1.5) then
+           if v.Name == "OpenDoorPrompt" and v.Parent.Parent.Parent.Parent == plot.CratePackager  then
                if game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart then
                 game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.Parent.CFrame + Vector3.new(-1,2,2)
                fireproximityprompt(v)
@@ -131,7 +129,7 @@ if  ac == true  then
            end
 
 end
-end
+
 end)
 	game:GetService("RunService").Heartbeat:Connect(function()
 if ab == true and task.wait(.8) then
