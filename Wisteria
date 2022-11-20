@@ -6,7 +6,7 @@ local aa
 local target
 game.RunService.Heartbeat:Connect(function()
 for i, v in pairs(game.Workspace.Living:GetChildren()) do
-if  v:FindFirstChild("Humanoid") and  v:FindFirstChild("Humanoid").Health ~= 0 and v:FindFirstChild("HumanoidRootPart")  and game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer.Character and  (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position -  v.HumanoidRootPart.Position).Magnitude < 8 then
+if v:FindFirstChildOfClass("Humanoid") and v:FindFirstChildOfClass("Humanoid").Health ~= 0 and  v:FindFirstChild("HumanoidRootPart")  and game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer.Character and  (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position -  v.HumanoidRootPart.Position).Magnitude < 8 then
 target = v
 end
 
