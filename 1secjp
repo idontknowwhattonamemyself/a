@@ -4,11 +4,12 @@ local wsamt
 local jp
 local ws
 coroutine.wrap(function()
+while wait() do
     if aw == true and game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-wait(.5)
+task.wait(.5)
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new()
 
-wait(.5)
+task.wait(.5)
 
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").World1.Win.Touch.CFrame
 
@@ -16,6 +17,7 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Wo
 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").World1.Win.Touch, 0)
 
 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").World1.Win.Touch, 1)
+    end
     end
 end)()
 game.RunService.Heartbeat:Connect(function()
