@@ -34,6 +34,22 @@ else
 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Win.Touch, 0)
 
 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Win.Touch, 1)
+if v:FindFirstChild("ObbyTower") then 
+	 task.wait(.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.ObbyTower.Win.Touch.CFrame
+firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.ObbyTower.Win.Touch, 0)
+
+firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.ObbyTower.Win.Touch, 1)
+for i, v in pairs(v.VIPTower:GetDescendants()) do
+if v.Name == "Touch" then
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+	firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
+
+firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 1)
+
+end
+end
+end
 		end
 		end
 		end
