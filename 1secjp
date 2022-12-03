@@ -1,8 +1,10 @@
+repeat wait() until game:IsLoaded()
 local aw
 local jpamt
 local wsamt
 local jp
 local ws
+local selected = game.Workspace.World1
 coroutine.wrap(function()
 while wait() do
     if aw == true and game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -11,12 +13,12 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new()
 
 task.wait(.5)
 
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").World1.Win.Touch.CFrame
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = selected.Win.Touch.CFrame
 
 
-firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").World1.Win.Touch, 0)
+firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, selected.Win.Touch, 0)
 
-firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").World1.Win.Touch, 1)
+firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, selected.Win.Touch, 1)
     end
     end
 end)()
@@ -62,6 +64,22 @@ local Toggle = Tab:CreateToggle({
 	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Value)
 	aw = Value
+	end,
+})
+local worlds = {}
+for i, v in pairs(game.Workspace:GetChildren()) do
+if string.match(v.Name, "World") then
+table.insert(worlds, v.Name)
+end
+end
+
+local Dropdown = Tab:CreateDropdown({
+	Name = "World Select",
+	Options = worlds,
+	CurrentOption = "World1",
+	Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Option)
+selected = game:GetService("Workspace"):FindFirstChild(Option)
 	end,
 })
 local Toggle = PLR:CreateToggle({
