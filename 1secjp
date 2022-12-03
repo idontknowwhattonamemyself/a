@@ -5,6 +5,12 @@ local wsamt
 local jp
 local farmall = false
 local ws
+local ar
+game.RunService.Heartbeat:Connect(function()
+	if ar == true then
+	game:GetService("ReplicatedStorage").RebirthEvent:FireServer()
+	end
+end)
 local selected = game.Workspace.World1
 coroutine.wrap(function()
 while wait() do
@@ -98,6 +104,14 @@ selected = game:GetService("Workspace"):FindFirstChild(Option)
 else
 	farmall = true
 end
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Rebirth",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+	ar = Value
 	end,
 })
 local Toggle = PLR:CreateToggle({
