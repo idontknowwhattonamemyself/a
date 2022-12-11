@@ -29,6 +29,7 @@ local af
 local ah
 local tier = 1
 local ar
+local ae
 local hatch = function()
     local args = {
         [1] = tier,
@@ -73,6 +74,14 @@ local Dropdown = Tab:CreateDropdown({
 tier = Option
 	end,
 })
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Equip Best Pets",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+ae = Value
+	end,
+})
 game:GetService("RunService").Heartbeat:Connect(function()
 if af == true then
 dunk()
@@ -89,3 +98,8 @@ game:GetService("RunService").Heartbeat:Connect(function()
         end
         end)
         
+        game:GetService("RunService").Heartbeat:Connect(function()
+            if ae == true then
+                game:GetService("ReplicatedStorage").Remotes.EquipBestPets:InvokeServer()
+            end
+            end)
