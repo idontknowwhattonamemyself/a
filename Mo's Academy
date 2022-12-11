@@ -1,6 +1,6 @@
 if game.PlaceId == 9000622508 then
 		local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Fuck You Samson Shitter 🤣🤣 SMOKING SAMSON PACK LLLLL", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "Statue Hub | i hate samsonxvi spread the word", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 local nd = false
 local im = false
 local km = false
