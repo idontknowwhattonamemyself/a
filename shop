@@ -97,20 +97,26 @@ if game.PlaceId == 11775705000 then
     local Button = Tab:CreateButton({
         Name = "Grab Keycard",
         Callback = function()
+	if game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").KeyRoom.Keycard.Root.CFrame
             wait(.5)
             
             fireproximityprompt(game:GetService("Workspace").KeyRoom.Keycard.Root.Collect)
+	    end
         end,
     })
 end
-game:GetService("RunService").Heartbeat:Connect(function()
+coroutine.wrap(function()
+while wait(.5) do
 if aga == true then
 autograb()
 end
-end)
-game:GetService("RunService").Heartbeat:Connect(function()
+end
+end)()
+coroutine.wrap(function()
+while wait(.5) do
     if ag == true then
     autograbfollowlist()
     end
-    end)
+end
+end)()
