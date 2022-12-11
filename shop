@@ -10,7 +10,7 @@ local autograbfollowlist = function()
         end
         
 for i, v in pairs(game:GetService("Workspace").Items:GetDescendants()) do
-if v.Name == "ClickDetector" and onshoppinglist(v.Parent.Parent.Name) == true  then 
+if v.ClassName == "ClickDetector" and onshoppinglist(v.Parent.Parent.Name) == true  then 
 fireclickdetector(v) 
 end
 end
@@ -21,7 +21,7 @@ end
 
 local autograb = function()
     for i, v in pairs(game:GetService("Workspace").Items:GetDescendants()) do
-        if v.Name == "ClickDetector"  then 
+        if v.ClassName == "ClickDetector"  then 
         fireclickdetector(v) 
         end
         end
