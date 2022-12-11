@@ -36,10 +36,10 @@ af = Value
 	end,
 })
 coroutine.wrap(function()
-while wait(.01) do
+while wait(.1) do
 if  game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil and af == true then 
 for i, v in pairs(game:GetService("Workspace").Zones.Stages["2"]:GetChildren()) do
-if  v:FindFirstChild("End") and  task.wait(.001) then
+if  v:FindFirstChild("End") and  task.wait(.01) then
     if  game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil then
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.End.CFrame
     end
