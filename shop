@@ -107,14 +107,14 @@ if game.PlaceId == 11775705000 then
     })
 end
 coroutine.wrap(function()
-while wait(.5) do
+while wait(1.5) do
 if aga == true then
 autograb()
 end
 end
 end)()
 coroutine.wrap(function()
-while wait(.5) do
+while wait(1.5) do
     if ag == true then
     autograbfollowlist()
     end
