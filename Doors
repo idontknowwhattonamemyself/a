@@ -7,7 +7,7 @@
 	local fesp = false
 	local besp = false
 	local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Venyx-UI-Library/main/source.lua"))()
-	local venyx = library.new("Statue Hub", 5013109572)
+	local venyx = library.new("Statue Hub | ty for all of the support on doors script", 5013109572)
 	
 	local autoopen = false
 	
@@ -61,7 +61,7 @@ wait()
 	end)
 wait()
 	section1:addButton("Auto Complete (buggy)", function()
-	
+	pcall(function()
 		while wait() do
     
 			local name = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
@@ -147,74 +147,9 @@ wait()
 			
 			
 			end
-			
+			end)
 	end)
-	section1:addButton("Fast Auto Complete (may kill u lol)", function()
-		while wait() do
-    
-			local name = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
-			
-			local latest = game:GetService("Workspace").CurrentRooms:FindFirstChild(name).RoomEnd
-			
-			if latest then
-				
-			if latest:FindFirstChild("Lock") then
-				for i, v in pairs(game:GetService("Workspace"):GetDescendants()) do
-					if v.Name == "ModulePrompt"  and v.Parent:FindFirstChild("Hitbox") then
-						for i,v in ipairs(latest.Parent:GetDescendants()) do
-								if v.Name == "KeyObtain" then
-									HasKey = v
-								end
-							end
-			local CF = CFrame.new
-							
-					 if HasKey then
-							game.Players.LocalPlayer.Character:PivotTo(CF(HasKey.Hitbox.Position))
-							wait(0.3)
-							fireproximityprompt(HasKey.ModulePrompt,0)
-							game.Players.LocalPlayer.Character:PivotTo(CF(latest.Door.Position))
-							wait(0.3)
-							fireproximityprompt(latest.Lock.UnlockPrompt,0)
-						end
-					   for i, v in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do
-					if v.Name == "ActivateEventPrompt"
-					and v.Parent.Parent:FindFirstChild("KeyObtain")
-					then
-						
-						fireproximityprompt(v)
-				  
-						
-					end
-			end
-								wait(.5)
-			   fireproximityprompt(latest.Lock.UnlockPrompt, 1)
-			   --game:GetService("Workspace").CurrentRooms.0.Assets.Dresser.DrawerContainer.Knobs.ActivateEventPrompt
-			end
-			end
-			end
-			local latest = game:GetService("Workspace").CurrentRooms:FindFirstChild(name)
-					
-					end
-					if latest.Parent.Name == "50" then
-						print("ran")
-						 latest = game:GetService("Workspace").CurrentRooms:FindFirstChild("51").RoomEnd
-						 wait(1.5)
-						
-					end
-		
-		
-				local Players = game:GetService("Players")
-			
-			 
-			
-		
-			game:GetService("Players").LocalPlayer.Character:PivotTo(latest.Parent.RoomEnd.CFrame + Vector3.new(0,0,0))
-			
-					game:GetService("ReplicatedStorage").Bricks.EBF:FireServer()
-			
-			
-			end
-	end)
+	
 	section1:addButton("Instant Interact", function()
 		game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(interactprompt)
 
