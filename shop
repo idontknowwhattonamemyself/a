@@ -105,6 +105,14 @@ if game.PlaceId == 11775705000 then
 	    end
         end,
     })
+        local Button = Tab:CreateButton({
+        Name = "Escape",
+        Callback = function()
+	if game:GetService("Workspace").EscapeFolder.POD1:FindFirstChild("EscapePod") then
+	fireproximityprompt(game:GetService("Workspace").EscapeFolder.POD1.EscapePod.Root.Attachment.BoardPod)
+	end
+        end,
+    })
 end
 coroutine.wrap(function()
 while wait(1.5) do
