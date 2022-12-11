@@ -26,6 +26,17 @@ local Window = Rayfield:CreateWindow({
 })
 local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
 local af
+local ah
+local tier = 1
+local ar
+local hatch = function()
+    local args = {
+        [1] = tier,
+        [2] = {}
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.BuyEgg:InvokeServer(unpack(args))
+end
 local dunk = function()
     game:GetService("ReplicatedStorage").Remotes.DunkRequest:FireServer()
 end
@@ -37,9 +48,44 @@ local Toggle = Tab:CreateToggle({
 af = Value
 	end,
 })
-
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Rebirth",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+ar = Value
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Hatch",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+ah = Value
+	end,
+})
+local Dropdown = Tab:CreateDropdown({
+	Name = "Egg Tier",
+	Options = {1,2,3,4,5,6},
+	CurrentOption = 1,
+	Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Option)
+tier = Option
+	end,
+})
 game:GetService("RunService").Heartbeat:Connect(function()
 if af == true then
 dunk()
 end
 end)
+game:GetService("RunService").Heartbeat:Connect(function()
+    if ah == true then
+    hatch()
+    end
+    end)
+    game:GetService("RunService").Heartbeat:Connect(function()
+        if ar == true then
+            game:GetService("ReplicatedStorage").Remotes.RequestRebirth:FireServer()
+        end
+        end)
+        
