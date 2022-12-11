@@ -1,5 +1,8 @@
 return {
-    ["clickyrace"] = 10674065190,
+    ["clickyrace"] = 10913525618, -- tundra
+    ["clickyrace"] = 10918540783, -- magma
+    ["clickyrace"] = 11687838890, -- Space
+    ["clickyrace"] = 10674065190, -- beginner
     ["fnunky%20fwiday"] = 6447798030,
     ["dunk"] = 11495830780,
     ["shop"] = 6607361476,
