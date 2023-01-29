@@ -1,8 +1,7 @@
 
 	wait(.1)
 	local gameid = game.PlaceId
-	
-	if gameid == 6839171747 then
+	local acdisabler
 	wait(2)
 	local fesp = false
 	local besp = false
@@ -156,6 +155,15 @@ wait()
 			fireproximityprompt(interactprompt, 1)
 	
 	end)
+	end)
+	section1:addButton("Disable Anticheat lololol (dunno abt float check)", function()
+	local a = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+	while wait() do
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Parent = nil
+	task.wait()
+	a.Parent = game.Players.LocalPlayer.Character
+	game.Players.LocalPlayer.Character.Humanoid:ChangeState("Landed")
+	end
 	end)
 	section1:addButton("Auto Monster Notify", function()
 		
@@ -407,7 +415,6 @@ end)
 		end
 		end
 		
-	end
 	end
 	end
 	end
