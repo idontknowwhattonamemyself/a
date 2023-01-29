@@ -1,7 +1,7 @@
 
 	wait(.1)
 	local gameid = game.PlaceId
-	local acdisabler
+
 	wait(2)
 	local fesp = false
 	local besp = false
@@ -36,6 +36,13 @@ wait()
 	local page = venyx:addPage("Doors", 5012544693)
 
 	local section = page:addSection("Main")
+	section:addButton("Disable Anticheat lololol (dunno abt float check)", function()
+	local a = game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+	while wait() do
+	a.Parent = nil
+	a.Parent = game.Players.LocalPlayer.Character
+	end
+	end)
 	local section1 = page:addSection("Misc")
 	_G.RushSpawned = false
 	section1:addButton("FullBright", function()
@@ -156,15 +163,7 @@ wait()
 	
 	end)
 	end)
-	section1:addButton("Disable Anticheat lololol (dunno abt float check)", function()
-	local a = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-	while wait() do
-	game.Players.LocalPlayer.Character.HumanoidRootPart.Parent = nil
-	task.wait()
-	a.Parent = game.Players.LocalPlayer.Character
-	game.Players.LocalPlayer.Character.Humanoid:ChangeState("Landed")
-	end
-	end)
+	
 	section1:addButton("Auto Monster Notify", function()
 		
 		while wait(3) do
