@@ -1,0 +1,251 @@
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local dfhrpsize
+for i, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+if v.Name == "HumanoidRootPart" then
+dfhrpsize = v.Size
+end
+end
+if dfhrpsize == nil then
+dfhrpsize = Vector3.new(2,2,1)
+end
+
+local Window = Rayfield:CreateWindow({
+	Name = "Statue Hub",
+	LoadingTitle = "Statue Hub",
+	LoadingSubtitle = "Made By wowzers!#0560",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "Statue Hub"
+	},
+        Discord = {
+        	Enabled = false,
+        	Invite = "sirius", -- The Discord invite code, do not include discord.gg/
+        	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+        },
+	KeySystem = false, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "Sirius Hub",
+		Subtitle = "Key System",
+		Note = "Join the discord (discord.gg/sirius)",
+		FileName = "SiriusKey",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "Hello"
+	}
+})
+local Tab = Window:CreateTab("Touch Interest Method")
+local HB = Window:CreateTab("Hitbox Method")
+local BM = Window:CreateTab("Bring Method")
+local CM = Window:CreateTab("Character Mods")
+local B
+local Paragraph = BM:CreateParagraph({Title = "Bring", Content = "Effective For Most Systems That Are Client Sided"})
+local Bring = BM:CreateToggle({
+	Name = "Bring All",
+	CurrentValue = false,
+	Flag = "BA", 
+	Callback = function(Value)
+B = Value
+	end,
+})
+local Paragraph = HB:CreateParagraph({Title = "Hitboxes", Content = "less detectable and overall sometimes just better"})
+
+local ka
+local ex
+local kilp
+local visamt = .5
+local expandamt = 10
+local vis
+local whitelisted = {}
+local Paragraph = Tab:CreateParagraph({Title = "Note:", Content = "can be detected easily but very effective for kill alls and stuff"})
+local HBETOG = HB:CreateToggle({
+	Name = "Hitboxes",
+	CurrentValue = false,
+	Flag = "HBS", 
+	Callback = function(Value)
+ex = Value
+	end,
+})
+local HBEVIS = HB:CreateToggle({
+	Name = "Hitbox Visibility",
+	CurrentValue = false,
+	Flag = "HBV", 
+	Callback = function(Value)
+vis = Value
+	end,
+})
+local EXTAMT = HB:CreateSlider({
+	Name = "Expand Amount",
+	Range = {2, 100},
+	Increment = 1,
+	Suffix = "Studs",
+	CurrentValue = 10,
+	Flag = "EXTENDAMT", 
+	Callback = function(Value)
+expandamt = Value
+	end,
+})
+local EXTAMT = HB:CreateSlider({
+	Name = "Transparency",
+	Range = {0.1, 0.9},
+	Increment = .1,
+	Suffix = "Transparency",
+	CurrentValue = .5,
+	Flag = "Trans", 
+	Callback = function(Value)
+visamt = Value
+	end,
+})
+local WSTog = CM:CreateSlider({
+	Name = "WalkSpeed",
+	Range = {1, 100},
+	Increment = 1,
+	Suffix = "Studs/second",
+	CurrentValue = 16,
+	Flag = "WS", 
+	Callback = function(Value)
+		if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+		end
+	end,
+})
+local JPTog = CM:CreateSlider({
+	Name = "Jump Power",
+	Range = {1, 100},
+	Increment = 1,
+	Suffix = "Studs",
+	CurrentValue = 32,
+	Flag = "JP", 
+	Callback = function(Value)
+		if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+		end
+	end,
+})
+local INFJ
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if INFJ == true and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+        game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(3)
+        end
+    end)
+local IJ = CM:CreateToggle({
+	Name = "Infinite Jump",
+	CurrentValue = false,
+	Flag = "INFJUMP", 
+	Callback = function(Value)
+		INFJ = Value
+	end,
+})
+local wl = Tab:CreateInput({
+	Name = "Whitelist To Kill All",
+	PlaceholderText = "Username Here.. (No Display)",
+	RemoveTextAfterFocusLost = false,
+	Callback = function(Text)
+	if game.Players:FindFirstChild(Text) then
+  table.insert(whitelisted, game.Players:FindFirstChild(Text))
+  Rayfield:Notify("Added Whitelist", "Whitelisted User: "..Text,10010348543)
+  else
+    Rayfield:Notify("Whitelist Error:", "Could Not Find User: "..Text,10010348543)
+  end
+
+	end,
+})
+local Ka = Tab:CreateToggle({
+	Name = "Kill All",
+	CurrentValue = false,
+	Flag = "KillAll", 
+	Callback = function(Value)
+ka = Value
+	end,
+})
+local ptokill
+local kilp
+local wl = Tab:CreateInput({
+	Name = "Player To Kill",
+	PlaceholderText = "Username Here.. (No Display)",
+	RemoveTextAfterFocusLost = false,
+	Callback = function(Text)
+if game.Players:FindFirstChild(Text) then
+ ptokill = game.Players:FindFirstChild(Text)
+end
+	end,
+})
+local Ka = Tab:CreateToggle({
+	Name = "Kill Player",
+	CurrentValue = false,
+	Flag = "KillPlayer", 
+	Callback = function(Value)
+kilp = Value
+	end,
+})
+local aa = function()
+  for i, target in pairs(game.Players:GetChildren()) do
+    if  target.Character and target.Character:FindFirstChild("HumanoidRootPart") and not table.find(whitelisted, target)  then
+  for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+  if v.Name == "TouchInterest" then
+  firetouchinterest(v.Parent, target.Character.HumanoidRootPart, 0)
+  firetouchinterest(v.Parent, target.Character.HumanoidRootPart, 1)
+  
+  end
+  end
+  end
+  end
+  end
+  game:GetService("RunService").Heartbeat:Connect(function()
+    if ka == true then
+    aa()
+    end
+    
+    end)
+    game:GetService("RunService").Heartbeat:Connect(function()
+      if ex == true then
+for i, v in pairs(game:GetService("Players"):GetChildren()) do
+if v.Character and v ~= game.Players.LocalPlayer and v.Character:FindFirstChild("HumanoidRootPart") then
+  v.Character:FindFirstChild("HumanoidRootPart").Size = Vector3.new(expandamt,expandamt,expandamt)
+  v.Character:FindFirstChild("HumanoidRootPart").CanCollide = false
+  if vis == true then
+    v.Character:FindFirstChild("HumanoidRootPart").Transparency = visamt
+  else
+    v.Character:FindFirstChild("HumanoidRootPart").Transparency = 1
+
+  end
+
+end
+end
+else
+  for i, v in pairs(game:GetService("Players"):GetChildren()) do
+    if v.Character and v ~= game.Players.LocalPlayer and v.Character:FindFirstChild("HumanoidRootPart") then
+      v.Character:FindFirstChild("HumanoidRootPart").Size = dfhrpsize
+      v.Character:FindFirstChild("HumanoidRootPart").Transparency = 1
+      v.Character:FindFirstChild("HumanoidRootPart").CanCollide = true
+    end
+    end
+end
+end)
+game:GetService("RunService").Heartbeat:Connect(function()
+  if kilp == true and ptokill ~= nil then
+  for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+    firetouchinterest(v.Parent, ptokill.Character.HumanoidRootPart, 0)
+    firetouchinterest(v.Parent, ptokill.Character.HumanoidRootPart, 1)
+    
+    end
+  end
+end
+end)
+local offset
+game:GetService("RunService").Heartbeat:Connect(function()
+  if B == true then
+  for i, v in pairs(game.Players:GetChildren()) do
+ if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+offset = (game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.LookVector * 3)
+
+
+
+  v.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + offset
+end 
+end
+elseif game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+end
+end)
