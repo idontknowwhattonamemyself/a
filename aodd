@@ -366,7 +366,7 @@ coroutine.wrap(function()
         if mobfarm == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') ~= nil then
         for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
 if string.match(v.Name, "Pirate") and v:FindFirstChild('Attributes') and  v.Attributes.Health.Value > 0 and mobfarm == true  and v ~= nil and v.PrimaryPart then
-            bypass_teleport(v.PrimaryPart.Position - Vector3.new(0,10,0))
+            bypass_teleport(v.PrimaryPart.Position - Vector3.new(0,5,0))
         task.wait(.75)
         end
         end
