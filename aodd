@@ -75,11 +75,21 @@ game:GetService'RunService'.RenderStepped:Connect(function()
 end)
 local killaura
 coroutine.wrap(function()
-while wait() do
+while wait(.2) do
 
     if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and killaura == true then
     for i, v in pairs(game.workspace:WaitForChild("Enemies"):GetChildren()) do
-       if v:IsA("Model") and v.PrimaryPart and (v.PrimaryPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 15 then
+       if v:IsA("Model") and v.PrimaryPart and (v.PrimaryPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 15 then
+    
+        local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
     local args = {
         [1] = 0,
         [2] = game.Players.LocalPlayer.Character,
@@ -89,6 +99,115 @@ while wait() do
     }
     
     game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+
     end
 end
     end
