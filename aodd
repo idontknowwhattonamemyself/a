@@ -340,7 +340,7 @@ for i,v in pairs(game:GetService("Workspace").Map:GetChildren()) do
     if v:FindFirstChild('TempChests') ~= nil then
     for i,v in pairs(v.TempChests:GetChildren()) do
         if chestfarm == true and  not v:FindFirstChild("Open") and v:IsA("Model")  and v.PrimaryPart ~= nil and v.PrimaryPart.Transparency == 0 then 
-            bypass_teleport(v.PrimaryPart.Position - Vector3.new(0, 5, 0))
+            bypass_teleport(v.PrimaryPart.Position + Vector3.new(0, 5, 0))
 task.wait(2.5)
     end
         end
