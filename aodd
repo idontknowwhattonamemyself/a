@@ -1,0 +1,226 @@
+local infstam
+local chestfarm
+local autopickupchests
+local speed
+
+local FlySpeed = 150;
+local UIS = game:GetService("UserInputService")
+local Player = game:GetService("Players").LocalPlayer
+local Camera = workspace.Camera
+getgenv().Toggled = false;
+
+local holdingWKey = false
+local holdingSKey = false
+
+
+
+UIS.InputBegan:Connect(function(inputObject) 
+    if(inputObject.KeyCode==Enum.KeyCode.W)then
+        holdingWKey = true
+
+    end
+end)
+
+UIS.InputEnded:Connect(function(inputObject)
+    if(inputObject.KeyCode==Enum.KeyCode.W)then
+        holdingWKey = false
+    end
+end)
+
+
+UIS.InputBegan:Connect(function(inputObject) 
+    if(inputObject.KeyCode==Enum.KeyCode.S)then
+        holdingSKey = true
+
+    end
+end)
+
+UIS.InputEnded:Connect(function(inputObject)
+    if(inputObject.KeyCode==Enum.KeyCode.S)then
+        holdingSKey = false
+    end
+end)
+
+
+
+
+game:GetService'RunService'.RenderStepped:Connect(function()
+    if (getgenv().Toggled == true and Player.Character and Player.Character:FindFirstChild('HumanoidRootPart')) then
+if holdingWKey == true then
+Player.Character.HumanoidRootPart.Velocity = Camera.CFrame.LookVector * FlySpeed;
+end
+if holdingSKey == true then
+  Player.Character.HumanoidRootPart.Velocity = Camera.CFrame.LookVector * FlySpeed * -1;
+
+end
+
+if holdingSKey == false and holdingWKey == false then
+    Player.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+end
+end
+
+end)
+
+game:GetService'RunService'.RenderStepped:Connect(function()
+    if (getgenv().Toggled == true and Player.Character and Player.Character:FindFirstChild('HumanoidRootPart')) then
+        Player.Character.HumanoidRootPart.Velocity = Camera.CFrame.LookVector * FlySpeed;
+    end;
+end)
+
+
+game:GetService'RunService'.RenderStepped:Connect(function()
+    if (getgenv().Toggled == true and Player.Character and Player.Character:FindFirstChild('HumanoidRootPart')) then
+        Player.Character.HumanoidRootPart.Velocity = Camera.CFrame.LookVector * FlySpeed;
+    end;
+end)
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Window = Rayfield:CreateWindow({
+	Name = "Statue Hub",
+	LoadingTitle = "Statue Hub",
+	LoadingSubtitle = "Made with love by wowzers!#0560",
+	ConfigurationSaving = {
+		Enabled = false,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "Big Hub"
+	},
+        Discord = {
+        	Enabled = false,
+        	Invite = "sirius", -- The Discord invite code, do not include discord.gg/
+        	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+        },
+	KeySystem = false, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "Sirius Hub",
+		Subtitle = "Key System",
+		Note = "Join the discord (discord.gg/sirius)",
+		FileName = "SiriusKey",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "Hello"
+	}
+})
+local Tab = Window:CreateTab("Main 🤑", 4483362458) -- Title, Image
+local Toggle = Tab:CreateToggle({
+	Name = "Chest Farm",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+chestfarm = Value
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Pickup Chests",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+autopickupchests = Value
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Infinite Stamina",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+infstam = Value
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Speed",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+speed = Value
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Fly",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+getgenv().Toggled = Value
+	end,
+})
+game.RunService.RenderStepped:Connect(function()
+if speed == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil then 
+    game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").WalkSpeed = 70
+end
+end)
+game.RunService.RenderStepped:Connect(function()
+if infstam == true then
+local args = {
+    [1] = -1,
+    [2] = "Dodge"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("StaminaCost"):FireServer(unpack(args))
+end
+end)
+local tween_s = game:GetService("TweenService")
+local lp = game:GetService("Players").LocalPlayer
+function bypass_teleport(v)
+    if lp.Character and
+    lp.Character:FindFirstChild("HumanoidRootPart") then
+        local mag = (lp.Character.HumanoidRootPart.Position - v).Magnitude
+        local cf = CFrame.new(v)
+        local tweeninfo = TweenInfo.new(mag/250,Enum.EasingStyle.Linear)
+        local a = tween_s:Create(lp.Character.HumanoidRootPart, tweeninfo, {CFrame=cf})
+        local bv = Instance.new("BodyVelocity")
+        bv.Parent = lp.Character.HumanoidRootPart
+        bv.Velocity = Vector3.new(0,3,0)
+        a:Play()
+
+        a.Completed:wait()
+        
+    end
+end
+coroutine.wrap(function()
+while wait() do
+    if chestfarm == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') ~= nil then
+for i,v in pairs(game:GetService("Workspace").Map:GetChildren()) do
+    if v:FindFirstChild('TempChests') ~= nil then
+    for i,v in pairs(v.TempChests:GetChildren()) do
+        if chestfarm == true and  not v:FindFirstChild("Open") and v:IsA("Model")  and v.PrimaryPart ~= nil and v.PrimaryPart.Transparency == 0 then 
+            bypass_teleport(v.PrimaryPart.Position - Vector3.new(0, 5, 0))
+task.wait(2.5)
+    end
+        end
+        
+    end
+    
+    if v:FindFirstChild('Chests') ~= nil then
+        for i,v in pairs(v.Chests:GetChildren()) do
+            if chestfarm == true and v:IsA("Model") and v.PrimaryPart and not v:FindFirstChild("Open") and v.PrimaryPart ~= nil and v:IsA("Model") and v.PrimaryPart.Transparency == 0 then 
+            bypass_teleport(v.PrimaryPart.Position - Vector3.new(0, 5, 0))
+            task.wait(2.5)
+
+            end
+            end
+        end
+end
+end
+end
+end)()
+game.RunService.RenderStepped:Connect(function()
+    if autopickupchests == true then
+for i,v in pairs(game:GetService("Workspace").Map:GetChildren()) do
+    if v:FindFirstChild('TempChests') ~= nil then
+    for i,v in pairs(v.TempChests:GetChildren()) do
+        if not v:FindFirstChild("Open") and v:IsA("Model")  and v.PrimaryPart ~= nil and v.PrimaryPart.Transparency == 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-v.PrimaryPart.Position).Magnitude < 15  then 
+        fireproximityprompt(v.PrimaryPart.Prompt)
+
+    end
+        end
+        
+    end
+    
+    if v:FindFirstChild('Chests') ~= nil then
+        for i,v in pairs(v.Chests:GetChildren()) do
+            if v:IsA("Model") and v.PrimaryPart and not v:FindFirstChild("Open") and v.PrimaryPart ~= nil and v:IsA("Model") and v.PrimaryPart.Transparency == 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-v.PrimaryPart.Position).Magnitude < 15  then 
+                fireproximityprompt(v.PrimaryPart.Prompt)
+            end
+            end
+        end
+end
+end
+end)
