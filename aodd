@@ -300,6 +300,18 @@ local Toggle = Tab:CreateToggle({
 getgenv().Toggled = Value
 	end,
 })
+local Button = Tab:CreateButton({
+	Name = "Negative Strength (basically inf points)",
+	Callback = function()
+		local args = {
+            [1] = "Strength",
+            [2] = -10000000000000000000000000000000000
+        }
+        
+        game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("UI"):WaitForChild("SpendSP"):InvokeServer(unpack(args))
+        
+	end,
+})
 game.RunService.RenderStepped:Connect(function()
 if speed == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil then 
     game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").WalkSpeed = 70
