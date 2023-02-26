@@ -75,8 +75,9 @@ game:GetService'RunService'.RenderStepped:Connect(function()
 end)
 local killaura
 game.RunService.RenderStepped:Connect(function()
+    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and killaura == true then
     for i, v in pairs(game.workspace:WaitForChild("Enemies"):GetChildren()) do
-        if killaura == true and v:IsA("Model") and v.PrimaryPart and (v.PrimaryPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 15 then
+       if v:IsA("Model") and v.PrimaryPart and (v.PrimaryPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 15 then
     local args = {
         [1] = 0,
         [2] = game.Players.LocalPlayer.Character,
@@ -87,6 +88,7 @@ game.RunService.RenderStepped:Connect(function()
     
     game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
     end
+end
     end
     end)
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
