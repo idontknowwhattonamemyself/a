@@ -73,7 +73,22 @@ game:GetService'RunService'.RenderStepped:Connect(function()
         Player.Character.HumanoidRootPart.Velocity = Camera.CFrame.LookVector * FlySpeed;
     end;
 end)
-
+local killaura
+game.RunService.RenderStepped:Connect(function()
+    for i, v in pairs(game.workspace:WaitForChild("Enemies"):GetChildren()) do
+        if killaura == true and v:IsA("Model") and v.PrimaryPart and (v.PrimaryPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 15 then
+    local args = {
+        [1] = 0,
+        [2] = game.Players.LocalPlayer.Character,
+        [3] = v,
+        [4] = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"),
+        [5] = "Slash"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("DealWeaponDamage"):FireServer(unpack(args))
+    end
+    end
+    end)
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 local Window = Rayfield:CreateWindow({
 	Name = "Statue Hub",
@@ -100,7 +115,16 @@ local Window = Rayfield:CreateWindow({
 		Key = "Hello"
 	}
 })
+
 local Tab = Window:CreateTab("Main 🤑", 4483362458) -- Title, Image
+local Toggle = Tab:CreateToggle({
+	Name = "Kill Aura",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+killaura = Value
+	end,
+})
 local Toggle = Tab:CreateToggle({
 	Name = "Chest Farm",
 	CurrentValue = false,
@@ -109,6 +133,7 @@ local Toggle = Tab:CreateToggle({
 chestfarm = Value
 	end,
 })
+
 local Toggle = Tab:CreateToggle({
 	Name = "Auto Pickup Chests",
 	CurrentValue = false,
