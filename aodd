@@ -169,8 +169,8 @@ function bypass_teleport(v)
         bv.Parent = lp.Character.HumanoidRootPart
         bv.Velocity = Vector3.new(0,3,0)
         a:Play()
-
         a.Completed:wait()
+        bv:Destroy()
         
     end
 end
