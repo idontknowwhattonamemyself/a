@@ -213,6 +213,7 @@ end
     end
 end
     end)()
+    local autoweapon
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 local Window = Rayfield:CreateWindow({
 	Name = "Statue Hub",
@@ -255,6 +256,14 @@ local Toggle = Tab:CreateToggle({
 	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Value)
 mobfarm = Value
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Equip Weapons",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+autoweapon = Value
 	end,
 })
 local Toggle = Tab:CreateToggle({
@@ -358,6 +367,7 @@ end
 end
 end
 end)()
+
 coroutine.wrap(function()
     while wait() do
         if mobfarm == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') ~= nil then
@@ -370,6 +380,17 @@ if string.match(v.Name, "Pirate") and v:FindFirstChild('Attributes') v.Attribute
         end
     end
     end)()
+    coroutine.wrap(function()
+    while wait() do 
+    if autoweapon == true then 
+    for i, v in pairs(game.Players.LocalPlayer.BackPack:GetChildren()) do
+        if game.Players.LocalPlayer.Character and string.match(v.Name, "sword") or string.match(v.Name, "Sword") or string.match(v.Name, "Dagger") or string.match(v.Name, "dagger") or string.match(v.Name, "Spear") or string.match(v.Name, "spear") then
+v.Parent = game.Players.LocalPlayer.Character
+        end
+    end
+    end
+    end
+    end)
 game.RunService.RenderStepped:Connect(function()
     if autopickupchests == true then
 for i,v in pairs(game:GetService("Workspace").Map:GetChildren()) do
