@@ -240,7 +240,24 @@ local Window = Rayfield:CreateWindow({
 		Key = "Hello"
 	}
 })
-
+local tween_s = game:GetService("TweenService")
+local lp = game:GetService("Players").LocalPlayer
+function bypass_teleport(v)
+    if lp.Character and
+    lp.Character:FindFirstChild("HumanoidRootPart") then
+        local mag = (lp.Character.HumanoidRootPart.Position - v).Magnitude
+        local cf = CFrame.new(v)
+        local tweeninfo = TweenInfo.new(mag/550,Enum.EasingStyle.Linear)
+        local a = tween_s:Create(lp.Character.HumanoidRootPart, tweeninfo, {CFrame=cf})
+        local bv = Instance.new("BodyVelocity")
+        bv.Parent = lp.Character.HumanoidRootPart
+        bv.Velocity = Vector3.new(0,3,0)
+        a:Play()
+        a.Completed:wait()
+        bv:Destroy()
+        
+    end
+end
 local Tab = Window:CreateTab("Main 🤑", 4483362458) -- Title, Image
 local Toggle = Tab:CreateToggle({
 	Name = "Kill Aura",
@@ -300,18 +317,7 @@ local Toggle = Tab:CreateToggle({
 getgenv().Toggled = Value
 	end,
 })
-local Button = Tab:CreateButton({
-	Name = "Negative Strength (basically inf points)",
-	Callback = function()
-		local args = {
-            [1] = "Strength",
-            [2] = -10000000000000000000000000000000000
-        }
-        
-        game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("UI"):WaitForChild("SpendSP"):InvokeServer(unpack(args))
-        
-	end,
-})
+
 game.RunService.RenderStepped:Connect(function()
 if speed == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil then 
     game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").WalkSpeed = 70
@@ -320,31 +326,14 @@ end)
 game.RunService.RenderStepped:Connect(function()
 if infstam == true then
 local args = {
-    [1] = -1,
+    [1] = -10000000,
     [2] = "Dodge"
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("RS"):WaitForChild("Remotes"):WaitForChild("Combat"):WaitForChild("StaminaCost"):FireServer(unpack(args))
 end
 end)
-local tween_s = game:GetService("TweenService")
-local lp = game:GetService("Players").LocalPlayer
-function bypass_teleport(v)
-    if lp.Character and
-    lp.Character:FindFirstChild("HumanoidRootPart") then
-        local mag = (lp.Character.HumanoidRootPart.Position - v).Magnitude
-        local cf = CFrame.new(v)
-        local tweeninfo = TweenInfo.new(mag/550,Enum.EasingStyle.Linear)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart, tweeninfo, {CFrame=cf})
-        local bv = Instance.new("BodyVelocity")
-        bv.Parent = lp.Character.HumanoidRootPart
-        bv.Velocity = Vector3.new(0,3,0)
-        a:Play()
-        a.Completed:wait()
-        bv:Destroy()
-        
-    end
-end
+
 coroutine.wrap(function()
 while wait() do
     if chestfarm == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') ~= nil then
