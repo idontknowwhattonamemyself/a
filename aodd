@@ -258,6 +258,7 @@ function bypass_teleport(v)
         
     end
 end
+local wackything
 local Tab = Window:CreateTab("Main 🤑", 4483362458) -- Title, Image
 local Toggle = Tab:CreateToggle({
 	Name = "Kill Aura",
@@ -317,7 +318,19 @@ local Toggle = Tab:CreateToggle({
 getgenv().Toggled = Value
 	end,
 })
-
+local Toggle = Tab:CreateToggle({
+	Name = "Barrel Inf Levels And Stamina (have barell at redwake shipyard)",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+wackything = Value
+	end,
+})
+game.RunService.Heartbeat:Connect(function()
+    if wackything == true then
+    game:GetService('replicatedStorage').RS.Remotes.Misc.Carry:FireServer("Sell","Redwake's Shipyard")
+    end    
+end)
 game.RunService.RenderStepped:Connect(function()
 if speed == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil then 
     game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").WalkSpeed = 70
