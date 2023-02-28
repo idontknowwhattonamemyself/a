@@ -326,10 +326,11 @@ local Toggle = Tab:CreateToggle({
 wackything = Value
 	end,
 })
+
 game.RunService.Heartbeat:Connect(function()
     if wackything == true then
-    game:GetService('replicatedStorage').RS.Remotes.Misc.Carry:FireServer("Sell","Redwake's Shipyard")
-    end    
+        game:GetService('ReplicatedStorage').RS.Remotes.Misc.Carry:FireServer("Sell",game:GetService("Workspace").NPCs.Elgfrothi.Model.Value) 
+       end    
 end)
 game.RunService.RenderStepped:Connect(function()
 if speed == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil then 
