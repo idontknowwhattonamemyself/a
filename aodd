@@ -324,14 +324,16 @@ local Toggle = Tab:CreateToggle({
 	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Value)
 wackything = Value
+for i = math.huge,1,-1 do
+    if wackything == true then
+        game:GetService('ReplicatedStorage').RS.Remotes.Misc.Carry:FireServer("Sell",game:GetService("Workspace").NPCs.Elgfrothi.Model.Value) 
+    end
+       end    
 	end,
 })
 
-game.RunService.Heartbeat:Connect(function()
-    if wackything == true then
-        game:GetService('ReplicatedStorage').RS.Remotes.Misc.Carry:FireServer("Sell",game:GetService("Workspace").NPCs.Elgfrothi.Model.Value) 
-       end    
-end)
+
+
 game.RunService.RenderStepped:Connect(function()
 if speed == true and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil then 
     game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").WalkSpeed = 70
