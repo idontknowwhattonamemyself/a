@@ -1,0 +1,202 @@
+-- lua 
+local a = {["Mythical"] = 6, ["Legendary"] = 5, ["Epic"] = 4, ["Rare"] = 3, ["Uncommon"] = 2, ["Common"] = 1} 
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Window = Rayfield:CreateWindow({
+	Name = "Statue Hub",
+	LoadingTitle = "Statue Hub",
+	LoadingSubtitle = "made by wowzers!#0560",
+	ConfigurationSaving = {
+		Enabled = false,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "Big Hub"
+	},
+        Discord = {
+        	Enabled = false,
+        	Invite = "sirius", -- The Discord invite code, do not include discord.gg/
+        	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+        },
+	KeySystem = false, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "Sirius Hub",
+		Subtitle = "Key System",
+		Note = "Join the discord (discord.gg/sirius)",
+		FileName = "SiriusKey",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "Hello"
+	}
+})
+local mobfarm
+local aa
+local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
+local Toggle = Tab:CreateToggle({
+	Name = "Mob Farm",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+mobfarm = Value
+if Value == true then
+Rayfield:Notify({
+    Title = "Mob farm",
+    Content = "Turn On Auto Fight (on the right side of the screen)",
+    Duration = 6.5,
+    Image = 4483362458,
+    Actions = { -- Notification Buttons
+        Ignore = {
+            Name = "Okay!",
+            Callback = function()
+            end
+		},
+	},
+})
+end
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Attack",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        aa = Value
+	end,
+})
+local autoh
+local aeb
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Hug",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        autoh = Value
+	end,
+})
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Equip Best",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        aeb = Value
+	end,
+})
+for i, v in pairs(game.Workspace:GetDescendants()) do
+if v.Name == "Cheat" then v:Destroy() print("Destroyed") end
+end
+
+Rayfield:Notify({
+    Title = "Statue hub",
+    Content = "Anti Cheat Disabled",
+    Duration = 6.5,
+    Image = 4483362458,
+    Actions = { -- Notification Buttons
+        Ignore = {
+            Name = "Okay!",
+            Callback = function()
+                
+            end
+		},
+	},
+})
+local doah
+local ah
+local Dropdown = Tab:CreateDropdown({
+	Name = "Auto Hatch Egg",
+	Options = {"None","Common","Uncommon","Rare","Epic", "Legendary","Mythical"},
+	CurrentOption = "None",
+	Flag = "", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Option)
+	    if a[Option] then 
+	   ah = a[Option]
+	   doah = true
+	   else
+	   doah = false
+	   end
+	end,
+})
+local dostat
+local Dropdown = Tab:CreateDropdown({
+	Name = "Auto Stat",
+	Options = {"None", "Health", "Attack", "Speed", "Luck"},
+	CurrentOption = "None",
+	Flag = "", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Option)
+
+dostat = Option
+	end,
+})
+spawn(function()
+    while wait() do
+        if dostat ~= "None" then
+        local args = {
+    [1] = dostat
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Profile"):WaitForChild("AddPoint"):FireServer(unpack(args))
+end
+    end
+    end)
+spawn(function()
+while wait() do 
+    if doah == true then 
+local args = {
+    [1] = ah,
+    [2] = "Open1",
+    [3] = {}
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Hatch"):WaitForChild("EggHatch"):InvokeServer(unpack(args))
+end
+end
+end)
+local getclosest =  function() 
+    local nearest 
+    local nearestdist = 9999999999999999999999
+    for i, v in pairs(game.Workspace.Waves:GetChildren()) do
+        for i, v in pairs(v.Enemy:GetChildren()) do 
+            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude < nearestdist and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude < 25 then 
+            nearestdist = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
+            nearest = v.HumanoidRootPart
+            end
+end
+end
+return nearest
+end
+game.RunService.Heartbeat:Connect(function()
+if mobfarm == true and getclosest() ~= nil and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then 
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getclosest().CFrame - getclosest().CFrame.LookVector * 5
+local args = {
+    [1] = true
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Auto"):WaitForChild("AutoRequest"):InvokeServer(unpack(args))
+
+end
+end)
+game.RunService.Heartbeat:Connect(function()
+if aa == true then 
+    game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Weapon"):WaitForChild("TakeDamage"):FireServer()
+
+
+end
+end)
+coroutine.wrap(function()
+while wait(1.5) do
+    if autoh == true then 
+            local args = {
+    [1] = true
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Princess"):WaitForChild("PrincessHug"):FireServer(unpack(args))
+        end
+    end
+end)()
+coroutine.wrap(function()
+while wait(1.5) do
+    if aeb == true then 
+        game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Weapon"):WaitForChild("EquipBest"):FireServer()
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Weapon"):WaitForChild("WeaponInitFinish"):FireServer()
+
+        end
+    end
+end)()
