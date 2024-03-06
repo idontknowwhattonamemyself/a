@@ -503,7 +503,7 @@ end
     end)
     game:GetService("RunService").RenderStepped:Connect(function()
         if fly == true then 
-            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
+            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) or game.Players.LocalPlayer.Character.Humanoid.Jump == true then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed) + Vector3.new(0,speed,0)    
             else 
                 game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed)   
