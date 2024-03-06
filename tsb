@@ -568,7 +568,41 @@ end
         myHRP.Velocity = Vector3.new()
         end
     end)
+    local Toggle = Tabs.Main:AddToggle("AF", {Title = "Auto Face Player (nearest)", Default = false })
+    local AF = false
+    local AFrange = 30
+    Toggle:OnChanged(function(Value)
+        AB = Value
+        wait(.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,10,0)
+    end)
 
+    local Slider = Tabs.Main:AddSlider("AFRANGE", {
+        Title = "Range",
+        Description = "(Studs)",
+        Default = 30,
+        Min = 1,
+        Max = 999,
+        Rounding = 1,
+        Callback = function(Value)
+            AFrange = Value
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        AFrange = Value
+    end)
+    AFrange = 30
+    local connection = game:GetService("RunService").RenderStepped:Connect(function()
+        if AF == true then
+        local closest = getclosest(AFrange)
+        if not closest then return end
+        local closestchar = closest.Character
+        local closestHRP = closestchar.HumanoidRootPart
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, closestHRP.CFrame)
+        workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.Position, closestHRP.Position)
+        end
+    end)
     -- Options.MyToggle:SetValue(true)
 
 
