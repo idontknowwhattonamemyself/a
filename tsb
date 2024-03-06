@@ -434,7 +434,7 @@ end
         if tpall == true then
         for i, v in pairs(game.Players:GetPlayers()) do
         if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + (v.Character.HumanoidRootPart.CFrame.LookVector * 3)
             wait(.1)
         end
         end
