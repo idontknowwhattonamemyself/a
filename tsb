@@ -183,7 +183,7 @@ end
     spawn(function()
         while wait() do
         xpcall(function()
-            if  game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt then
+            if  game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt and autosp then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(safeplace)
                 print(game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt)
             end
