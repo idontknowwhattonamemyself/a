@@ -200,7 +200,7 @@ local Keybind = Tabs.Main:AddKeybind("FLYKB", {
     ChangedCallback = function(New)
     end
 })
-Tabs.ExploitsTab:AddButton({
+Tabs.Main:AddButton({
     Title = "Complete Stage",
     Description = "(INCOMPLETE)",
     Callback = function()
