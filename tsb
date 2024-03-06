@@ -417,55 +417,12 @@ end
             if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip") then return end
             local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
             tpvoid = true
+            wait(3.5)
             pcall(function()
                 local args = {
                     [1] = {
                         ["Goal"] = "Console Move",
                         ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip")
-                    }
-                }
-                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-            end)
-            tpvoid = false
-            wait(.1)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
-        end
-    })
-    Tabs.ExploitsTab:AddButton({
-        Title = "Invisible Serious Punch",
-        Description = "sum1 leaked this so like yea",
-        Callback = function()
-            if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Serious Punch") then return end
-
-            pcall(function()
-                local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                tpvoid = true
-                local args = {
-                    [1] = {
-                        ["Goal"] = "Console Move",
-                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Serious Punch")
-                    }
-                }
-                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-                wait(2)
-                tpvoid = false
-                wait(.1)
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
-            end)
-        end
-    })
-    Tabs.ExploitsTab:AddButton({
-        Title = "Invisible Omni",
-        Description = "sum1 leaked this so like yea",
-        Callback = function()
-            if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Omni Directional Punch") then return end
-            local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-            tpvoid = true
-            pcall(function()
-                local args = {
-                    [1] = {
-                        ["Goal"] = "Console Move",
-                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Omni Directional Punch")
                     }
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
