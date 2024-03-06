@@ -101,7 +101,7 @@ function notify(text, length)
 end
     Fluent:Notify({
         Title = "Sillyware.meow",
-        Content = "Sillyware Succesfully Loaded",
+        Content = "If you dont see a fully loaded notification, please type /console and screenshit the bottom pls",
         Duration = 5 -- Set to nil to make the notification not disappear
     })
 
@@ -146,6 +146,56 @@ end
                     game.Players.LocalPlayer.Character.Humanoid.Health = 0
                 end)
             end
+    })
+    local safeplace
+    Tabs.Misc:AddButton({
+        Title = "Set Safe Place",
+        Description = "Sets your safe place so u can tp to it later!",
+        Callback = function()
+            pcall(function()
+                if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                safeplace = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position
+                end
+            end)
+        end
+    })
+    local Ctoggle = Tabs.Misc:AddToggle("AutoTptosafeplace", {Title = "Tp to safe place when low", Default = false })
+    local autosp = false
+    local hpamt = 30
+    Ctoggle:OnChanged(function(Value)
+        autosp = Value
+    end)
+    spawn(function()
+        while wait() do
+        pcall(function()
+            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart and game.Players.LocalPlayer.Character.Humanoid and safeplace ~= nil and game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = safeplace
+            end
+        end)
+        end
+    end)
+    local Slider = Tabs.Misc:AddSlider("SPHEALTH", {
+        Title = "Auto Safe Place Health",
+        Description = "HP",
+        Default = 30,
+        Min = 5,
+        Max = 75,
+        Rounding = 1,
+        Callback = function(Value)
+            hpamt = Value
+        end
+    })
+
+    Tabs.Misc:AddButton({
+        Title = "Goto Safe Place",
+        Description = "Teleports To Your Saved Safe Place",
+        Callback = function()
+            pcall(function()
+                if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = CFrame.new(safeplace)
+                end
+            end)
+        end
     })
     local Ctoggle = Tabs.ExploitsTab:AddToggle("CharOffset", {Title = "Character Offset", Default = false })
     local co = false
@@ -797,3 +847,8 @@ Tabs.PlayEmotes:AddButton({
 })
 end)
 end
+Fluent:Notify({
+    Title = "Sillyware.meow",
+    Content = "Fully Loaded Script!",
+    Duration = 5 -- Set to nil to make the notification not disappear
+})
