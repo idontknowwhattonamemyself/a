@@ -152,7 +152,27 @@ end
     --     end
     -- })
 
-
+    local Ctoggle = Tabs.Misc:AddToggle("AUTOROLL", {Title = "Auto Roll Emote", Default = false })
+    local autoroll = false
+    Ctoggle:OnChanged(function(Value)
+        autoroll = Value
+    end)
+    
+    spawn(function()
+        while wait() do
+        xpcall(function()
+            if game.Players.LocalPlayer:GetAttribute("CanBuyRandom") == true then
+                local args = {
+                    [1] = {
+                        ["Goal"] = "Emote Spin"
+                    }
+                }
+                
+                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+            end
+        end, warn)
+        end
+    end)
     Tabs.Misc:AddButton({
             Title = "Force Reset",
             Description = "Resets Character (no need to wait for no combat)",
@@ -927,6 +947,7 @@ emotesscript = require(game:GetService("ReplicatedStorage").Emotes)
 end)
 print("succesfully required emotes")
 pcall(function()
+    
 emotes = {[[Bring It]], [[Happy Steps]], [[Fork]], [[Disgraced]], [[Crush]], [[Brush]], [[Spread]], [[Crack]], [[Sweat]], [[Chrono]], [[OK]], [[Honored]], [[Situp]], [[Warmup]], [[Skull]], [[Boxing]], [[Ls]], [[Point Down]], [[Heh]], [[Cart Ride]], [[Soda]], [[Hunter Salute]], [[March]], [[Hunted]], [[Countdown]], [[Ramen]], [[Traditional Duel]], [[Jumping Jacks]], [[Rock Paper Scissor]], [[Snake]], [[Smile]], [[Energized]], [[Party]], [[8 Bit]], [[Nerf This]], [[Moves]], [[Laugh]], [[Steps]], [[You Alright?]], [[I'll Win]], [[Victory Dance]], [[Fool]], [[Boppin]], [[Sleepy]], [[Flex]], [[Boogie]], [[Popcorn]], [[Rock n' Roll]], [[Keyboard Warrior]], [[L]], [[Come]], [[Head Spin]], [[Highfive]], [[Selfie In Style]], [[Crazy]], [[T]], [[Wave]], [[Nuh uh]], [[New Sheriff]], [[Rest]], [[Cheers]], [[Skewed]], [[Bye Bye]], [[Groceries]], [[Rage]], [[Mop]], [[We Ball]], [[Am Dead]], [[Bizarre Handshake]], [[Facepalm]], [[And One]], [[Exercise]], [[Pls]], [[Bow of Respect]], [[Log]], [[Sheathe]], [[Guilty]], [[Pushup]], [[Hunter]], [[Brooming]], [[The Strongest Rocks]], [[Yay]], [[Stay Down]], [[Thinker]], [[Garbage]], [[Salute]], [[First Rule]], [[RAHHH]], [[Bouncy]], [[RK Coin Trick]], [[Confused]], [[Relax]], [[Kneel]], [[Bow]], [[Rolling]], [[Selfie]], [[Sit 2]], [[You Hear That?]], [[RIP]], [[Fresh Fries]], [[Untouchable]], [[4K]], [[WHY?]], [[Levitate]], [[Dap Me Up]], [[Calculated]], [[Bully]], [[Show Me]], [[Read]], [[Kitty Cat]], [[Applause]], [[Cry]], [[Sturdy]], [[Penguin]], [[Chill]], [[Happy]], [[Fist Bump]], [[Chair]], [[Soul]], [[Shuffle]], [[Hologram]], [[Sit 3]], [[Clap Clap]], [[Gun Shot]], [[Expendable]], [[Silence]], [[Weight]], [[Think]], [[Millionare]], [[Table Flip]], [[Salt Shaker]], [[Crowbar]], [[Steel]], [[Pipe Down]], [[Munch]], [[Backflip]], [[Score]], [[360]], [[Wiggle]], [[Skateboard]], [[Coffee]], [[Cook]], [[Umbrella]], [[Sit]], [[Footrest]], [[Relaxed]], [[Comical]], [[Griddy]], [[No Limit]]}
 end)
 print("succesfully got emotes list")
