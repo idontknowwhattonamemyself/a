@@ -250,6 +250,49 @@ end
         ChangedCallback = function(New)
         end
     })
+    local Ctoggle = Tabs.ExploitsTab:AddToggle("SPAMDASH", {Title = "spam dash fx", Default = false})
+    local spamdash = false
+    Ctoggle:OnChanged(function(Value)
+        spamdash = Value
+        spawn(function()
+        while spamdash and wait() do
+            local args = {
+                [1] = {
+                    ["Dash"] = Enum.KeyCode.S,
+                    ["Key"] = Enum.KeyCode.Q,
+                    ["Goal"] = "KeyPress"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+        end
+    end)
+    end)
+    Tabs.ExploitsTab:AddButton({
+        Title = "Invisible Table Flip",
+        Description = "sum1 leaked this so like yea",
+        Callback = function()
+            if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip") then return end
+            local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            tpvoid = true
+            xpcall(function()
+                local args = {
+                    [1] = {
+                        ["Goal"] = "Console Move",
+                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip")
+                    }
+                }
+                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+            end, warn)
+            wait(5)
+            disableanims()
+            wait(1)
+            tpvoid = false
+            wait(.1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
+        end
+    })
+    
     Tabs.ExploitsTab:AddParagraph({
         Title = "Deadly Ninja Exploits",
         Content = "ALL BELOW EXPLOITS REQUIRE DEADLY NINJA TO BE EQUIPPED!"
@@ -265,6 +308,7 @@ end
             notify("Please Equip Sonic Base Form (Deadly Ninja)", 1)
         end
     end)
+    
     Tabs.ExploitsTab:AddButton({
         Title = "Manual Void Player",
         Description = "Grab Player with scatter or any other move that grabs and press this to use manual version",
@@ -313,6 +357,7 @@ end
             player = Value
         end
     })
+    
     Tabs.ExploitsTab:AddButton({
         Title = "Bring Player",
         Description = "Brings The Player",
@@ -425,30 +470,7 @@ end
             end, warn)
         end
     })
-    Tabs.ExploitsTab:AddButton({
-        Title = "Invisible Table Flip",
-        Description = "sum1 leaked this so like yea",
-        Callback = function()
-            if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip") then return end
-            local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-            tpvoid = true
-            xpcall(function()
-                local args = {
-                    [1] = {
-                        ["Goal"] = "Console Move",
-                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip")
-                    }
-                }
-                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-            end, warn)
-            wait(5)
-            disableanims()
-            wait(1)
-            tpvoid = false
-            wait(.1)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
-        end
-    })
+
     spawn(function()
     while wait() do
     if killall == true then
