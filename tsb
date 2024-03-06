@@ -60,6 +60,14 @@ local a = getlchar()
 if a == nil then return end
 return a.Humanoid
 end
+function disableanims()
+pcall(function()
+    for i, v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+        v:Stop()
+        v:Destroy()
+        end
+end)
+end
 function playanim(id)
     local anim = Instance.new("Animation")
     anim.AnimationId = id
@@ -411,13 +419,12 @@ end
         end
     })
     Tabs.ExploitsTab:AddButton({
-        Title = "Invisible Serious Punch",
+        Title = "Invisible Table Flip",
         Description = "sum1 leaked this so like yea",
         Callback = function()
             if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip") then return end
             local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
             tpvoid = true
-            wait(3.5)
             pcall(function()
                 local args = {
                     [1] = {
@@ -427,6 +434,9 @@ end
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
             end)
+            wait(2.5)
+            disableanims()
+            wait(1)
             tpvoid = false
             wait(.1)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
