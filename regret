@@ -199,7 +199,7 @@ Tabs.ExploitsTab:AddButton({
     Description = "(INCOMPLETE)",
     Callback = function()
     if getRoomName() ~= "elevator" then
-        if callbacks[getRoomName] then
+        if table.find(callbacks, getRoomName()) then
         callbacks[getRoomName]()
         else notify("This stage currently does not have an auto complete")
         end
