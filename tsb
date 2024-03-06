@@ -177,8 +177,9 @@ end
     spawn(function()
         while wait() do
         pcall(function()
-            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart and game.Players.LocalPlayer.Character.Humanoid and safeplace ~= nil and game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt then
+            if  game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = safeplace
+                print(game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt)
             end
         end)
         end
