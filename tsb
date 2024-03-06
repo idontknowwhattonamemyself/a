@@ -2,10 +2,16 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/idontknowwhattonamemyself/modified/Lua/new'),true))()
-espLib.chams = false
-espLib.boxesColor = Color3.new(255,255,255)
-
+local Sense = loadstring(game:HttpGet(
+    'https://raw.githubusercontent.com/idontknowwhattonamemyself/modified/Lua/new'))()
+Sense.teamSettings.enemy.enabled = false
+Sense.teamSettings.enemy.box = false
+Sense.teamSettings.enemy.healthBar = true
+Sense.teamSettings.enemy.distance = true
+Sense.teamSettings.enemy.name = false
+Sense.teamSettings.enemy.weapon = false
+Sense.teamSettings.enemy.boxColor[1] = Color3.fromRGB(255,0,255)
+Sense.Load()
 local anims = {
     ["Pumped Up"] = "rbxassetid://14733282425",
     ["Brutal Beatdown"] = "rbxassetid://14701242661", 
@@ -501,9 +507,9 @@ end
     local Toggle = Tabs.Main:AddToggle("ESPTOG", {Title = "ESP", Default = false })
     Toggle:OnChanged(function(Value)
         if Value == true then
-            espLib:Load()
+            Sense.teamSettings.enemy.enabled = true
         elseif esp == true then
-            espLib:Unload()
+            Sense.teamSettings.enemy.enabled = false
         end
         esp = Value
     end)
@@ -603,11 +609,11 @@ end
     Toggle:OnChanged(function(Value)
         showdc = Value
     end)
-    --local Toggle = Tabs.Main:AddToggle("SHOWSU", {Title = "Show Saitama Ult", Default = true })
-    -- local saitamault = true
-    -- Toggle:OnChanged(function(Value)
-    --     saitamault = Value
-    -- end)
+    local Toggle = Tabs.Main:AddToggle("SHOWSU", {Title = "Show Saitama Ult", Default = true })
+    local saitamault = true
+    Toggle:OnChanged(function(Value)
+        saitamault = Value
+    end)
     local Toggle = Tabs.Main:AddToggle("NotifyDC", {Title = "Notify", Default = true })
     local notifydc = true
     Toggle:OnChanged(function(Value)
