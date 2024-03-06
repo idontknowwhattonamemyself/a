@@ -163,15 +163,10 @@ end
             hlight:Destroy()
             end
             game.Players.LocalPlayer.Character.HumanoidRootPart.Transparency = 1
-            loaded:Stop()
-            loaded:Destroy()
-            local id = "rbxassetid://13083332742"
-            local anim = Instance.new("Animation")
-            loaded = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(anim)
-            loaded.Priority = Enum.AnimationPriority.Action4
-            loaded:Play()
-            loaded:Stop()
-            loaded:Destroy()
+            for i, v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+            v:Stop()
+            v:Destroy()
+            end
         end
         end)
     end)
