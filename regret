@@ -1,0 +1,362 @@
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+function isAnticheatRemote(remote)
+    local pattern = "%x%x%x%x%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%x%x%x%x%x%x%x%x";
+
+    if #remote.Name == 36 and string.match(remote.Name,pattern) then --notes: guids are always 36 characters long, look like xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+        return true;
+    end
+    return false;
+end;
+
+function getRoomName()
+    return workspace.Values.CurrentRoom.Value and workspace.Values.CurrentRoom.Value.Name or "elevator";
+end;
+
+local blacklist = {
+    "gm_flatgrass",
+    "InfectedRacing",
+}
+
+function pivToPart(part)
+    game.Players.LocalPlayer.Character:PivotTo(part.CFrame);
+end;
+
+local callbacks = {
+    ["SuspciouslyLongRoom"] = function()
+        pivToPart(workspace.SuspiciouslyLongRoom.Build.WinPool);
+    end,
+    ["Splitsville_Wipeout"] = function()
+        pivToPart(workspace.Splitsville_Wipeout.Checkpoints.EndCheckpoint);
+    end,
+    ["FunTimesAtSquishys"] = function()
+        pivToPart(workspace.FunTimesAtSquishys.Build.WinPart);
+    end,
+    ["3008_Room"] = function()
+        pivToPart(workspace["3008_Room"].Build.Lampert.HumanoidRootPart);
+        fireclickdetector(workspace["3008_Room"].Build.Lampert.ClickDetector)
+    end,
+    ["TurretRoom"] = function()
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(-11, 9, 31));
+    end,
+    ["WHEEL_OF"] = function()
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(-11, 9, 31));
+    end
+ --workspace["3008_Room"].Build.Lampert
+    --workspace.SuspiciouslyLongRoom.Build.WinPool
+    
+}
+
+local anticheatRemote;
+for i, v in pairs(game:GetService("ReplicatedStorage").RE:GetChildren()) do
+    if isAnticheatRemote(v) and game.IsA(v,"RemoteEvent") then
+        anticheatRemote = v;
+    end;
+end;
+print(anticheatRemote.Name)
+
+local old;
+old = hookmetamethod(game,"__namecall", function(self,...)
+    if self == anticheatRemote and getcallingscript().Name == "Animate" then
+        --print(getcallingscript().Name);
+        return coroutine.yield();
+    end;
+    return old(self,...)
+end);
+-- Credits To unionizing on discord
+function firetouch(part)
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, part, 0)
+wait(.05)
+firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, part, 1)
+end
+end
+local Window = Fluent:CreateWindow({
+    Title = "Sillyware",
+    SubTitle = "UI Version: "..Fluent.Version,
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "skull" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+    local Toggle = Tabs.Main:AddToggle("AUTOCG", {Title = "Automatically Grab Coins", Default = true })
+    local autocoingrab = true
+    Toggle:OnChanged(function(Value)
+        autocoingrab = Value
+    end)
+    local Toggle = Tabs.Main:AddToggle("AUTOCL", {Title = "Auto Click Everything", Default = true })
+    local autoclickall = true
+    Toggle:OnChanged(function(Value)
+        autoclickall = Value
+        if autoclickall == true then
+        for i, v in pairs(workspace:GetDescendants()) do
+            if v.ClassName == "ClickDetector" and not v:IsDescendantOf(workspace.Elevator) then
+                fireclickdetector(v);
+            end;
+        end;
+        end
+    end)
+
+spawn(function()
+while wait(1.5) do
+    if autocoingrab or autoclickall and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        for i, v in pairs(workspace:GetDescendants()) do
+            if v.Name == "Coin" and v:IsA("BasePart") and autocoingrab then
+                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+            if v.ClassName == "ClickDetector" and not v:IsDescendantOf(workspace.Elevator) and autoclickall then
+                fireclickdetector(v);
+            end;
+        end
+    end
+end
+end)
+local Toggle = Tabs.Main:AddToggle("NCLIP", {Title = "Noclip", Default = false })
+local noclip = false
+Toggle:OnChanged(function(Value)
+    noclip = Value
+end)
+
+local Keybind = Tabs.Main:AddKeybind("NOCLIPKB", {
+    Title = "KeyBind",
+    Mode = "Toggle", -- Always, Toggle, Hold
+    Default = "Z", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+    -- Occurs when the keybind is clicked, Value is `true`/`false`
+    Callback = function(Value)
+        Options.NCLIP:SetValue(not noclip)
+    end,
+
+    -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+    ChangedCallback = function(New)
+    end
+})
+local Toggle = Tabs.Main:AddToggle("FLYTOG", {Title = "Fly", Default = false })
+local fly = false
+local speed = 150
+Toggle:OnChanged(function(Value)
+    fly = Value
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+    if fly == true then 
+        if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed) + Vector3.new(0,speed,0)    
+        else 
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed)   
+        end
+    end
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.RigidConstraint.Enabled = noclip
+    if noclip == true then 
+        for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if v:IsA("BasePart") then
+            v.CanCollide = false
+            end
+        end
+    end
+end)
+local Slider = Tabs.Main:AddSlider("FSPEED", {
+    Title = "Fly Speed",
+    Description = "",
+    Default = 150,
+    Min = 1,
+    Max = 999,
+    Rounding = 1,
+    Callback = function(Value)
+        speed = Value
+    end
+})
+-- Options.MyToggle:SetValue(false)
+
+local Keybind = Tabs.Main:AddKeybind("FLYKB", {
+    Title = "KeyBind",
+    Mode = "Toggle", -- Always, Toggle, Hold
+    Default = "Z", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+    -- Occurs when the keybind is clicked, Value is `true`/`false`
+    Callback = function(Value)
+        Options.FLYTOG:SetValue(not fly)
+    end,
+
+    -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+    ChangedCallback = function(New)
+    end
+})
+Tabs.ExploitsTab:AddButton({
+    Title = "Complete Stage",
+    Description = "(INCOMPLETE)",
+    Callback = function()
+    if getRoomName() ~= "elevator" then
+        if callbacks[getRoomName] then
+        callbacks[getRoomName]()
+        else notify("This stage currently does not have an auto complete")
+        end
+    else notify("You are currently in elevator")
+    end
+    end
+})
+    -- Options.MyToggle:SetValue(true)
+
+
+    
+    -- local Slider = Tabs.Main:AddSlider("Slider", {
+    --     Title = "Slider",
+    --     Description = "This is a slider",
+    --     Default = 2,
+    --     Min = 0,
+    --     Max = 5,
+    --     Rounding = 1,
+    --     Callback = function(Value)
+    --         print("Slider was changed:", Value)
+    --     end
+    -- })
+
+    -- Slider:OnChanged(function(Value)
+    --     print("Slider changed:", Value)
+    -- end)
+
+    -- Slider:SetValue(3)
+
+
+
+    -- local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    --     Title = "Dropdown",
+    --     Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+    --     Multi = false,
+    --     Default = 1,
+    -- })
+
+    -- Dropdown:SetValue("four")
+
+    -- Dropdown:OnChanged(function(Value)
+    --     print("Dropdown changed:", Value)
+    -- end)
+    -- MultiDropdown:OnChanged(function(Value)
+    --     local Values = {}
+    --     for Value, State in next, Value do
+    --         table.insert(Values, Value)
+    --     end
+    --     print("Mutlidropdown changed:", table.concat(Values, ", "))
+    -- end)
+
+
+
+    -- local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+    --     Title = "Colorpicker",
+    --     Default = Color3.fromRGB(96, 205, 255)
+    -- })
+
+    -- Colorpicker:OnChanged(function()
+    --     print("Colorpicker changed:", Colorpicker.Value)
+    -- end)
+    
+    -- Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+
+
+    -- local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+    --     Title = "Colorpicker",
+    --     Description = "but you can change the transparency.",
+    --     Transparency = 0,
+    --     Default = Color3.fromRGB(96, 205, 255)
+    -- })
+
+    -- TColorpicker:OnChanged(function()
+    --     print(
+    --         "TColorpicker changed:", TColorpicker.Value,
+    --         "Transparency:", TColorpicker.Transparency
+    --     )
+    -- end)
+
+
+
+    -- local Keybind = Tabs.Main:AddKeybind("Keybind", {
+    --     Title = "KeyBind",
+    --     Mode = "Toggle", -- Always, Toggle, Hold
+    --     Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+    --     -- Occurs when the keybind is clicked, Value is `true`/`false`
+    --     Callback = function(Value)
+    --         print("Keybind clicked!", Value)
+    --     end,
+
+    --     -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+    --     ChangedCallback = function(New)
+    --         print("Keybind changed!", New)
+    --     end
+    -- })
+
+    -- OnClick is only fired when you press the keybind and the mode is Toggle
+    -- Otherwise, you will have to use Keybind:GetState()
+    -- Keybind:OnClick(function()
+    --     print("Keybind clicked:", Keybind:GetState())
+    -- end)
+
+    -- Keybind:OnChanged(function()
+    --     print("Keybind changed:", Keybind.Value)
+    -- end)
+
+    -- local Input = Tabs.Main:AddInput("Input", {
+    --     Title = "Input",
+    --     Default = "Default",
+    --     Placeholder = "Placeholder",
+    --     Numeric = false, -- Only allows numbers
+    --     Finished = false, -- Only calls callback when you press enter
+    --     Callback = function(Value)
+    --         print("Input changed:", Value)
+    --     end
+    -- })
+
+    -- Input:OnChanged(function()
+    --     print("Input updated:", Input.Value)
+    -- end)
+
+
+-- Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system)
+
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings()
+
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
+
+Fluent:Notify({
+    Title = "Sillyware.meow",
+    Content = "Sillyware Succesfully Loaded",
+    Duration = 5 -- Set to nil to make the notification not disappear
+})
