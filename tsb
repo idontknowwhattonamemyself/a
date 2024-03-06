@@ -61,12 +61,12 @@ if a == nil then return end
 return a.Humanoid
 end
 function disableanims()
-pcall(function()
+xpcall(function()
     for i, v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
         v:Stop()
         v:Destroy()
         end
-end)
+end, warn)
 end
 function playanim(id)
     local anim = Instance.new("Animation")
@@ -151,9 +151,9 @@ end
             Title = "Force Reset",
             Description = "Resets Character (no need to wait for no combat)",
             Callback = function()
-                pcall(function()
+                xpcall(function()
                     game.Players.LocalPlayer.Character.Humanoid.Health = 0
-                end)
+                end, warn)
             end
     })
     local safeplace
@@ -161,11 +161,11 @@ end
         Title = "Set Safe Place",
         Description = "Sets your safe place so u can tp to it later!",
         Callback = function()
-            pcall(function()
+            xpcall(function()
                 if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 safeplace = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position
                 end
-            end)
+            end, warn)
         end
     })
     local Ctoggle = Tabs.Misc:AddToggle("AutoTptosafeplace", {Title = "Tp to safe place when low", Default = false })
@@ -176,12 +176,12 @@ end
     end)
     spawn(function()
         while wait() do
-        pcall(function()
+        xpcall(function()
             if  game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = safeplace
                 print(game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt)
             end
-        end)
+        end, warn)
         end
     end)
     local Slider = Tabs.Misc:AddSlider("SPHEALTH", {
@@ -192,7 +192,7 @@ end
         Max = 75,
         Rounding = 1,
         Callback = function(Value)
-            hpamt = Value
+            hpamt = tonumber(Value)
         end
     })
 
@@ -200,11 +200,11 @@ end
         Title = "Goto Safe Place",
         Description = "Teleports To Your Saved Safe Place",
         Callback = function()
-            pcall(function()
+            xpcall(function()
                 if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = CFrame.new(safeplace)
                 end
-            end)
+            end, warn)
         end
     })
     local Ctoggle = Tabs.ExploitsTab:AddToggle("CharOffset", {Title = "Character Offset", Default = false })
@@ -213,7 +213,7 @@ end
     local loaded
     Ctoggle:OnChanged(function(Value)
         co = Value
-        pcall(function()
+        xpcall(function()
         if Value == true then 
             hlight = Instance.new("Highlight")
             hlight.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -228,7 +228,7 @@ end
             v:Destroy()
             end
         end
-        end)
+        end, warn)
     end)
     local Keybind = Tabs.ExploitsTab:AddKeybind("CHAROFFSETKB", {
         Title = "KeyBind",
@@ -264,14 +264,14 @@ end
         Description = "Grab Player with scatter or any other move that grabs and press this to use manual version",
         Callback = function()
             if tpvoid == true then notify("Already Teleporting To Void...") return end
-            pcall(function()
+            xpcall(function()
                 local savedpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
                 tpvoid = true
                 wait(3)
                 tpvoid = false
                 wait(.1)
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedpos
-            end)
+            end, warn)
         end
     })
     local Keybind = Tabs.ExploitsTab:AddKeybind("NOCLIPKB", {
@@ -282,14 +282,14 @@ end
         -- Occurs when the keybind is clicked, Value is `true`/`false`
         Callback = function(Value)
             if tpvoid == true then notify("Already Teleporting To Void...") return end
-            pcall(function()
+            xpcall(function()
                 local savedpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
                 tpvoid = true
                 wait(3)
                 tpvoid = false
                 wait(.1)
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedpos
-            end)
+            end, warn)
         end,
 
         -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
@@ -311,7 +311,7 @@ end
         Title = "Bring Player",
         Description = "Brings The Player",
         Callback = function()
-            pcall(function()
+            xpcall(function()
                 local playerinst
                 if string.lower(player) ~= "Random" then
                     playerinst = game.Players:FindFirstChild(player)
@@ -352,12 +352,12 @@ end
                 else 
                     notify("Error: Scatter On Cooldown", 1)
                 end
-            end)
+            end, warn)
         end
     })
     spawn(function()
     while wait() do
-    pcall(function()
+    xpcall(function()
         if tpall == true then
         for i, v in pairs(game.Players:GetPlayers()) do
         if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
@@ -369,14 +369,14 @@ end
         if tpvoid == true then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,-49000, 0)
         end
-    end)
+    end, warn)
     end
     end)
     Tabs.ExploitsTab:AddButton({
         Title = "Kill Player",
         Description = "Kills Selected Player",
         Callback = function()
-            pcall(function()
+            xpcall(function()
                 local player
                 local playerinst
                 if string.lower(player) ~= "Random" then
@@ -416,7 +416,7 @@ end
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
                 wait(1)
                 tpvoid = false
-            end)
+            end, warn)
         end
     })
     Tabs.ExploitsTab:AddButton({
@@ -426,7 +426,7 @@ end
             if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip") then return end
             local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
             tpvoid = true
-            pcall(function()
+            xpcall(function()
                 local args = {
                     [1] = {
                         ["Goal"] = "Console Move",
@@ -434,7 +434,7 @@ end
                     }
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-            end)
+            end, warn)
             wait(6)
             disableanims()
             wait(1)
@@ -446,7 +446,7 @@ end
     spawn(function()
     while wait() do
     if killall == true then
-        pcall(function()
+        xpcall(function()
         if not moveoncd("3") then
         local savedposition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
         workspace.FallenPartsDestroyHeight = -50000
@@ -477,9 +477,7 @@ end
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
 
     end
-    end)
-    else
-        workspace.FallenPartsDestroyHeight = defaultdestroyheight
+    end, warn)
     end
     end
     end)
@@ -488,7 +486,7 @@ end
     anim.AnimationId = id
     spawn(function()
     while wait() do
-        pcall(function()
+        xpcall(function()
         if co == true then
         loaded = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(anim)
         loaded.Priority = Enum.AnimationPriority.Action4
@@ -496,7 +494,7 @@ end
         loaded.TimePosition = 4
         loaded:AdjustSpeed(0)
         end
-        end)
+        end, warn)
     end
     end)
     local esp = false
