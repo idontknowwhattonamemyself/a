@@ -645,9 +645,7 @@ end
         while wait() do
             for i, v in pairs(game.Players:GetPlayers()) do 
             pcall(function()
-            if plr.Backpack and plr.Backpack:FindFirstChild("Death Counter") and not table.find(foundcounters, plr.Backpack["Death Counter"]) and saitamault == true then
-                table.insert(foundcounters, plr.Backpack["Death Counter"])
-                if saitamault then
+                if v.Backpack and v.Backpack:FindFirstChild("Death Counter") and saitamault then
                     local highlight = Instance.new("Highlight")
                     highlight.Parent = plr.Character
                     highlight.OutlineColor = Color3.fromRGB(0,0,255)
@@ -657,9 +655,8 @@ end
                     end)
                 end
                 if notifydc then
-                notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Saitama Ultimate")
-                end 
-            end
+                    notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Death Counter")
+                    end 
             end)
             end
         end
