@@ -249,6 +249,20 @@ end
             notify("Please Equip Sonic Base Form (Deadly Ninja)", 1)
         end
     end)
+    Tabs.ExploitsTab:AddButton({
+        Title = "Manual Kill Player",
+        Description = "Grab Player with scatter or any other move that grabs and press this to use manual version",
+        Callback = function()
+            pcall(function()
+                local savedpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                tpvoid = true
+                wait(3)
+                tpvoid = false
+                wait(.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedpos
+            end)
+        end
+    })
     local player = ""
     local Input = Tabs.ExploitsTab:AddInput("Input", {
         Title = "Player Username",
