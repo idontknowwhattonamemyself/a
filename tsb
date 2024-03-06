@@ -441,7 +441,7 @@ end
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
             end, warn)
-            wait(6)
+            wait(5)
             disableanims()
             wait(1)
             tpvoid = false
