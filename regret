@@ -165,6 +165,12 @@ game:GetService("RunService").RenderStepped:Connect(function()
             v.CanCollide = false
             end
         end
+    else
+        for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
+            v.CanCollide = true
+            end
+        end
     end
 end)
 local Slider = Tabs.Main:AddSlider("FSPEED", {
