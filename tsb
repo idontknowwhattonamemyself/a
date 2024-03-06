@@ -670,22 +670,22 @@ end
     spawn(function()
         while wait() do
             for i, v in pairs(game.Players:GetPlayers()) do 
-            pcall(function()
-                if v.Backpack and v.Backpack:FindFirstChild("Death Counter") and saitamault and not table.find(jgiojgoaj, v.Backpack["Death Counter"]) then
+            xpcall(function()
+                if v.Backpack and v.Backpack:FindFirstChild("Death Counter") and saitamault and not table.find(jgiojgoaj, v.Backpack:FindFirstChild("Death Counter")) then
                     table.insert(jgiojgoaj, v.Backpack["Death Counter"])
                     local highlight = Instance.new("Highlight")
                     highlight.Parent = v.Character
                     highlight.OutlineColor = Color3.fromRGB(0,0,255)
-                    v.FillColor = Color3.fromRGB(0,0,255)
+                    highlight.FillColor = Color3.fromRGB(0,0,255)
                     spawn(function()
                     v.Backpack["Death Counter"]:GetPropertyChangedSignal("Parent"):Wait()
                     highlight:Destroy()
                     end)
                     if notifydc then
-                        notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Death Counter")
+                        notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Saitama Ult")
                         end 
                 end
-            end)
+            end, warn)
             end
         end
         end)
