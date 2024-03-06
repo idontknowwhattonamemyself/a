@@ -393,6 +393,26 @@ end
             espLib:Unload()
         end
     end)
+    local Toggle = Tabs.Main:AddToggle("NCLIP", {Title = "Noclip", Default = false })
+    local noclip = false
+    Toggle:OnChanged(function(Value)
+        noclip = Value
+    end)
+    
+    local Keybind = Tabs.Main:AddKeybind("NOCLIPKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "Z", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            Options.NCLIP:SetValue(not noclip)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+        end
+    })
     local Toggle = Tabs.Main:AddToggle("FLYTOG", {Title = "Fly", Default = false })
     local fly = false
     local speed = 150
@@ -405,6 +425,15 @@ end
                 game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed) + Vector3.new(0,speed,0)    
             else 
                 game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed)   
+            end
+        end
+    end)
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if noclip == true then 
+            for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                v.CanCollide = false
+                end
             end
         end
     end)
