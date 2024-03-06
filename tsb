@@ -603,11 +603,11 @@ end
     Toggle:OnChanged(function(Value)
         showdc = Value
     end)
-    local Toggle = Tabs.Main:AddToggle("SHOWSU", {Title = "Show Saitama Ult", Default = true })
-    local saitamault = true
-    Toggle:OnChanged(function(Value)
-        saitamault = Value
-    end)
+    --local Toggle = Tabs.Main:AddToggle("SHOWSU", {Title = "Show Saitama Ult", Default = true })
+    -- local saitamault = true
+    -- Toggle:OnChanged(function(Value)
+    --     saitamault = Value
+    -- end)
     local Toggle = Tabs.Main:AddToggle("NotifyDC", {Title = "Notify", Default = true })
     local notifydc = true
     Toggle:OnChanged(function(Value)
@@ -640,17 +640,17 @@ end
     end)
     local jgiojgoaj = {}
     spawn(function()
-        pcall(function()
         while wait() do
             for i, v in pairs(game.Players:GetPlayers()) do 
             pcall(function()
                 if v.Backpack and v.Backpack:FindFirstChild("Death Counter") and saitamault and not table.find(jgiojgoaj, v.Backpack["Death Counter"]) then
                     table.insert(jgiojgoaj, v.Backpack["Death Counter"])
                     local highlight = Instance.new("Highlight")
-                    highlight.Parent = plr.Character
+                    highlight.Parent = v.Character
                     highlight.OutlineColor = Color3.fromRGB(0,0,255)
+                    v.FillColor = Color3.fromRGB(0,0,255)
                     spawn(function()
-                    plr.Backpack["Death Counter"]:GetPropertyChangedSignal("Parent"):Wait()
+                    v.Backpack["Death Counter"]:GetPropertyChangedSignal("Parent"):Wait()
                     highlight:Destroy()
                     end)
                     if notifydc then
@@ -660,7 +660,6 @@ end
             end)
             end
         end
-    end)
         end)
     spawn(function()
         while wait() do
