@@ -466,14 +466,15 @@ end
         end)
     end
     end)
-
+    local esp = false
     local Toggle = Tabs.Main:AddToggle("ESPTOG", {Title = "ESP", Default = false })
     Toggle:OnChanged(function(Value)
         if Value == true then
             espLib:Load()
-        else
+        elseif esp == true then
             espLib:Unload()
         end
+        esp = Value
     end)
     local Toggle = Tabs.Main:AddToggle("NCLIP", {Title = "Noclip", Default = false })
     local noclip = false
