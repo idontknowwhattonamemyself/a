@@ -640,12 +640,14 @@ end
         end
     end
     end)
+    local jgiojgoaj = {}
     spawn(function()
         pcall(function()
         while wait() do
             for i, v in pairs(game.Players:GetPlayers()) do 
             pcall(function()
-                if v.Backpack and v.Backpack:FindFirstChild("Death Counter") and saitamault then
+                if v.Backpack and v.Backpack:FindFirstChild("Death Counter") and saitamault and not table.find(jgiojgoaj, v.Backpack["Death Counter"]) then
+                    table.insert(jgiojgoaj, v.Backpack["Death Counter"])
                     local highlight = Instance.new("Highlight")
                     highlight.Parent = plr.Character
                     highlight.OutlineColor = Color3.fromRGB(0,0,255)
@@ -653,10 +655,10 @@ end
                     plr.Backpack["Death Counter"]:GetPropertyChangedSignal("Parent"):Wait()
                     highlight:Destroy()
                     end)
+                    if notifydc then
+                        notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Death Counter")
+                        end 
                 end
-                if notifydc then
-                    notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Death Counter")
-                    end 
             end)
             end
         end
