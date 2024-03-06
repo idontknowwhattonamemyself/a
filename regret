@@ -122,7 +122,7 @@ while wait(1.5) do
     end
 end
 end)
-local Toggle = Tabs.Main:AddToggle("NCLIP", {Title = "Noclip", Default = false })
+local NOCLIPTOG = Tabs.Main:AddToggle("NCLIP", {Title = "Noclip", Default = false })
 local noclip = false
 Toggle:OnChanged(function(Value)
     noclip = Value
@@ -135,14 +135,14 @@ local Keybind = Tabs.Main:AddKeybind("NOCLIPKB", {
 
     -- Occurs when the keybind is clicked, Value is `true`/`false`
     Callback = function(Value)
-        Options.NCLIP:SetValue(not noclip)
+        NOCLIPTOG:SetValue(not noclip)
     end,
 
     -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
     ChangedCallback = function(New)
     end
 })
-local Toggle = Tabs.Main:AddToggle("FLYTOG", {Title = "Fly", Default = false })
+local FLY = Tabs.Main:AddToggle("FLYTOG", {Title = "Fly", Default = false })
 local fly = false
 local speed = 150
 Toggle:OnChanged(function(Value)
@@ -193,7 +193,7 @@ local Keybind = Tabs.Main:AddKeybind("FLYKB", {
 
     -- Occurs when the keybind is clicked, Value is `true`/`false`
     Callback = function(Value)
-        Options.FLYTOG:SetValue(not fly)
+        FLY:SetValue(not fly)
     end,
 
     -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
