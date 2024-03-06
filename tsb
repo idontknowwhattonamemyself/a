@@ -365,7 +365,7 @@ end
     end)
     Tabs.ExploitsTab:AddButton({
         Title = "Kill Player",
-        Description = "Brings The Player",
+        Description = "Kills Selected Player",
         Callback = function()
             pcall(function()
                 local player
@@ -415,6 +415,8 @@ end
         Description = "sum1 leaked this so like yea",
         Callback = function()
             if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip") then return end
+            local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            tpvoid = true
             pcall(function()
                 local args = {
                     [1] = {
@@ -424,6 +426,9 @@ end
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
             end)
+            tpvoid = false
+            wait(.1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
         end
     })
     Tabs.ExploitsTab:AddButton({
@@ -433,6 +438,8 @@ end
             if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Serious Punch") then return end
 
             pcall(function()
+                local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                tpvoid = true
                 local args = {
                     [1] = {
                         ["Goal"] = "Console Move",
@@ -440,6 +447,10 @@ end
                     }
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+                wait(2)
+                tpvoid = false
+                wait(.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
             end)
         end
     })
@@ -448,7 +459,8 @@ end
         Description = "sum1 leaked this so like yea",
         Callback = function()
             if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Omni Directional Punch") then return end
-
+            local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            tpvoid = true
             pcall(function()
                 local args = {
                     [1] = {
@@ -458,6 +470,9 @@ end
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
             end)
+            tpvoid = false
+            wait(.1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
         end
     })
     spawn(function()
