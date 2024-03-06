@@ -489,7 +489,7 @@ end
     Toggle:OnChanged(function(Value)
         showdc = Value
     end)
-    local Toggle = Tabs.Main:AddToggle("SHOWDC", {Title = "Show Saitama Ult", Default = true })
+    local Toggle = Tabs.Main:AddToggle("SHOWSU", {Title = "Show Saitama Ult", Default = true })
     local saitamault = true
     Toggle:OnChanged(function(Value)
         saitamault = Value
@@ -525,6 +525,7 @@ end
     end
     end)
     spawn(function()
+        pcall(function()
         while wait() do
             for i, v in pairs(game.Players:GetPlayers()) do 
             pcall(function()
@@ -546,6 +547,7 @@ end
             end)
             end
         end
+    end)
         end)
     spawn(function()
         while wait() do
