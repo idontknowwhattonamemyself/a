@@ -460,7 +460,7 @@ end
         game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
         wait(.25)
         tpall = true
-        wait(1.25)
+        wait(.75)
         tpall = false
         tpvoid = true
         game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
