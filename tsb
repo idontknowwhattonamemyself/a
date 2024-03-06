@@ -251,9 +251,10 @@ end
         end
     end)
     Tabs.ExploitsTab:AddButton({
-        Title = "Manual Kill Player",
+        Title = "Manual Void Player",
         Description = "Grab Player with scatter or any other move that grabs and press this to use manual version",
         Callback = function()
+            if tpvoid == true then notify("Already Teleporting To Void...") return end
             pcall(function()
                 local savedpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
                 tpvoid = true
@@ -262,6 +263,28 @@ end
                 wait(.1)
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedpos
             end)
+        end
+    })
+    local Keybind = Tabs.ExploitsTab:AddKeybind("NOCLIPKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "J", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            if tpvoid == true then notify("Already Teleporting To Void...") return end
+            pcall(function()
+                local savedpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                tpvoid = true
+                wait(3)
+                tpvoid = false
+                wait(.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedpos
+            end)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
         end
     })
     local player = ""
@@ -461,7 +484,7 @@ end
     local Keybind = Tabs.Main:AddKeybind("NOCLIPKB", {
         Title = "KeyBind",
         Mode = "Toggle", -- Always, Toggle, Hold
-        Default = "Z", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+        Default = "N", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
 
         -- Occurs when the keybind is clicked, Value is `true`/`false`
         Callback = function(Value)
