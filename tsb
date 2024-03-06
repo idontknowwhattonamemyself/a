@@ -5,6 +5,7 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/idontknowwhattonamemyself/modified/Lua/new'),true))()
 espLib.chams = false
 espLib.boxesColor = Color3.new(255,255,255)
+
 local anims = {
     ["Pumped Up"] = "rbxassetid://14733282425",
     ["Brutal Beatdown"] = "rbxassetid://14701242661", 
@@ -90,7 +91,7 @@ local Tabs = {
 }
 
 local Options = Fluent.Options
-
+workspace.FallenPartsDestroyHeight = -50000
 function notify(text, length)
     Fluent:Notify({
         Title = "Sillyware.meow",
@@ -354,7 +355,6 @@ end
                 if not playerinst then notify("Cant Find Player: ".. player) return end
 
                 local savedposition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                workspace.FallenPartsDestroyHeight = -50000
                 local args = {
                     [1] = {
                         ["Goal"] = "Console Move",
