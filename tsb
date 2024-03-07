@@ -26,6 +26,59 @@ local stunnames = {
 "Slowed",
 "ComboStun",
 }
+xpcall(function()
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+local Template = Instance.new("TextLabel")
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 1.000
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.46044305, 0, 0.551829278, 0)
+Frame.Size = UDim2.new(0.079113923, 0, 0.152439028, 0)
+UIListLayout.Parent = Frame
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+Template.Name = "Template"
+Template.Parent = Frame
+Template.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Template.BackgroundTransparency = 1.000
+Template.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Template.BorderSizePixel = 0
+Template.Size = UDim2.new(0.997099638, 0, 0.159999996, 0)
+Template.Visible = false
+Template.Font = Enum.Font.SourceSans
+Template.Text = "[Sillyware] Killed Player!"
+Template.TextColor3 = Color3.fromRGB(255, 255, 255)
+Template.TextScaled = true
+Template.TextSize = 14.000
+Template.TextStrokeTransparency = 0.600
+Template.TextTransparency = 1.000
+Template.TextWrapped = true
+local function Init()
+	local template = Frame.Template
+    game.Players.LocalPlayer:WaitForChild("leaderstats")["Total Kills"].Changed:Connect(function()
+    local clone = template:Clone()
+		clone.Parent = Frame
+		clone.Visible = true
+		clone.Transparency = 1
+		local ts = game:GetService("TweenService")
+		local tweena = ts:Create(clone, TweenInfo.new(.5, Enum.EasingStyle.Linear), {TextTransparency = 0})
+		tweena:Play()
+		tweena.Completed:Wait()
+		wait(2)
+		local tweenb = ts:Create(clone, TweenInfo.new(1, Enum.EasingStyle.Linear), {TextTransparency = 1})
+		tweenb:Play()
+		tweenb.Completed:Wait()
+		template:Destroy()
+	end
+    end)
+end
+coroutine.wrap(Init)()
+end, warn)
 local Window = Fluent:CreateWindow({
     Title = "Sillyware",
     SubTitle = "UI Version: "..Fluent.Version,
