@@ -169,7 +169,6 @@ end
                 
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
                 wait(.5)
-                notify("Rolled Emote!")
             end
         end, warn)
         end
