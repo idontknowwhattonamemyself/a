@@ -11,6 +11,8 @@ Sense.teamSettings.enemy.name = false
 Sense.teamSettings.enemy.weapon = false
 Sense.teamSettings.enemy.boxColor[1] = Color3.fromRGB(255,0,255)
 Sense.Load()
+-- config stuff
+local tpall = false
 local anims = {
     ["Pumped Up"] = "rbxassetid://14733282425",
     ["Brutal Beatdown"] = "rbxassetid://14701242661", 
@@ -88,6 +90,7 @@ local Window = Fluent:CreateWindow({
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
 })
+
 function getchar(plr)
     local char
     if plr.Character ~= nil and plr:FindFirstChild("HumanoidRootPart") and plr:FindFirstChild("Humanoid") then
@@ -203,7 +206,59 @@ end
     --         })
     --     end
     -- })
+    local fling = false
 
+    xpcall(function()
+    --[[
+------------------------------------
+Credits to Infinite Yield For Fling (i coulda made it but like infinite yield already made it so like uhh yea)
+------------------------------------
+--]]
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+if fling == true then
+local bv = Instance.new("BodyAngularVelocity")
+bv.Name = "Hello TSB devs, it would be so kind of you to not ban me for inserting this!"
+bv.Parent = getRoot(game.Players.LocalPlayer.Character)
+bv.AngularVelocity = Vector3.new(0,99999,0)
+bv.MaxTorque = Vector3.new(0,math.huge,0)
+bv.P = math.huge
+for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+	if v:IsA("BasePart") then
+		v.CanCollide = false
+		v.Massless = true
+		v.Velocity = Vector3.new(0, 0, 0)
+	end
+end
+repeat
+	bv.AngularVelocity = Vector3.new(0,99999,0)
+	wait(.2)
+	bv.AngularVelocity = Vector3.new(0,0,0)
+	wait(.1)
+until fling == false or bv == nil
+end
+end)
+function enablefling()
+local bv = Instance.new("BodyAngularVelocity")
+bv.Name = "Hello TSB devs, it would be so kind of you to not ban me for inserting this!"
+bv.Parent = getRoot(game.Players.LocalPlayer.Character)
+bv.AngularVelocity = Vector3.new(0,99999,0)
+bv.MaxTorque = Vector3.new(0,math.huge,0)
+bv.P = math.huge
+for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+	if v:IsA("BasePart") then
+		v.CanCollide = false
+		v.Massless = true
+		v.Velocity = Vector3.new(0, 0, 0)
+	end
+end
+repeat
+	bv.AngularVelocity = Vector3.new(0,99999,0)
+	wait(.2)
+	bv.AngularVelocity = Vector3.new(0,0,0)
+	wait(.1)
+until fling == false or bv == nil
+end
+    end, warn)
     local Ctoggle = Tabs.Misc:AddToggle("AUTOROLL", {Title = "Auto Roll Emote", Default = false })
     local autoroll = false
     Ctoggle:OnChanged(function(Value)
@@ -681,6 +736,21 @@ end
         ChangedCallback = function(New)
         end
     })
+    xpcall(function()
+    local Toggle = Tabs.Main:AddToggle("FLING", {Title = "Fling", Default = false })
+    Toggle:OnChanged(function(Value)
+        fling = Value
+        if Value == true then enablefling() end
+    end)
+    end, warn)
+    xpcall(function()
+        local Toggle = Tabs.Main:AddToggle("FLINGALL", {Title = "Fling All", Default = false })
+        Toggle:OnChanged(function(Value)
+            fling = true
+            if Value == true then tpall = true enablefling() end
+            if Value == false then tpall = false end
+        end)
+        end, warn)
     local Toggle = Tabs.Main:AddToggle("NOSTUN", {Title = "No Stun", Default = false })
     local nostun = false
     local Cutscenes = {
