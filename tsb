@@ -2,8 +2,7 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-local Sense = loadstring(game:HttpGet(
-    'https://raw.githubusercontent.com/idontknowwhattonamemyself/modified/Lua/new'))()
+local Sense = loadstring(game:HttpGet('https://raw.githubusercontent.com/idontknowwhattonamemyself/modified/Lua/new'))()
 Sense.teamSettings.enemy.enabled = false
 Sense.teamSettings.enemy.box = false
 Sense.teamSettings.enemy.healthBar = true
@@ -306,9 +305,12 @@ end
                 }
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
             end, warn)
-            wait(5)
+            wait(1)
+            disableanims()
+            wait(3)
             disableanims()
             wait(1)
+            disableanims()
             tpvoid = false
             wait(.1)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
