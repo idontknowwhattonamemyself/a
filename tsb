@@ -168,7 +168,6 @@ end
                 }
                 
                 game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-                wait(.5)
             end
         end, warn)
         end
