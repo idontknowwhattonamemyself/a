@@ -849,7 +849,7 @@ end
         while wait() do
             if game.Players.LocalPlayer.Character then 
                 for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
-                    if table.find(stunnames, v.Name) then 
+                    if table.find(stunnames, v.Name) and nostun == true then 
                         v:Destroy()
                     end
                 end
