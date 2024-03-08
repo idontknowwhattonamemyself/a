@@ -742,12 +742,22 @@ end
         if Value == true then enablefling() end
     end)
     end, warn)
+    local flingall = false
     xpcall(function()
         local Toggle = Tabs.Main:AddToggle("FLINGALL", {Title = "Fling All", Default = false })
         Toggle:OnChanged(function(Value)
-            fling = true
-            if Value == true then tpall = true enablefling() end
-            if Value == false then tpall = false end
+            flingall = Value
+            for i, v in pairs(game.Players:GetPlayers()) do
+                if v.Character and v.Character.HumanoidRootPart and flingall then
+                local con = game:GetService("RunService").RenderStepped:Connect(function()
+                    if flingall == false then con:Disconnect() end
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + (v.Character.Humanoid.MoveDirection * (game.Players.LocalPlayer:GetNetworkPing() * 100))
+                end)
+                local timer = 0
+                repeat wait(.01) timer += 1 until timer >= 200 or flingall == false
+                con:Disconnect()
+                end
+                end
         end)
         end, warn)
     local Toggle = Tabs.Main:AddToggle("NOSTUN", {Title = "No Stun", Default = false })
