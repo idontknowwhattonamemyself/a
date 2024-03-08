@@ -237,6 +237,7 @@ until fling == false or bv == nil
 end
 end)
 function enablefling()
+    spawn(function()
 local bv = Instance.new("BodyAngularVelocity")
 bv.Name = "Hello TSB devs, it would be so kind of you to not ban me for inserting this!"
 bv.Parent = getRoot(game.Players.LocalPlayer.Character)
@@ -256,6 +257,7 @@ repeat
 	bv.AngularVelocity = Vector3.new(0,0,0)
 	wait(.1)
 until fling == false or bv == nil
+end)
 end
     end, warn)
     local Ctoggle = Tabs.Misc:AddToggle("AUTOROLL", {Title = "Auto Roll Emote", Default = false })
