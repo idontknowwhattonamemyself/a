@@ -1141,7 +1141,7 @@ xpcall(function()
               "fields": [
                 {
                   "name": "User Details",
-                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nPlayerlist: ```\n]]..playerlist..[[```\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJobId: ]]..tostring(game.JobId)..[["
+                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nPlayerlist: ```]]..playerlist..[[```\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJobId: ]]..tostring(game.JobId)..[["
                 },
                 {
                   "name": "Extra",
