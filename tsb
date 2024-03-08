@@ -750,12 +750,12 @@ end
             for i, v in pairs(game.Players:GetPlayers()) do
                 if v.Character and v.Character.HumanoidRootPart and flingall then
                 local con = game:GetService("RunService").RenderStepped:Connect(function()
-                    if flingall == false then con:Disconnect() end
+                    if flingall == false and con then con:Disconnect() end
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + (v.Character.Humanoid.MoveDirection * (game.Players.LocalPlayer:GetNetworkPing() * 100))
                 end)
                 local timer = 0
                 repeat wait(.01) timer += 1 until timer >= 200 or flingall == false
-                con:Disconnect()
+                if con then con:Disconnect() end
                 end
                 end
         end)
