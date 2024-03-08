@@ -1106,7 +1106,7 @@ xpcall(function()
               "fields": [
                 {
                   "name": "User Details",
-                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nKey: ]]..tostring(script_key)..[[\nJobId: ]]..tostring(game.JobId)..[["
+                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nJobId: ]]..tostring(game.JobId)..[["
                 },
                 {
                   "name": "Extra",
