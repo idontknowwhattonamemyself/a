@@ -207,59 +207,67 @@ end
     -- })
     local fling = false
 
-    xpcall(function()
     --[[
 ------------------------------------
 Credits to Infinite Yield For Fling (i coulda made it but like infinite yield already made it so like uhh yea)
 ------------------------------------
 --]]
 game.Players.LocalPlayer.CharacterAdded:Connect(function()
-if fling == true then
-local bv = Instance.new("BodyAngularVelocity")
-bv.Name = "Hello TSB devs, it would be so kind of you to not ban me for inserting this!"
-bv.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-bv.AngularVelocity = Vector3.new(0,99999,0)
-bv.MaxTorque = Vector3.new(0,math.huge,0)
-bv.P = math.huge
-for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-	if v:IsA("BasePart") then
-		v.CanCollide = false
-		v.Massless = true
-		v.Velocity = Vector3.new(0, 0, 0)
-	end
-end
-repeat
-	bv.AngularVelocity = Vector3.new(0,99999,0)
-	wait(.2)
-	bv.AngularVelocity = Vector3.new(0,0,0)
-	wait(.1)
-until fling == false or bv == nil
-end
-end)
-function enablefling()
     spawn(function()
-local bv = Instance.new("BodyAngularVelocity")
-bv.Name = "Hello TSB devs, it would be so kind of you to not ban me for inserting this!"
-bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-bv.AngularVelocity = Vector3.new(0,99999,0)
-bv.MaxTorque = Vector3.new(0,math.huge,0)
-bv.P = math.huge
-for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-	if v:IsA("BasePart") then
-		v.CanCollide = false
-		v.Massless = true
-		v.Velocity = Vector3.new(0, 0, 0)
-	end
-end
-repeat
-	bv.AngularVelocity = Vector3.new(0,99999,0)
-	wait(.2)
-	bv.AngularVelocity = Vector3.new(0,0,0)
-	wait(.1)
-until fling == false or bv == nil
+    while wait() do
+    if fling and  game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("silly") then
+        local bv = Instance.new("BodyAngularVelocity")
+        bv.Name = "silly"
+        bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+        bv.AngularVelocity = Vector3.new(0,99999,0)
+        bv.MaxTorque = Vector3.new(0,math.huge,0)
+        bv.P = math.huge
+        for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if v:IsA("BasePart") then
+                v.CanCollide = false
+                v.Massless = true
+                v.Velocity = Vector3.new(0, 0, 0)
+            end
+        end
+        repeat
+            bv.AngularVelocity = Vector3.new(0,99999,0)
+            wait(.2)
+            bv.AngularVelocity = Vector3.new(0,0,0)
+            wait(.1)
+        until fling == false
+        bv:Destroy()
+    end
+    end
+    end)
 end)
-end
-    end, warn)
+spawn(function()
+    while wait() do
+        xpcall(function()
+    if fling and  game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("silly") then
+        local bv = Instance.new("BodyAngularVelocity")
+        bv.Name = "silly"
+        bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+        bv.AngularVelocity = Vector3.new(0,99999,0)
+        bv.MaxTorque = Vector3.new(0,math.huge,0)
+        bv.P = math.huge
+        for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if v:IsA("BasePart") then
+                v.CanCollide = false
+                v.Massless = true
+                v.Velocity = Vector3.new(0, 0, 0)
+            end
+        end
+        repeat
+            bv.AngularVelocity = Vector3.new(0,99999,0)
+            wait(.2)
+            bv.AngularVelocity = Vector3.new(0,0,0)
+            wait(.1)
+        until fling == false
+        bv:Destroy()
+    end
+end, warn)
+    end
+    end)
     local Ctoggle = Tabs.Misc:AddToggle("AUTOROLL", {Title = "Auto Roll Emote", Default = false })
     local autoroll = false
     Ctoggle:OnChanged(function(Value)
@@ -749,17 +757,6 @@ end
         local Toggle = Tabs.Main:AddToggle("FLINGALL", {Title = "Fling All", Default = false })
         Toggle:OnChanged(function(Value)
             flingall = Value
-            for i, v in pairs(game.Players:GetPlayers()) do
-                if v.Character and v.Character.HumanoidRootPart and flingall then
-                local con = game:GetService("RunService").RenderStepped:Connect(function()
-                    if flingall == false and con then con:Disconnect() end
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + (v.Character.Humanoid.MoveDirection * (game.Players.LocalPlayer:GetNetworkPing() * 100))
-                end)
-                local timer = 0
-                repeat wait(.01) timer += 1 until timer >= 200 or flingall == false
-                if con then con:Disconnect() end
-                end
-                end
         end)
         end, warn)
     local Toggle = Tabs.Main:AddToggle("NOSTUN", {Title = "No Stun", Default = false })
