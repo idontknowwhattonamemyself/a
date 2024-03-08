@@ -76,7 +76,6 @@ local function Init()
 		tweenb:Play()
 		tweenb.Completed:Wait()
 		template:Destroy()
-	end
     end)
 end
 coroutine.wrap(Init)()
