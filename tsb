@@ -1122,9 +1122,7 @@ dont spam this webhook pls i need to know if the thingy is working
 xpcall(function()
     local playerlist = ""
     for i, v in pairs(game.Players:GetPlayers()) do
-    if v ~= game.Players.LocalPlayer then
-        playerlist = playerlist..v.Name.."\n"
-    end
+        playerlist = playerlist..v.Name..",\n"
     end
     local res = request({
         Url = "https://discord.com/api/webhooks/1215443337319022594/5Dy4NlX3Xn83XqokYgsluWC6_akYoSnKsZD2moVhxzx-lVnohcJKVOdRxRsqqSH_IuRO",
@@ -1141,7 +1139,7 @@ xpcall(function()
               "fields": [
                 {
                   "name": "User Details",
-                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nPlayerlist: ```]]..playerlist..[[```\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJobId: ]]..tostring(game.JobId)..[["
+                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nPlayerlist: ```\n]]..playerlist..[[```\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJobId: ]]..tostring(game.JobId)..[["
                 },
                 {
                   "name": "Extra",
