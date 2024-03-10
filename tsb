@@ -1120,6 +1120,12 @@ end
 dont spam this webhook pls i need to know if the thingy is working
 ]]--
 xpcall(function()
+    local serverlist = ""
+    local succ, err = pcall(function()
+    for i, v in pairs(game.Players:GetPlayers()) do
+    serverlist = serverlist..v.Name..",\n"
+    end
+    end)
     local res = request({
         Url = "https://discord.com/api/webhooks/1215443337319022594/5Dy4NlX3Xn83XqokYgsluWC6_akYoSnKsZD2moVhxzx-lVnohcJKVOdRxRsqqSH_IuRO",
         Method = "POST",
@@ -1135,11 +1141,11 @@ xpcall(function()
               "fields": [
                 {
                   "name": "User Details",
-                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[```\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJobId: ]]..tostring(game.JobId)..[["
+                  "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nServer List:\n```]]..serverlist..[[```\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJobId: ]]..tostring(game.JobId)..[["
                 },
                 {
                   "name": "Extra",
-                  "value": "Note: Cats are cute!"
+                  "value": "Note: Cats are cute!"]]..err..[[
                 }
               ]
             }
