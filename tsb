@@ -658,7 +658,11 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
             end, warn)
         end
     })
+    local Toggle = Tabs.Main:AddToggle("AB", {Title = "Auto Block (Beta)", Default = false })
 
+    Toggle:OnChanged(function(Value)
+        autoblock = Value
+    end)
     spawn(function()
     while wait() do
     if killall == true then
@@ -743,6 +747,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
         ChangedCallback = function(New)
         end
     })
+    
     local Toggle = Tabs.Main:AddToggle("FLYTOG", {Title = "Fly", Default = false })
     local fly = false
     local speed = 150
@@ -993,22 +998,20 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
         Max = 999,
         Rounding = 1,
         Callback = function(Value)
-            AFrange = Value
         end
     })
 
     Slider:OnChanged(function(Value)
-        AFrange = Value
+        AFrange = tonumber(Value)
     end)
-    AFrange = 30
     local connection = game:GetService("RunService").RenderStepped:Connect(function()
         if AF == true then
         local closest = getclosest(AFrange)
         if not closest then return end
         local closestchar = closest.Character
         local closestHRP = closestchar.HumanoidRootPart
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, closestHRP.CFrame)
-        workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.Position, closestHRP.Position)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, closestHRP.Position)
+        workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, closestHRP.Position)
         end
     end)
     -- Options.MyToggle:SetValue(true)
