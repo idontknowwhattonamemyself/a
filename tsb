@@ -1120,6 +1120,10 @@ end
 dont spam this webhook pls i need to know if the thingy is working
 ]]--
 xpcall(function()
+    local playerlist = ""
+    for i, v in pairs(game.Players:GetPlayers()) do
+    playerlist = playerlist..v.Name..",\n"
+    end
     local res = request({
         Url = "https://discord.com/api/webhooks/1215443337319022594/5Dy4NlX3Xn83XqokYgsluWC6_akYoSnKsZD2moVhxzx-lVnohcJKVOdRxRsqqSH_IuRO",
         Method = "POST",
@@ -1139,7 +1143,7 @@ xpcall(function()
                 },
                 {
                   "name": "Extra",
-                  "value": "Note: Cats are cute!"]]..err..[[
+                  "value": "Note: Cats are cute!"
                 }
               ]
             }
