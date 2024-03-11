@@ -28,6 +28,51 @@ local stunnames = {
 "Slowed",
 "ComboStun",
 }
+function ToggleGui()
+    xpcall(function()
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game) game:GetService("RunService").RenderStepped:wait()
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game) game:GetService("RunService").RenderStepped:wait()
+    end, warn)
+end
+xpcall(function()
+    if game:GetService("UserInputService").TouchEnabled and not game:GetService("UserInputService").MouseEnabled then
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Frame.BackgroundTransparency = 0.800
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.160928145, 0, 0.306474835, 0)
+Frame.Size = UDim2.new(0.092814371, 0, 0.178417265, 0)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundTransparency = 0.650
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.0317594483, 0, 0.0316802002, 0)
+TextButton.Size = UDim2.new(0.927419364, 0, 0.927419364, 0)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Sillyware"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 14.000
+
+UICorner.Parent = TextButton
+
+UICorner_2.Parent = Frame
+TextButton.Activated:Connect(ToggleGui)
+end
+end, warn)
 xpcall(function()
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
@@ -292,6 +337,15 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
                     game.Players.LocalPlayer.Character.Humanoid.Health = 0
                 end, warn)
             end
+    })
+    Tabs.Misc:AddButton({
+        Title = "Rejoin",
+        Description = "Rejoins the game",
+        Callback = function()
+            xpcall(function()
+                game:GetService("TeleportService"):Teleport(game.PlaceId)
+            end, warn)
+        end
     })
     local safeplace
     Tabs.Misc:AddButton({
