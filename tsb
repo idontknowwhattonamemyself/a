@@ -1,4 +1,4 @@
-repeat wait() until game:IsLoaded()
+
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
@@ -878,9 +878,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     local AF = false
     local AFrange = 30
     Toggle:OnChanged(function(Value)
-        AB = Value
-        wait(.1)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,10,0)
+        AF = Value
     end)
 
     local Slider = Tabs.Main:AddSlider("AFRANGE", {
