@@ -90,6 +90,56 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
 })
 
+local blockstuff = {
+    "M1ing",
+    "BarrageBind",
+    "WaterPalm",
+}
+
+function block(val)
+    if val then
+    local args = {
+        [1] = {
+            ["Goal"] = "KeyPress",
+            ["Key"] = Enum.KeyCode.F
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+else
+    local args = {
+        [1] = {
+            ["Goal"] = "KeyRelease",
+            ["Key"] = Enum.KeyCode.F
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+end
+end
+local autoblock = false
+spawn(function()
+    xpcall(function()
+while wait() do
+if autoblock and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart then
+for i, v in pairs(game.Players:GetPlayers()) do
+    if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude < 10 then
+for i2, v2 in pairs(v.Character:GetDescendants()) do
+if table.find(blockstuff, v2.Name) then 
+    block(true)
+    spawn(function()
+    v2:GetPropertyChangedSignal("Parent"):Wait()
+    block(false)
+    end)
+end
+end
+end
+end
+end
+end
+end, wait)
+end)
+
 function getchar(plr)
     local char
     if plr.Character ~= nil and plr:FindFirstChild("HumanoidRootPart") and plr:FindFirstChild("Humanoid") then
