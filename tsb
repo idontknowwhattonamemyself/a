@@ -34,6 +34,7 @@ function ToggleGui()
         game:GetService("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game) game:GetService("RunService").RenderStepped:wait()
     end, warn)
 end
+
 xpcall(function()
     if game:GetService("UserInputService").TouchEnabled and not game:GetService("UserInputService").MouseEnabled then
 local ScreenGui = Instance.new("ScreenGui")
@@ -42,9 +43,62 @@ local TextButton = Instance.new("TextButton")
 local UICorner = Instance.new("UICorner")
 local UICorner_2 = Instance.new("UICorner")
 
+--// Services
+local Players = game:GetService('Players')
+local UIS = game:GetService("UserInputService")
+
+--// Variables
+local UI = Frame
+
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+local Hovered = false
+local Holding = false
+local MoveCon = nil
+
+local InitialX, InitialY, UIInitialPos
+
+--// Functions
+
+local function Drag()
+	if Holding == false then MoveCon:Disconnect(); return end
+	local distanceMovedX = InitialX - Mouse.X
+	local distanceMovedY = InitialY - Mouse.Y
+
+	UI.Position = UIInitialPos - UDim2.new(0, distanceMovedX, 0, distanceMovedY)
+end
+
+--// Connections
+
+UI.MouseEnter:Connect(function()
+	Hovered = true
+end)
+
+UI.MouseLeave:Connect(function()
+	Hovered = false
+end)
+
+UIS.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		Holding = Hovered
+		if Holding then
+			InitialX, InitialY = Mouse.X, Mouse.Y
+			UIInitialPos = UI.Position
+
+			MoveCon = Mouse.Move:Connect(Drag)
+		end
+	end
+end)
+
+UIS.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		Holding = false
+	end
+end)
 --Properties:
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = ScreenGui
