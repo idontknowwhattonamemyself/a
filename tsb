@@ -14,11 +14,42 @@ Sense.Load()
 -- config stuff
 local tpall = false
 local anims = {
-    ["Pumped Up"] = "rbxassetid://14733282425",
-    ["Brutal Beatdown"] = "rbxassetid://14701242661", 
-    ["Maximum Energy Output"] = "rbxassetid://14701242661",
+    ["Maximum Energy Output"] = "rbxassetid://12772543293",
     ["Incinerate"] = "rbxassetid://13146710762",
     ["Flamewave Cannon"] = "rbxassetid://13083332742",
+    ["Serious Mode"] = "rbxassetid://12447707844",
+    ["Omni Directional Punch"] = "rbxassetid://13927612951",
+    ["Serious Punch"] = "rbxassetid://12983333733",
+    ["Machine Gun Blows"] = "rbxassetid://12534735382",
+    ["Ignition Burst"] = "rbxassetid://12502664044",
+    ["Blitz Shot"] = "rbxassetid://12618292188",
+    ["Jet Dive"] = "rbxassetid://12684390285",
+    ["Thunder Kick"] = "rbxassetid://14721837245",
+    ["Speed Blitz Drop Kick"] = "rbxassetid://12832505612",
+    ["Death Blow"] = "rbxassetid://15128849047",
+    ["Strength Difference"] = "rbxassetid://14900168720",
+    ["Savage Tornado"] = "rbxassetid://14719290328",
+    ["Pumped Up"] = "rbxassetid://14733282425",
+    ["Brutal Beatdown"] = "rbxassetid://14701242661", 
+    ["Quick Slice"] = "rbxassetid://15290930205", 
+    ["Atmos Cleave"] = "rbxassetid://15145462680", 
+    ["Pinpoint Cut"] = "rbxassetid://15295895753", 
+    ["Split Second Counter"] = "rbxassetid://15311685628", 
+    ["Scorching Blade"] = "rbxassetid://14701242661", 
+    ["Solar Cleave"] = "rbxassetid://15676072469",
+    ["Sunrise"] = "rbxassetid://16062410809",
+    ["Atomic Slash"] = "rbxassetid://16082123712",
+    ["Flowing Water"] = "rbxassetid://12272894215",
+    ["Lethal Whirlwind Stream"] = "rbxassetid://12296882427",
+    ["Hunter's Grasp"] = "rbxassetid://12307656616",
+    ["Prey's Peril"] = "rbxassetid://12351854556",
+    ["Water Stream Rock Smashing"] = "rbxassetid://12460977270",
+    ["The Final Hunt"] = "rbxassetid://12463072679",
+    ["Rock Splitting Fist"] = "rbxassetid://14057231976",
+    ["Crushed Rock"] = "rbxassetid://13630786846",
+
+
+
 }
 local stunnames = {
 "NoBlock",
@@ -304,6 +335,7 @@ local Tabs = {
     ExploitsTab = Window:AddTab({ Title = "Exploits", Icon = "skull" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "ban" }),
     PlayEmotes = Window:AddTab({ Title = "Emotes", Icon = "laugh" }),
+    FakeMoves = Window:AddTab({ Title = "Fake Moves", Icon = "laugh" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -1234,6 +1266,17 @@ Tabs.PlayEmotes:AddButton({
         Callback = function()
             local Animation = emotesscript.GetTable()[v].Animation
             playanim("rbxassetid://"..Animation)
+        end
+})
+end)
+end
+for i, v in pairs(anims) do
+    pcall(function()
+Tabs.FakeMoves:AddButton({
+        Title = i,
+        Description = "",
+        Callback = function()
+            playanim(v)
         end
 })
 end)
