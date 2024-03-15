@@ -403,7 +403,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     spawn(function()
         while wait() do
         xpcall(function()
-            if game.Players.LocalPlayer:GetAttribute("CanBuyRandom") == true then
+            if game.Players.LocalPlayer:GetAttribute("CanBuyRandom") == true and autoroll then
                 local args = {
                     [1] = {
                         ["Goal"] = "Emote Spin"
