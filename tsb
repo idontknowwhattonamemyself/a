@@ -583,6 +583,12 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
         end
     end)
     
+    local kys = false
+    local Ctoggle = Tabs.ExploitsTab:AddToggle("FASTAFARM", {Title = "Fast Autofarm (no killstreak)", Default = false})
+    Ctoggle:OnChanged(function(Value)
+        kys = Value
+    end)
+
     Tabs.ExploitsTab:AddButton({
         Title = "Manual Void Player",
         Description = "Grab Player with scatter or any other move that grabs and press this to use manual version",
@@ -749,13 +755,18 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     Toggle:OnChanged(function(Value)
         autoblock = Value
     end)
+    
     spawn(function()
     while wait() do
     if killall == true then
         xpcall(function()
         if not moveoncd("3") then
         local savedposition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        if kys == false then
         workspace.FallenPartsDestroyHeight = -50000
+        else    
+        workspace.FallenPartsDestroyHeight = -1000
+        end
         local args = {
             [1] = {
                 ["Goal"] = "Console Move",
@@ -938,6 +949,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     end, warn)
 
     local Toggle = Tabs.Main:AddToggle("NOSTUN", {Title = "No Stun", Default = false })
+    xpcall(function()
     local nostun = false
     local Cutscenes = {
 
@@ -945,6 +957,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     for i, v in pairs(game:GetService("ReplicatedStorage").Cutscenes:GetChildren()) do 
         table.insert(Cutscenes, {["Name"] = v.Name, ["Script"] = v})
     end
+end, warn)
     Toggle:OnChanged(function(Value)
         nostun = Value
         if Value == false then 
