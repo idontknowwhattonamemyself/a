@@ -334,6 +334,7 @@ local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "skull" }),
     ExploitsTab = Window:AddTab({ Title = "Exploits", Icon = "skull" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "ban" }),
+    AutoAttack = Window:AddTab({ Title = "Auto Attack", Icon = "laugh" }),
     PlayEmotes = Window:AddTab({ Title = "Emotes", Icon = "laugh" }),
     FakeMoves = Window:AddTab({ Title = "Fake Moves", Icon = "laugh" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
@@ -400,6 +401,34 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
         autoroll = Value
     end)
     
+xpcall(function()
+    local Ctoggle = Tabs.AutoAttack:AddToggle("AM1", {Title = "Auto M1", Default = false })
+    local autom1 = false
+    Ctoggle:OnChanged(function(Value)
+        autom1 = Value
+        if Value == true then 
+        while autom1 == true do
+        wait()
+        local args = {
+            [1] = {
+                ["Goal"] = "LeftClick"
+            }
+        }
+        
+        game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+        local args = {
+            [1] = {
+                ["Goal"] = "LeftClickRelease"
+            }
+        }
+        
+        game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+        end
+        end
+    end)
+    
+end, warn)
+
     spawn(function()
         while wait() do
         xpcall(function()
@@ -761,7 +790,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     function findboss()
         local boss
         for i, v in pairs(workspace.Live:GetChildren()) do
-        if v:FindFirstChild("BossHandler") then boss = v.Parent end
+        if v:FindFirstChild("BossHandler") then boss = v end
         end
     return boss
     end
@@ -773,8 +802,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     Toggle:OnChanged(function(Value)
         tptoboss = Value
     end)
-
-    end, warn)
+end, warn)
     
     spawn(function()
     while wait() do
