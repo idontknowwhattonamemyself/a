@@ -712,10 +712,9 @@ end, warn)
                         }
                     }
                     
-                    game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-                    
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                    game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))                    
                     wait(.25)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
                     wait(.25)
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
@@ -849,7 +848,7 @@ end, warn)
         game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
         wait(.25)
         tpall = true
-        wait(.75)
+        wait(.6)
         tpall = false
         tpvoid = true
         game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
