@@ -1,0 +1,13 @@
+while wait() do
+    for i, v in pairs(game.Players:GetPlayers()) do
+        if v.Character and v ~= game.Players.LocalPlayer then 
+local args = {
+    [1] = v.Character,
+    [2] = Vector3.new(-9e9,-9e9,-9e9),
+    [3] = Vector3.yAxis
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(unpack(args))
+end
+end
+end
