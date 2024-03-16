@@ -88,11 +88,12 @@ end)
 
 
 OrionLib:Init()
-while wait(.3) do
+while wait() do
 
     for i, v in pairs(game:GetService("Players"):GetChildren()) do
-if ka == true and v~= game:GetService("Players").LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
-        local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").b:FireServer(unpack(args))
+if ka == true and v~= game:GetService("Players").LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart and (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 20 then
+wait(.5)        
+local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").b:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").FlashHit:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").JetHit:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").WarpHt:FireServer(unpack(args))
@@ -107,13 +108,7 @@ if ka == true and v~= game:GetService("Players").LocalPlayer and v.Character and
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").CustomHit:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").WormHit:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").GeneralHit:FireServer(unpack(args))
-
-
-
-
-
         end
     end
     end
 end
-
