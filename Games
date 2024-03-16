@@ -1,4 +1,5 @@
 return {
+    ['psmash'] = 5200655965,
     ['clockautofarm'] = 189707,
     ['regret'] = 4972273297,
     ['tsb'] = 3808081382,
