@@ -1,13 +1,12 @@
 spawn(function()
 workspace:WaitForChild("BountyHunterRoom"):WaitForChild("BountyHunterBooth"):WaitForChild("_configPart"):WaitForChild("OpenRemote"):InvokeServer()
 workspace:WaitForChild("BountyHunterRoom"):WaitForChild("BountyHunterBooth"):WaitForChild("_configPart"):WaitForChild("LeaveRemote"):FireServer()
-while wait(1) do
+while wait(5) do
 workspace:WaitForChild("BountyHunterRoom"):WaitForChild("BountyHunterBooth"):WaitForChild("_configPart"):WaitForChild("OpenRemote"):InvokeServer()
 workspace:WaitForChild("BountyHunterRoom"):WaitForChild("BountyHunterBooth"):WaitForChild("_configPart"):WaitForChild("LeaveRemote"):FireServer()
 end
 end)
 if game.PlaceId == 6403373529 then
-		wait(2)
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Statue Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Statue Hub"})
 local nk = false
@@ -92,8 +91,7 @@ while wait() do
 
     for i, v in pairs(game:GetService("Players"):GetChildren()) do
 if ka == true and v~= game:GetService("Players").LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart and (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 20 then
-wait(.5)        
-local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").b:FireServer(unpack(args))
+        local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").b:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").FlashHit:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").JetHit:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").WarpHt:FireServer(unpack(args))
