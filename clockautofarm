@@ -1,7 +1,7 @@
 while wait() do 
 for i, v in pairs(workspace.Clocks:GetChildren()) do
 if v:WaitForChild("Parts"):FindFirstChildWhichIsA("BasePart") and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then 
-    game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChildWhichIsA("BasePart").CFrame
+    game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = v.Parts:FindFirstChildWhichIsA("BasePart").CFrame
     wait(1)
     game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = CFrame.new(-321, 199, 320)
     wait(1)
