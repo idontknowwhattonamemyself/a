@@ -450,7 +450,7 @@ xpcall(function()
         end
         end
     end)
-end)
+end, warn)
 
     spawn(function()
         while wait() do
