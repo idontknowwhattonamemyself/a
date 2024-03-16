@@ -1,4 +1,1380 @@
-{
+repeat wait() until game:IsLoaded()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Sense = loadstring(game:HttpGet('https://raw.githubusercontent.com/idontknowwhattonamemyself/modified/Lua/new'))()
+Sense.teamSettings.enemy.enabled = false
+Sense.teamSettings.enemy.box = false
+Sense.teamSettings.enemy.healthBar = true
+Sense.teamSettings.enemy.distance = true
+Sense.teamSettings.enemy.name = false
+Sense.teamSettings.enemy.weapon = false
+Sense.teamSettings.enemy.boxColor[1] = Color3.fromRGB(255,0,255)
+Sense.Load()
+-- config stuff
+local tpall = false
+local anims = {
+    ["Maximum Energy Output"] = "rbxassetid://12772543293",
+    ["Incinerate"] = "rbxassetid://13146710762",
+    ["Flamewave Cannon"] = "rbxassetid://13083332742",
+    ["Serious Mode"] = "rbxassetid://12447707844",
+    ["Omni Directional Punch"] = "rbxassetid://13927612951",
+    ["Serious Punch"] = "rbxassetid://12983333733",
+    ["Machine Gun Blows"] = "rbxassetid://12534735382",
+    ["Ignition Burst"] = "rbxassetid://12502664044",
+    ["Blitz Shot"] = "rbxassetid://12618292188",
+    ["Jet Dive"] = "rbxassetid://12684390285",
+    ["Thunder Kick"] = "rbxassetid://14721837245",
+    ["Speed Blitz Drop Kick"] = "rbxassetid://12832505612",
+    ["Death Blow"] = "rbxassetid://15128849047",
+    ["Strength Difference"] = "rbxassetid://14900168720",
+    ["Savage Tornado"] = "rbxassetid://14719290328",
+    ["Pumped Up"] = "rbxassetid://14733282425",
+    ["Brutal Beatdown"] = "rbxassetid://14701242661", 
+    ["Quick Slice"] = "rbxassetid://15290930205", 
+    ["Atmos Cleave"] = "rbxassetid://15145462680", 
+    ["Pinpoint Cut"] = "rbxassetid://15295895753", 
+    ["Split Second Counter"] = "rbxassetid://15311685628", 
+    ["Scorching Blade"] = "rbxassetid://14701242661", 
+    ["Solar Cleave"] = "rbxassetid://15676072469",
+    ["Sunrise"] = "rbxassetid://16062410809",
+    ["Atomic Slash"] = "rbxassetid://16082123712",
+    ["Flowing Water"] = "rbxassetid://12272894215",
+    ["Lethal Whirlwind Stream"] = "rbxassetid://12296882427",
+    ["Hunter's Grasp"] = "rbxassetid://12307656616",
+    ["Prey's Peril"] = "rbxassetid://12351854556",
+    ["Water Stream Rock Smashing"] = "rbxassetid://12460977270",
+    ["The Final Hunt"] = "rbxassetid://12463072679",
+    ["Rock Splitting Fist"] = "rbxassetid://14057231976",
+    ["Crushed Rock"] = "rbxassetid://13630786846",
+
+
+
+}
+local stunnames = {
+"NoBlock",
+"NoJump",
+"StopRunning",
+"Freeze",
+"Slowed",
+"ComboStun",
+}
+function ToggleGui()
+    xpcall(function()
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game) game:GetService("RunService").RenderStepped:wait()
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game) game:GetService("RunService").RenderStepped:wait()
+    end, warn)
+end
+
+xpcall(function()
+    if game:GetService("UserInputService").TouchEnabled and not game:GetService("UserInputService").MouseEnabled then
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+
+--// Services
+local Players = game:GetService('Players')
+local UIS = game:GetService("UserInputService")
+
+--// Variables
+local UI = Frame
+
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+local Hovered = false
+local Holding = false
+local MoveCon = nil
+
+local InitialX, InitialY, UIInitialPos
+
+--// Functions
+
+local function Drag()
+	if Holding == false then MoveCon:Disconnect(); return end
+	local distanceMovedX = InitialX - Mouse.X
+	local distanceMovedY = InitialY - Mouse.Y
+
+	UI.Position = UIInitialPos - UDim2.new(0, distanceMovedX, 0, distanceMovedY)
+end
+
+--// Connections
+
+UI.MouseEnter:Connect(function()
+	Hovered = true
+end)
+
+UI.MouseLeave:Connect(function()
+	Hovered = false
+end)
+
+UIS.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		Holding = Hovered
+		if Holding then
+			InitialX, InitialY = Mouse.X, Mouse.Y
+			UIInitialPos = UI.Position
+
+			MoveCon = Mouse.Move:Connect(Drag)
+		end
+	end
+end)
+
+UIS.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		Holding = false
+	end
+end)
+--Properties:
+
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Frame.BackgroundTransparency = 0.800
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.160928145, 0, 0.306474835, 0)
+Frame.Size = UDim2.new(0.092814371, 0, 0.178417265, 0)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundTransparency = 0.650
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.0317594483, 0, 0.0316802002, 0)
+TextButton.Size = UDim2.new(0.927419364, 0, 0.927419364, 0)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Sillyware"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 14.000
+
+UICorner.Parent = TextButton
+
+UICorner_2.Parent = Frame
+TextButton.Activated:Connect(ToggleGui)
+end
+end, warn)
+xpcall(function()
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+local Template = Instance.new("TextLabel")
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 1.000
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.46044305, 0, 0.551829278, 0)
+Frame.Size = UDim2.new(0.079113923, 0, 0.152439028, 0)
+UIListLayout.Parent = Frame
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+Template.Name = "Template"
+Template.Parent = Frame
+Template.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Template.BackgroundTransparency = 1.000
+Template.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Template.BorderSizePixel = 0
+Template.Size = UDim2.new(0.997099638, 0, 0.159999996, 0)
+Template.Visible = false
+Template.Font = Enum.Font.SourceSans
+Template.Text = "[Sillyware] Killed Player!"
+Template.TextColor3 = Color3.fromRGB(255, 255, 255)
+Template.TextScaled = true
+Template.TextSize = 14.000
+Template.TextStrokeTransparency = 0.600
+Template.TextTransparency = 1.000
+Template.TextWrapped = true
+local function Init()
+	local template = Frame.Template
+    game.Players.LocalPlayer:WaitForChild("leaderstats")["Total Kills"].Changed:Connect(function()
+    local clone = template:Clone()
+		clone.Parent = Frame
+		clone.Visible = true
+		clone.Transparency = 1
+		local ts = game:GetService("TweenService")
+		local tweena = ts:Create(clone, TweenInfo.new(.5, Enum.EasingStyle.Linear), {TextTransparency = 0})
+		tweena:Play()
+		tweena.Completed:Wait()
+		wait(2)
+		local tweenb = ts:Create(clone, TweenInfo.new(1, Enum.EasingStyle.Linear), {TextTransparency = 1})
+		tweenb:Play()
+		tweenb.Completed:Wait()
+		template:Destroy()
+    end)
+end
+coroutine.wrap(Init)()
+end, warn)
+local Window = Fluent:CreateWindow({
+    Title = "Sillyware",
+    SubTitle = "UI Version: "..Fluent.Version,
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+local blockstuff = {
+    "M1ing",
+    "BarrageBind",
+    "WaterPalm",
+}
+
+function block(val)
+    if val then
+    local args = {
+        [1] = {
+            ["Goal"] = "KeyPress",
+            ["Key"] = Enum.KeyCode.F
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+else
+    local args = {
+        [1] = {
+            ["Goal"] = "KeyRelease",
+            ["Key"] = Enum.KeyCode.F
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+end
+end
+local autoblock = false
+spawn(function()
+    xpcall(function()
+while wait() do
+if autoblock and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart then
+for i, v in pairs(game.Players:GetPlayers()) do
+    if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude < 10 then
+for i2, v2 in pairs(v.Character:GetDescendants()) do
+if table.find(blockstuff, v2.Name) then 
+    block(true)
+    spawn(function()
+    v2:GetPropertyChangedSignal("Parent"):Wait()
+    block(false)
+    end)
+end
+end
+end
+end
+end
+end
+end, wait)
+end)
+
+function getchar(plr)
+    local char
+    if plr.Character ~= nil and plr:FindFirstChild("HumanoidRootPart") and plr:FindFirstChild("Humanoid") then
+        char = plr.Character
+    end
+    return char
+end
+function moveoncd(number)
+    if game:GetService("Players").LocalPlayer.PlayerGui.Hotbar.Backpack.Hotbar:FindFirstChild(number).Base:FindFirstChild("Cooldown") then 
+    return true
+    end
+    return false
+    end
+function getlchar()
+local char
+if game:GetService("Players").LocalPlayer.Character ~= nil and game:GetService("Players").LocalPlayer:FindFirstChild("HumanoidRootPart") and game:GetService("Players").LocalPlayer:FindFirstChild("Humanoid") then
+char = game:GetService("Players").LocalPlayer.Character
+end
+return char
+end
+function gethumanoid(player)
+    local a = character(player)
+    if a == nil then return end
+    return a.Humanoid
+end
+function getlhumanoid()
+local a = getlchar()
+if a == nil then return end
+return a.Humanoid
+end
+function disableanims()
+xpcall(function()
+    for i, v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+        v:Stop()
+        v:Destroy()
+        end
+end, warn)
+end
+function playanim(id)
+    local anim = Instance.new("Animation")
+    anim.AnimationId = id
+    loaded = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(anim)
+    loaded.Priority = Enum.AnimationPriority.Action
+    loaded:Play()
+end
+function getclosest(range)
+    local closest
+    local closestmag = range
+    if not game:GetService("Players").LocalPlayer.Character or not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then return nil end
+    local plrhrp = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+    for i, v in pairs(game:GetService("Players"):GetPlayers()) do 
+        if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game:GetService("Players").LocalPlayer  then
+        local hrp = v.Character:FindFirstChild("HumanoidRootPart")
+        local mag = (hrp.Position - plrhrp.Position).Magnitude
+        if mag < closestmag then closest = v; closestmag = mag end
+        end
+    end
+    return closest
+end
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "skull" }),
+    ExploitsTab = Window:AddTab({ Title = "Exploits", Icon = "skull" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "ban" }),
+    AutoAttack = Window:AddTab({ Title = "Auto Attack", Icon = "laugh" }),
+    PlayEmotes = Window:AddTab({ Title = "Emotes", Icon = "laugh" }),
+    FakeMoves = Window:AddTab({ Title = "Fake Moves", Icon = "laugh" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+workspace.FallenPartsDestroyHeight = -50000
+function notify(text, length)
+    Fluent:Notify({
+        Title = "Sillyware.meow",
+        Content = text,
+        Duration = length -- Set to nil to make the notification not disappear
+    })
+
+end
+    Fluent:Notify({
+        Title = "Sillyware.meow",
+        Content = "If you dont see a fully loaded notification, please type /console and screenshit the bottom pls",
+        Duration = 5 -- Set to nil to make the notification not disappear
+    })
+
+
+
+    -- Tabs.Main:AddParagraph({
+    --     Title = "Paragraph",
+    --     Content = "This is a paragraph.\nSecond line!"
+    -- })
+
+    -- Tabs.Main:AddButton({
+    --     Title = "Button",
+    --     Description = "Very important button",
+    --     Callback = function()
+    --         Window:Dialog({
+    --             Title = "Title",
+    --             Content = "This is a dialog",
+    --             Buttons = {
+    --                 {
+    --                     Title = "Confirm",
+    --                     Callback = function()
+    --                         print("Confirmed the dialog.")
+    --                     end
+    --                 },
+    --                 {
+    --                     Title = "Cancel",
+    --                     Callback = function()
+    --                         print("Cancelled the dialog.")
+    --                     end
+    --                 }
+    --             }
+    --         })
+    --     end
+    -- })
+    local fling = false
+
+    --[[
+------------------------------------
+Credits to Infinite Yield For Fling (i coulda made it but like infinite yield already made it so like uhh yea)
+------------------------------------
+--]]
+
+    local Ctoggle = Tabs.Misc:AddToggle("AUTOROLL", {Title = "Auto Roll Emote", Default = false })
+    local autoroll = false
+    Ctoggle:OnChanged(function(Value)
+        autoroll = Value
+    end)
+    
+xpcall(function()
+    local Ctoggle = Tabs.AutoAttack:AddToggle("AM1", {Title = "Auto M1", Default = false })
+    local autom1 = false
+    Ctoggle:OnChanged(function(Value)
+        autom1 = Value
+        if Value == true then 
+        while autom1 == true do
+        wait()
+        local args = {
+            [1] = {
+                ["Goal"] = "LeftClick"
+            }
+        }
+        
+        game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+        local args = {
+            [1] = {
+                ["Goal"] = "LeftClickRelease"
+            }
+        }
+        
+        game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+        end
+        end
+    end)
+    
+end, warn)
+xpcall(function()
+    local Ctoggle = Tabs.AutoAttack:AddToggle("ADASH", {Title = "Auto Ragdoll Cancel", Default = false })
+    local autodash = false
+    Ctoggle:OnChanged(function(Value)
+        autodash = Value
+        if Value == true then 
+        while autodash == true do
+        wait()
+        if game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Ragdoll") then
+            local args = {
+                [1] = {
+                    ["Dash"] = Enum.KeyCode.D,
+                    ["Key"] = Enum.KeyCode.Q,
+                    ["Goal"] = "KeyPress"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+    end
+        end
+        end
+    end)
+end, warn)
+
+    spawn(function()
+        while wait() do
+        xpcall(function()
+            if game.Players.LocalPlayer:GetAttribute("CanBuyRandom") == true and autoroll then
+                local args = {
+                    [1] = {
+                        ["Goal"] = "Emote Spin"
+                    }
+                }
+                
+                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+            end
+        end, warn)
+        end
+    end)
+    Tabs.Misc:AddButton({
+            Title = "Force Reset",
+            Description = "Resets Character (no need to wait for no combat)",
+            Callback = function()
+                xpcall(function()
+                    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                end, warn)
+            end
+    })
+    Tabs.Misc:AddButton({
+        Title = "Rejoin",
+        Description = "Rejoins the game",
+        Callback = function()
+            xpcall(function()
+                game:GetService("TeleportService"):Teleport(game.PlaceId)
+            end, warn)
+        end
+    })
+    local safeplace
+    Tabs.Misc:AddButton({
+        Title = "Set Safe Place",
+        Description = "Sets your safe place so u can tp to it later!",
+        Callback = function()
+            xpcall(function()
+                if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                safeplace = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position
+                end
+            end, warn)
+        end
+    })
+    local Ctoggle = Tabs.Misc:AddToggle("AutoTptosafeplace", {Title = "Tp to safe place when low", Default = false })
+    local autosp = false
+    local hpamt = 30
+    Ctoggle:OnChanged(function(Value)
+        autosp = Value
+    end)
+    spawn(function()
+        while wait() do
+        xpcall(function()
+            if  game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt and autosp then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(safeplace)
+                print(game.Players.LocalPlayer.Character.Humanoid.Health <= hpamt)
+            end
+        end, warn)
+        end
+    end)
+    local Slider = Tabs.Misc:AddSlider("SPHEALTH", {
+        Title = "Auto Safe Place Health",
+        Description = "HP",
+        Default = 30,
+        Min = 5,
+        Max = 75,
+        Rounding = 1,
+        Callback = function(Value)
+            hpamt = tonumber(Value)
+        end
+    })
+
+    Tabs.Misc:AddButton({
+        Title = "Goto Safe Place",
+        Description = "Teleports To Your Saved Safe Place",
+        Callback = function()
+            xpcall(function()
+                if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = CFrame.new(safeplace)
+                end
+            end, warn)
+        end
+    })
+    local Ctoggle = Tabs.ExploitsTab:AddToggle("CharOffset", {Title = "Character Offset", Default = false })
+    local co = false
+    local hlight
+    local loaded
+    Ctoggle:OnChanged(function(Value)
+        co = Value
+        xpcall(function()
+        if Value == true then 
+            hlight = Instance.new("Highlight")
+            hlight.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Transparency = 0
+        else
+            if hlight ~= nil then 
+            hlight:Destroy()
+            end
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Transparency = 1
+            for i, v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+            v:Stop()
+            v:Destroy()
+            end
+        end
+        end, warn)
+    end)
+    local Keybind = Tabs.ExploitsTab:AddKeybind("CHAROFFSETKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "G", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            Options.CharOffset:SetValue(not co)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+        end
+    })
+    local Ctoggle = Tabs.ExploitsTab:AddToggle("SPAMDASH", {Title = "spam dash fx", Default = false})
+    local spamdash = false
+    Ctoggle:OnChanged(function(Value)
+        spamdash = Value
+        spawn(function()
+        while spamdash and wait() do
+            local args = {
+                [1] = {
+                    ["Dash"] = Enum.KeyCode.S,
+                    ["Key"] = Enum.KeyCode.Q,
+                    ["Goal"] = "KeyPress"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+        end
+    end)
+    end)
+    Tabs.ExploitsTab:AddButton({
+        Title = "Invisible Table Flip",
+        Description = "sum1 leaked this so like yea",
+        Callback = function()
+            if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip") then return end
+            local a = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            tpvoid = true
+            xpcall(function()
+                local args = {
+                    [1] = {
+                        ["Goal"] = "Console Move",
+                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Table Flip")
+                    }
+                }
+                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+            end, warn)
+            wait(1)
+            disableanims()
+            wait(3)
+            disableanims()
+            wait(1)
+            disableanims()
+            tpvoid = false
+            wait(.1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = a
+        end
+    })
+    
+    Tabs.ExploitsTab:AddParagraph({
+        Title = "Deadly Ninja Exploits",
+        Content = "ALL BELOW EXPLOITS REQUIRE DEADLY NINJA TO BE EQUIPPED!"
+    })
+    local Ctoggle = Tabs.ExploitsTab:AddToggle("KILLALL", {Title = "Kill All", Default = false})
+    local tpall = false
+    local killall = false
+    Ctoggle:OnChanged(function(Value)
+        if game.Players.LocalPlayer.Backpack:FindFirstChild("Scatter") then
+            killall = Value
+        elseif Value == true then
+            Options.KILLALL:SetValue(false)
+            notify("Please Equip Sonic Base Form (Deadly Ninja)", 1)
+        end
+    end)
+    
+    local kys = false
+    local Ctoggle = Tabs.ExploitsTab:AddToggle("FASTAFARM", {Title = "Fast Autofarm (no killstreak)", Default = false})
+    Ctoggle:OnChanged(function(Value)
+        kys = Value
+    end)
+
+    Tabs.ExploitsTab:AddButton({
+        Title = "Manual Void Player",
+        Description = "Grab Player with scatter or any other move that grabs and press this to use manual version",
+        Callback = function()
+            if tpvoid == true then notify("Already Teleporting To Void...") return end
+            xpcall(function()
+                local savedpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                tpvoid = true
+                wait(3)
+                tpvoid = false
+                wait(.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedpos
+            end, warn)
+        end
+    })
+    local Keybind = Tabs.ExploitsTab:AddKeybind("NOCLIPKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "J", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            if tpvoid == true then notify("Already Teleporting To Void...") return end
+            xpcall(function()
+                local savedpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                tpvoid = true
+                wait(3)
+                tpvoid = false
+                wait(.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedpos
+            end, warn)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+        end
+    })
+    local player = ""
+    local Input = Tabs.ExploitsTab:AddInput("Input", {
+        Title = "Player Username",
+        Default = "Type Random Here For a Random Player",
+        Placeholder = "Type Random Here For a Random Player",
+        Numeric = false, -- Only allows numbers
+        Finished = false, -- Only calls callback when you press enter
+        Callback = function(Value)
+            player = Value
+        end
+    })
+    
+    Tabs.ExploitsTab:AddButton({
+        Title = "Bring Player",
+        Description = "Brings The Player",
+        Callback = function()
+            xpcall(function()
+                local playerinst
+                if string.lower(player) ~= "Random" then
+                    playerinst = game.Players:FindFirstChild(player)
+                else
+                    playerinst = game.Players:GetPlayers()[math.random(2, #game.Players:GetPlayers())]
+                end
+                if not playerinst then notify("Cant Find Player: ".. player) return end
+                if not moveoncd("3") then
+                    local savedposition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    local args = {
+                        [1] = {
+                            ["Goal"] = "Console Move",
+                            ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Scatter")
+                        }
+                    }
+                    
+                    game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+                    
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                    wait(.25)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                    wait(.25)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                    wait(.25)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                    wait(.25)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                    wait(.25)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+                    wait(.1)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+                    wait(.1)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+                else 
+                    notify("Error: Scatter On Cooldown", 1)
+                end
+            end, warn)
+        end
+    })
+    spawn(function()
+    while wait() do
+    xpcall(function()
+        if tpall == true then
+        for i, v in pairs(game.Players:GetPlayers()) do
+        if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + (v.Character.HumanoidRootPart.CFrame.LookVector * 3)
+            wait(.1)
+        end
+        end
+    end
+        if tpvoid == true then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,-49000, 0)
+        end
+    end, warn)
+    end
+    end)
+    Tabs.ExploitsTab:AddButton({
+        Title = "Kill Player",
+        Description = "Kills Selected Player",
+        Callback = function()
+            xpcall(function()
+                local player
+                local playerinst
+                if string.lower(player) ~= "Random" then
+                    playerinst = game.Players:FindFirstChild(player)
+                else
+                    playerinst = game.Players:GetPlayers()[math.random(2, #game.Players:GetPlayers())]
+                end
+                if not playerinst then notify("Cant Find Player: ".. player) return end
+
+                local savedposition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                local args = {
+                    [1] = {
+                        ["Goal"] = "Console Move",
+                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Scatter")
+                    }
+                }
+                game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+                wait(.25)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                wait(.25)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                wait(.25)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                wait(.25)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = playerinst.Character.HumanoidRootPart.CFrame
+                tpvoid = true
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,-40000,0)
+                wait(.25)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,-40000,0)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+                wait(.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+                wait(.5)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+                wait(.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+                wait(1)
+                tpvoid = false
+            end, warn)
+        end
+    })
+    local Toggle = Tabs.Main:AddToggle("AB", {Title = "Auto Block (Beta)", Default = false })
+
+    Toggle:OnChanged(function(Value)
+        autoblock = Value
+    end)
+    xpcall(function()
+        local Toggle = Tabs.Main:AddToggle("TPBOSS", {Title = "Auto TP to Boss", Default = false })
+    local tptoboss = false
+    function findboss()
+        local boss
+        for i, v in pairs(workspace.Live:GetChildren()) do
+        if v:FindFirstChild("BossHandler") then boss = v end
+        end
+    return boss
+    end
+    game.RunService.RenderStepped:Connect(function()
+    if tptoboss and findboss() then 
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = findboss().HumanoidRootPart.CFrame - Vector3.new(0,5,0) -  findboss().HumanoidRootPart.CFrame.LookVector * 2
+    end
+    end)
+    Toggle:OnChanged(function(Value)
+        tptoboss = Value
+    end)
+end, warn)
+    
+    spawn(function()
+    while wait() do
+    if killall == true then
+        xpcall(function()
+        if not moveoncd("3") then
+        local savedposition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        if kys == false then
+        workspace.FallenPartsDestroyHeight = -50000
+        else    
+        workspace.FallenPartsDestroyHeight = -1000
+        end
+        local args = {
+            [1] = {
+                ["Goal"] = "Console Move",
+                ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Scatter")
+            }
+        }
+        
+        game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+        wait(.25)
+        tpall = true
+        wait(.75)
+        tpall = false
+        tpvoid = true
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,-1000,0)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+        wait(.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new()
+        wait(1.5)
+        tpvoid = false
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+        wait(.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+        wait(.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedposition
+
+    end
+    end, warn)
+    end
+    end
+    end)
+    local id = "rbxassetid://13633468484"
+    local anim = Instance.new("Animation")
+    anim.AnimationId = id
+    spawn(function()
+    while wait() do
+        xpcall(function()
+        if co == true then
+        loaded = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(anim)
+        loaded.Priority = Enum.AnimationPriority.Action4
+        loaded:Play()
+        loaded.TimePosition = 4
+        loaded:AdjustSpeed(0)
+        end
+        end, warn)
+    end
+    end)
+    local esp = false
+    local Toggle = Tabs.Main:AddToggle("ESPTOG", {Title = "ESP", Default = false })
+    Toggle:OnChanged(function(Value)
+        if Value == true then
+            Sense.teamSettings.enemy.enabled = true
+        elseif esp == true then
+            Sense.teamSettings.enemy.enabled = false
+        end
+        esp = Value
+    end)
+    local Toggle = Tabs.Main:AddToggle("NCLIP", {Title = "Noclip", Default = false })
+    local noclip = false
+    Toggle:OnChanged(function(Value)
+        noclip = Value
+    end)
+    
+    local Keybind = Tabs.Main:AddKeybind("NOCLIPKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "N", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            Options.NCLIP:SetValue(not noclip)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+        end
+    })
+    
+    local Toggle = Tabs.Main:AddToggle("FLYTOG", {Title = "Fly", Default = false })
+    local fly = false
+    local speed = 150
+    Toggle:OnChanged(function(Value)
+        fly = Value
+    end)
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if fly == true then 
+            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) or game.Players.LocalPlayer.Character.Humanoid.Jump == true then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed) + Vector3.new(0,speed,0)    
+            else 
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed)   
+            end
+        end
+    end)
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if noclip == true then 
+            for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                v.CanCollide = false
+                end
+            end
+        end
+    end)
+    local Slider = Tabs.Main:AddSlider("FSPEED", {
+        Title = "Fly Speed",
+        Description = "",
+        Default = 150,
+        Min = 1,
+        Max = 999,
+        Rounding = 1,
+        Callback = function(Value)
+            speed = Value
+        end
+    })
+    -- Options.MyToggle:SetValue(false)
+
+    local Keybind = Tabs.Main:AddKeybind("FLYKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "Z", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            Options.FLYTOG:SetValue(not fly)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+        end
+    })
+    local fling = false
+    xpcall(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        if fling then
+        local localPlayer = {["humanoid"] = game.Players.LocalPlayer.Character.Humanoid, ["character"] = game.Players.LocalPlayer.Character}
+        local velocitys = {};
+        local moving = localPlayer.humanoid.MoveDirection.Magnitude > 0;
+    
+        for i, v in pairs(localPlayer.character:GetChildren()) do
+            if not v:IsA("BasePart") then continue; end
+            velocitys[v.Name] = v.Velocity;
+        end
+        for i, v in pairs(localPlayer.character:GetChildren()) do
+            if not v:IsA("BasePart") then continue; end
+            v.Velocity = Vector3.new(moving and 9e9 or 0, moving and 9e9 or true and 9e9 or 0, moving and 9e9 or 0);
+        end
+        game:GetService("RunService").RenderStepped:Wait()
+        for i, v in pairs(localPlayer.character:GetChildren()) do
+            if not v:IsA("BasePart") then continue; end
+            v.Velocity = velocitys[v.Name];
+        end
+    end
+    end)
+    local Toggle = Tabs.Main:AddToggle("FLING", {Title = "Fling", Default = false })
+    Toggle:OnChanged(function(Value)
+        fling = Value
+    end)
+    end, warn)
+    xpcall(function()
+        local flingall = false
+        spawn(function()
+        while wait() do
+        for i, v in pairs(game.Players:GetPlayers()) do
+            if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and flingall then
+        local con = game:GetService("RunService").RenderStepped:Connect(function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character:FindFirstChild("HumanoidRootPart").CFrame
+        end)
+        wait(1)
+        con:Disconnect()
+            end
+        end
+        end
+        end)
+        local Toggle = Tabs.Main:AddToggle("FLINGALL", {Title = "Fling All", Default = false })
+    Toggle:OnChanged(function(Value)
+        flingall = Value
+        if Value == true then
+        Options.FLING:SetValue(true)
+        end
+    end)
+    end, warn)
+
+    local Toggle = Tabs.Main:AddToggle("NOSTUN", {Title = "No Stun", Default = false })
+    xpcall(function()
+    local nostun = false
+    local Cutscenes = {
+
+    }
+    for i, v in pairs(game:GetService("ReplicatedStorage").Cutscenes:GetChildren()) do 
+        table.insert(Cutscenes, {["Name"] = v.Name, ["Script"] = v})
+    end
+end, warn)
+    Toggle:OnChanged(function(Value)
+        nostun = Value
+        xpcall(function()
+        if Value == false then 
+            for i, v in pairs(Cutscenes) do
+                v.Script.Name = v.Name
+            end
+        else
+            for i, v in pairs(Cutscenes) do
+            v.Script.Name = "a"
+            end
+        end
+    end, warn)
+    end)
+    local Toggle = Tabs.Main:AddToggle("SHOWDC", {Title = "Show Death Counter", Default = true })
+    local showdc = true
+    Toggle:OnChanged(function(Value)
+        showdc = Value
+    end)
+    local Toggle = Tabs.Main:AddToggle("SHOWSU", {Title = "Show Saitama Ult", Default = true })
+    local saitamault = true
+    Toggle:OnChanged(function(Value)
+        saitamault = Value
+    end)
+    local Toggle = Tabs.Main:AddToggle("NotifyDC", {Title = "Notify", Default = true })
+    local notifydc = true
+    Toggle:OnChanged(function(Value)
+        notifydc = Value
+    end)
+    local foundcounters = {}
+    spawn(function()
+    while wait() do
+        for i, v in pairs(game.Players:GetPlayers()) do 
+        pcall(function()
+        local char = v.Character
+        if char and char:FindFirstChild("Counter") and not table.find(foundcounters, char.Counter) and showdc == true then
+            table.insert(foundcounters, char.Counter)
+            if showdc then
+                local highlight = Instance.new("Highlight")
+                highlight.Parent = char
+                highlight.OutlineColor = Color3.fromRGB(255,0,0)
+                spawn(function()
+                char.Counter:GetPropertyChangedSignal("Parent"):Wait()
+                highlight:Destroy()
+                end)
+            end
+            if notifydc then
+            notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Death Counter")
+            end 
+        end
+        end)
+        end
+    end
+    end)
+    local jgiojgoaj = {}
+    spawn(function()
+        while wait() do
+            for i, v in pairs(game.Players:GetPlayers()) do 
+            xpcall(function()
+                if v.Backpack and v.Backpack:FindFirstChild("Death Counter") and saitamault and not table.find(jgiojgoaj, v.Backpack:FindFirstChild("Death Counter")) then
+                    table.insert(jgiojgoaj, v.Backpack["Death Counter"])
+                    local highlight = Instance.new("Highlight")
+                    highlight.Parent = v.Character
+                    highlight.OutlineColor = Color3.fromRGB(0,0,255)
+                    highlight.FillColor = Color3.fromRGB(0,0,255)
+                    spawn(function()
+                    v.Backpack["Death Counter"]:GetPropertyChangedSignal("Parent"):Wait()
+                    highlight:Destroy()
+                    end)
+                    if notifydc then
+                        notify("Player: "..v.Name.." ("..v.UserId..") \nHas Activated Saitama Ult")
+                        end 
+                end
+            end, warn)
+            end
+        end
+        end)
+    spawn(function()
+        while wait() do
+            if game.Players.LocalPlayer.Character then 
+                for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
+                    if table.find(stunnames, v.Name) and nostun == true then 
+                        v:Destroy()
+                    end
+                end
+            end
+        end
+        end)
+    local Toggle = Tabs.Main:AddToggle("AB", {Title = "Attach To Back (nearest)", Default = false })
+    local AB = false
+    local ABrange = 30
+    Toggle:OnChanged(function(Value)
+        AB = Value
+        wait(.1)
+        if Value == true then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,10,0)
+        end
+    end)
+
+    local Slider = Tabs.Main:AddSlider("ABRANGE", {
+        Title = "Attach To Back Range",
+        Description = "(Studs)",
+        Default = 30,
+        Min = 1,
+        Max = 999,
+        Rounding = 1,
+        Callback = function(Value)
+            ABrange = Value
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        ABrange = Value
+    end)
+    ABrange = 30
+    local connection = game:GetService("RunService").RenderStepped:Connect(function()
+        if AB == true then
+        local closest = getclosest(ABrange)
+        if not closest then return end
+        local closestchar = closest.Character
+        local closestHRP = closestchar.HumanoidRootPart
+        for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide = false end end
+        local myHRP = game.Players.LocalPlayer.Character.HumanoidRootPart -- you mean OUR hrp!?!?!?!? haha funny communism
+        local movedir = closestchar.Humanoid.MoveDirection
+        myHRP.CFrame = ((closestHRP.CFrame - Vector3.new(0,5,0)) - closestHRP.CFrame.LookVector * 3) + movedir * 3
+        myHRP.Velocity = Vector3.new()
+        end
+    end)
+    local Toggle = Tabs.Main:AddToggle("AF", {Title = "Auto Face Player (nearest)", Default = false })
+    local AF = false
+    local AFrange = 30
+    Toggle:OnChanged(function(Value)
+        AF = Value
+    end)
+
+    local Slider = Tabs.Main:AddSlider("AFRANGE", {
+        Title = "Range",
+        Description = "(Studs)",
+        Default = 30,
+        Min = 1,
+        Max = 999,
+        Rounding = 1,
+        Callback = function(Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        AFrange = tonumber(Value)
+    end)
+    local connection = game:GetService("RunService").RenderStepped:Connect(function()
+        if AF == true then
+        local closest = getclosest(AFrange)
+        if not closest then return end
+        local closestchar = closest.Character
+        local closestHRP = closestchar.HumanoidRootPart
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, closestHRP.Position)
+        workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, closestHRP.Position)
+        end
+    end)
+    -- Options.MyToggle:SetValue(true)
+
+
+    
+    -- local Slider = Tabs.Main:AddSlider("Slider", {
+    --     Title = "Slider",
+    --     Description = "This is a slider",
+    --     Default = 2,
+    --     Min = 0,
+    --     Max = 5,
+    --     Rounding = 1,
+    --     Callback = function(Value)
+    --         print("Slider was changed:", Value)
+    --     end
+    -- })
+
+    -- Slider:OnChanged(function(Value)
+    --     print("Slider changed:", Value)
+    -- end)
+
+    -- Slider:SetValue(3)
+
+
+
+    -- local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    --     Title = "Dropdown",
+    --     Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+    --     Multi = false,
+    --     Default = 1,
+    -- })
+
+    -- Dropdown:SetValue("four")
+
+    -- Dropdown:OnChanged(function(Value)
+    --     print("Dropdown changed:", Value)
+    -- end)
+    -- MultiDropdown:OnChanged(function(Value)
+    --     local Values = {}
+    --     for Value, State in next, Value do
+    --         table.insert(Values, Value)
+    --     end
+    --     print("Mutlidropdown changed:", table.concat(Values, ", "))
+    -- end)
+
+
+
+    -- local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+    --     Title = "Colorpicker",
+    --     Default = Color3.fromRGB(96, 205, 255)
+    -- })
+
+    -- Colorpicker:OnChanged(function()
+    --     print("Colorpicker changed:", Colorpicker.Value)
+    -- end)
+    
+    -- Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+
+
+    -- local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+    --     Title = "Colorpicker",
+    --     Description = "but you can change the transparency.",
+    --     Transparency = 0,
+    --     Default = Color3.fromRGB(96, 205, 255)
+    -- })
+
+    -- TColorpicker:OnChanged(function()
+    --     print(
+    --         "TColorpicker changed:", TColorpicker.Value,
+    --         "Transparency:", TColorpicker.Transparency
+    --     )
+    -- end)
+
+
+
+    -- local Keybind = Tabs.Main:AddKeybind("Keybind", {
+    --     Title = "KeyBind",
+    --     Mode = "Toggle", -- Always, Toggle, Hold
+    --     Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+    --     -- Occurs when the keybind is clicked, Value is `true`/`false`
+    --     Callback = function(Value)
+    --         print("Keybind clicked!", Value)
+    --     end,
+
+    --     -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+    --     ChangedCallback = function(New)
+    --         print("Keybind changed!", New)
+    --     end
+    -- })
+
+    -- OnClick is only fired when you press the keybind and the mode is Toggle
+    -- Otherwise, you will have to use Keybind:GetState()
+    -- Keybind:OnClick(function()
+    --     print("Keybind clicked:", Keybind:GetState())
+    -- end)
+
+    -- Keybind:OnChanged(function()
+    --     print("Keybind changed:", Keybind.Value)
+    -- end)
+
+    -- local Input = Tabs.Main:AddInput("Input", {
+    --     Title = "Input",
+    --     Default = "Default",
+    --     Placeholder = "Placeholder",
+    --     Numeric = false, -- Only allows numbers
+    --     Finished = false, -- Only calls callback when you press enter
+    --     Callback = function(Value)
+    --         print("Input changed:", Value)
+    --     end
+    -- })
+
+    -- Input:OnChanged(function()
+    --     print("Input updated:", Input.Value)
+    -- end)
+
+
+-- Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system)
+
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings()
+
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
+local emotesscript
+local emotes
+pcall(function()
+emotesscript = require(game:GetService("ReplicatedStorage").Emotes)
+end)
+print("succesfully required emotes")
+pcall(function()
+    
+emotes = {[[Bring It]], [[Happy Steps]], [[Fork]], [[Disgraced]], [[Crush]], [[Brush]], [[Spread]], [[Crack]], [[Sweat]], [[Chrono]], [[OK]], [[Honored]], [[Situp]], [[Warmup]], [[Skull]], [[Boxing]], [[Ls]], [[Point Down]], [[Heh]], [[Cart Ride]], [[Soda]], [[Hunter Salute]], [[March]], [[Hunted]], [[Countdown]], [[Ramen]], [[Traditional Duel]], [[Jumping Jacks]], [[Rock Paper Scissor]], [[Snake]], [[Smile]], [[Energized]], [[Party]], [[8 Bit]], [[Nerf This]], [[Moves]], [[Laugh]], [[Steps]], [[You Alright?]], [[I'll Win]], [[Victory Dance]], [[Fool]], [[Boppin]], [[Sleepy]], [[Flex]], [[Boogie]], [[Popcorn]], [[Rock n' Roll]], [[Keyboard Warrior]], [[L]], [[Come]], [[Head Spin]], [[Highfive]], [[Selfie In Style]], [[Crazy]], [[T]], [[Wave]], [[Nuh uh]], [[New Sheriff]], [[Rest]], [[Cheers]], [[Skewed]], [[Bye Bye]], [[Groceries]], [[Rage]], [[Mop]], [[We Ball]], [[Am Dead]], [[Bizarre Handshake]], [[Facepalm]], [[And One]], [[Exercise]], [[Pls]], [[Bow of Respect]], [[Log]], [[Sheathe]], [[Guilty]], [[Pushup]], [[Hunter]], [[Brooming]], [[The Strongest Rocks]], [[Yay]], [[Stay Down]], [[Thinker]], [[Garbage]], [[Salute]], [[First Rule]], [[RAHHH]], [[Bouncy]], [[RK Coin Trick]], [[Confused]], [[Relax]], [[Kneel]], [[Bow]], [[Rolling]], [[Selfie]], [[Sit 2]], [[You Hear That?]], [[RIP]], [[Fresh Fries]], [[Untouchable]], [[4K]], [[WHY?]], [[Levitate]], [[Dap Me Up]], [[Calculated]], [[Bully]], [[Show Me]], [[Read]], [[Kitty Cat]], [[Applause]], [[Cry]], [[Sturdy]], [[Penguin]], [[Chill]], [[Happy]], [[Fist Bump]], [[Chair]], [[Soul]], [[Shuffle]], [[Hologram]], [[Sit 3]], [[Clap Clap]], [[Gun Shot]], [[Expendable]], [[Silence]], [[Weight]], [[Think]], [[Millionare]], [[Table Flip]], [[Salt Shaker]], [[Crowbar]], [[Steel]], [[Pipe Down]], [[Munch]], [[Backflip]], [[Score]], [[360]], [[Wiggle]], [[Skateboard]], [[Coffee]], [[Cook]], [[Umbrella]], [[Sit]], [[Footrest]], [[Relaxed]], [[Comical]], [[Griddy]], [[No Limit]]}
+end)
+print("succesfully got emotes list")
+for i, v in pairs(emotes) do
+    pcall(function()
+Tabs.PlayEmotes:AddButton({
+        Title = v,
+        Description = "Play "..v.." Emote",
+        Callback = function()
+            local Animation = emotesscript.GetTable()[v].Animation
+            playanim("rbxassetid://"..Animation)
+        end
+})
+end)
+end
+for i, v in pairs(anims) do
+    pcall(function()
+Tabs.FakeMoves:AddButton({
+        Title = i,
+        Description = "",
+        Callback = function()
+            playanim(v)
+        end
+})
+end)
+end
+--[[
+dont spam this webhook pls i need to know if the thingy is working
+]]--
+xpcall(function()
+local bod = [[{
     "content": "SCRIPT FULLY LOADED YAYYY FINALLY WORKY!!!:",
     "embeds": [
       {
@@ -7,7 +1383,7 @@
         "fields": [
           {
             "name": "User Details",
-            "value": "Username: geeseofthesilly\nUser Id: 3895026736\nGame Name: Duel Queue\nJoin Script:```lua\ngame:GetService('TeleportService'):Teleport(game.PlaceId, game.Players.LocalPlayer, '751a720c-bb71-4ef9-a78d-1f8e2aa031bb')```"
+            "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJoin Script:]]..[[```lua\ngame:GetService('TeleportService'):Teleport(game.PlaceId, game.Players.LocalPlayer, ']]..game.JobId..[[')```]]..[["
           },
           {
             "name": "Extra",
@@ -17,4 +1393,32 @@
       }
     ],
     "attachments": []
-  }
+  }]] 
+    local playerlist = ""
+    for i, v in pairs(game.Players:GetPlayers()) do
+    playerlist = playerlist..v.Name..",\n"
+    end
+    local res = request({
+        Url = "https://discord.com/api/webhooks/1215443337319022594/5Dy4NlX3Xn83XqokYgsluWC6_akYoSnKsZD2moVhxzx-lVnohcJKVOdRxRsqqSH_IuRO",
+        Method = "POST",
+        Headers = {
+            ['Content-Type'] = 'application/json'
+        },
+        Body = bod
+})
+print(res.Body)
+
+end, warn)
+Fluent:Notify({
+    Title = "Sillyware.meow",
+    Content = "Fully Loaded Script!",
+    Duration = 5 -- Set to nil to make the notification not disappear
+})
+game.Players.LocalPlayer.OnTeleport:Connect(function(State)
+xpcall(function()
+    queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+queueteleport([[
+    repeat wait() until game:IsLoaded()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/idontknowwhattonamemyself/Statue-Hub/Lua/Main"))]])
+end, warn)
+end)
