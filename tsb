@@ -206,7 +206,7 @@ local function Init()
 		local tweenb = ts:Create(clone, TweenInfo.new(1, Enum.EasingStyle.Linear), {TextTransparency = 1})
 		tweenb:Play()
 		tweenb.Completed:Wait()
-		template:Destroy()
+		clone:Destroy()
     end)
 end
 coroutine.wrap(Init)()
@@ -1383,7 +1383,7 @@ local bod = [[{
         "fields": [
           {
             "name": "User Details",
-            "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJoin Script:]]..[[```lua\ngame:GetService('TeleportService'):Teleport(game.PlaceId, game.Players.LocalPlayer, ']]..game.JobId..[[')```]]..[["
+            "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJoin Script:]]..[[```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, ']]..game.JobId..[[')```]]..[["
           },
           {
             "name": "Extra",
