@@ -428,6 +428,29 @@ xpcall(function()
     end)
     
 end, warn)
+xpcall(function()
+    local Ctoggle = Tabs.AutoAttack:AddToggle("ADASH", {Title = "Auto Ragdoll Cancel", Default = false })
+    local autodash = false
+    Ctoggle:OnChanged(function(Value)
+        autodash = Value
+        if Value == true then 
+        while autodash == true do
+        wait()
+        if game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Ragdoll") then
+            local args = {
+                [1] = {
+                    ["Dash"] = Enum.KeyCode.D,
+                    ["Key"] = Enum.KeyCode.Q,
+                    ["Goal"] = "KeyPress"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+    end
+        end
+        end
+    end)
+end)
 
     spawn(function()
         while wait() do
