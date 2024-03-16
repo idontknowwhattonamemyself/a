@@ -111,10 +111,14 @@ end)
 
 OrionLib:Init()
 while wait() do
-
     for i, v in pairs(game:GetService("Players"):GetChildren()) do
 if ka == true and v~= game:GetService("Players").LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart and (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 20 then
     if v:FindFirstChild("Reversed") then return end
+    local args = {
+        [1] = "AoeExplosion",
+        [2] = 0
+        }
+        game:GetService("ReplicatedStorage").rhythmevent:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").b:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").FlashHit:FireServer(unpack(args))
         local args = {[1] = v.Character.HumanoidRootPart} game:GetService("ReplicatedStorage").JetHit:FireServer(unpack(args))
