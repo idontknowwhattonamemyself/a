@@ -65,6 +65,29 @@ Tab:AddToggle({
 	nk = Value
 	end    
 })
+Tab:AddToggle({
+	Name = "Server Crasher",
+	Default = false,
+	Callback = function(Value)
+	_G.crahs = Value
+	end    
+})
+_G.crahs = false
+game.RunService.RenderStepped:Connect(function()
+if _G.crahs == true then
+local args = {
+    [1] = "Charge"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("RojoAbility"):FireServer(unpack(args))
+
+end
+end)
+workspace.ChildAdded:Connect(function(v)
+if v.Name == "redfx" or v.Name =="bluefx" or v.Name == "hollowpurplefx" then 
+v:Destroy()
+end
+end)
 
 game:GetService("RunService").RenderStepped:Connect(function()
 if game:GetService("Workspace"):FindFirstChild("wall") and nw == true then
