@@ -1,4 +1,5 @@
 return {
+    ['clockautofarm'] = 189707,
     ['regret'] = 4972273297,
     ['tsb'] = 3808081382,
     ['kmtsp'] = 8568266872,
