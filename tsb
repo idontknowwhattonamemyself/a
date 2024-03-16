@@ -755,6 +755,26 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
     Toggle:OnChanged(function(Value)
         autoblock = Value
     end)
+    xpcall(function()
+        local Toggle = Tabs.Main:AddToggle("TPBOSS", {Title = "Auto TP to Boss", Default = false })
+    local tptoboss = false
+    function findboss()
+        local boss
+        for i, v in pairs(workspace.Live:GetChildren()) do
+        if v:FindFirstChild("BossHandler") then boss = v.Parent end
+        end
+    return boss
+    end
+    game.RunService.RenderStepped:Connect(function()
+    if tptoboss and findboss() then 
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = findboss().HumanoidRootPart.CFrame - Vector3.new(0,5,0) -  findboss().HumanoidRootPart.CFrame.LookVector * 2
+    end
+    end)
+    Toggle:OnChanged(function(Value)
+        tptoboss = Value
+    end)
+
+    end, warn)
     
     spawn(function()
     while wait() do
@@ -960,6 +980,7 @@ Credits to Infinite Yield For Fling (i coulda made it but like infinite yield al
 end, warn)
     Toggle:OnChanged(function(Value)
         nostun = Value
+        xpcall(function()
         if Value == false then 
             for i, v in pairs(Cutscenes) do
                 v.Script.Name = v.Name
@@ -969,6 +990,7 @@ end, warn)
             v.Script.Name = "a"
             end
         end
+    end, warn)
     end)
     local Toggle = Tabs.Main:AddToggle("SHOWDC", {Title = "Show Death Counter", Default = true })
     local showdc = true
@@ -1050,7 +1072,9 @@ end, warn)
     Toggle:OnChanged(function(Value)
         AB = Value
         wait(.1)
+        if Value == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,10,0)
+        end
     end)
 
     local Slider = Tabs.Main:AddSlider("ABRANGE", {
