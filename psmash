@@ -317,7 +317,7 @@ end, warn)
     local killall = false
 spawn(function()
     while wait() do
-        if killall then
+        if killall == true then
         for i, v in pairs(game.Players:GetPlayers()) do
             if v.Character and v ~= game.Players.LocalPlayer then 
     local args = {
