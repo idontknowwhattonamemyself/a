@@ -29,7 +29,7 @@ end
 function waituntilnottargeted()
 local timeout = false
     spawn(function()
-wait(getping()*6)
+wait(.8)
 timeout = true
     end)
     repeat wait() until not istargeted() or timeout
@@ -62,7 +62,7 @@ while wait() and not getgenv().disable do
         -- if getball() then print(getparrydist()) end
         if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then circle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame circle.Size = Vector3.new(getparrydist(),getparrydist(),getparrydist()) end
 if istargeted() and not alrchecked then
-    if tick() - last < .7 or distancefromball() < 20 then
+    if tick() - last < .7 and distancefromball() < 70 or distancefromball() < 20  then
         print(distancefromball())
         print(tick() - last)
     spam = true
