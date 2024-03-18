@@ -1,4 +1,5 @@
 return {
+    ['bladeball'] = 4777817887,
     ['psmash'] = 5200655965,
     ['clockautofarm'] = 189707,
     ['regret'] = 4972273297,
