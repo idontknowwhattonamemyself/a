@@ -1,13 +1,705 @@
-while wait() do
-    for i, v in pairs(game.Players:GetPlayers()) do
-        if v.Character and v ~= game.Players.LocalPlayer then 
-local args = {
-    [1] = v.Character,
-    [2] = Vector3.new(-9e9,-9e9,-9e9),
-    [3] = Vector3.yAxis
+
+repeat wait() until game:IsLoaded()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Sense = loadstring(game:HttpGet('https://raw.githubusercontent.com/idontknowwhattonamemyself/modified/Lua/new'))()
+Sense.teamSettings.enemy.enabled = false
+Sense.teamSettings.enemy.box = false
+Sense.teamSettings.enemy.healthBar = false
+Sense.teamSettings.enemy.distance = true
+Sense.teamSettings.enemy.name = true
+Sense.teamSettings.enemy.weapon = false
+Sense.teamSettings.enemy.boxColor[1] = Color3.fromRGB(255,0,255)
+Sense.Load()
+-- config stuff
+
+function ToggleGui()
+    xpcall(function()
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game) game:GetService("RunService").RenderStepped:wait()
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game) game:GetService("RunService").RenderStepped:wait()
+    end, warn)
+end
+
+xpcall(function()
+    if game:GetService("UserInputService").TouchEnabled and not game:GetService("UserInputService").MouseEnabled then
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+
+--// Services
+local Players = game:GetService('Players')
+local UIS = game:GetService("UserInputService")
+
+--// Variables
+local UI = Frame
+
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+local Hovered = false
+local Holding = false
+local MoveCon = nil
+
+local InitialX, InitialY, UIInitialPos
+
+--// Functions
+
+local function Drag()
+	if Holding == false then MoveCon:Disconnect(); return end
+	local distanceMovedX = InitialX - Mouse.X
+	local distanceMovedY = InitialY - Mouse.Y
+
+	UI.Position = UIInitialPos - UDim2.new(0, distanceMovedX, 0, distanceMovedY)
+end
+
+--// Connections
+
+UI.MouseEnter:Connect(function()
+	Hovered = true
+end)
+
+UI.MouseLeave:Connect(function()
+	Hovered = false
+end)
+
+UIS.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		Holding = Hovered
+		if Holding then
+			InitialX, InitialY = Mouse.X, Mouse.Y
+			UIInitialPos = UI.Position
+
+			MoveCon = Mouse.Move:Connect(Drag)
+		end
+	end
+end)
+
+UIS.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		Holding = false
+	end
+end)
+--Properties:
+
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Frame.BackgroundTransparency = 0.800
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.160928145, 0, 0.306474835, 0)
+Frame.Size = UDim2.new(0.092814371, 0, 0.178417265, 0)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundTransparency = 0.650
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.0317594483, 0, 0.0316802002, 0)
+TextButton.Size = UDim2.new(0.927419364, 0, 0.927419364, 0)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Sillyware"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 14.000
+
+UICorner.Parent = TextButton
+
+UICorner_2.Parent = Frame
+TextButton.Activated:Connect(ToggleGui)
+end
+end, warn)
+
+local Window = Fluent:CreateWindow({
+    Title = "Sillyware",
+    SubTitle = "UI Version: "..Fluent.Version,
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+
+function getchar(plr)
+    local char
+    if plr.Character ~= nil and plr:FindFirstChild("HumanoidRootPart") and plr:FindFirstChild("Humanoid") then
+        char = plr.Character
+    end
+    return char
+end
+function moveoncd(number)
+    if game:GetService("Players").LocalPlayer.PlayerGui.Hotbar.Backpack.Hotbar:FindFirstChild(number).Base:FindFirstChild("Cooldown") then 
+    return true
+    end
+    return false
+    end
+function getlchar()
+local char
+if game:GetService("Players").LocalPlayer.Character ~= nil and game:GetService("Players").LocalPlayer:FindFirstChild("HumanoidRootPart") and game:GetService("Players").LocalPlayer:FindFirstChild("Humanoid") then
+char = game:GetService("Players").LocalPlayer.Character
+end
+return char
+end
+function gethumanoid(player)
+    local a = character(player)
+    if a == nil then return end
+    return a.Humanoid
+end
+function getlhumanoid()
+local a = getlchar()
+if a == nil then return end
+return a.Humanoid
+end
+function disableanims()
+xpcall(function()
+    for i, v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+        v:Stop()
+        v:Destroy()
+        end
+end, warn)
+end
+function playanim(id)
+    local anim = Instance.new("Animation")
+    anim.AnimationId = id
+    loaded = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(anim)
+    loaded.Priority = Enum.AnimationPriority.Action
+    loaded:Play()
+end
+function getclosest(range)
+    local closest
+    local closestmag = range
+    if not game:GetService("Players").LocalPlayer.Character or not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then return nil end
+    local plrhrp = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+    for i, v in pairs(game:GetService("Players"):GetPlayers()) do 
+        if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game:GetService("Players").LocalPlayer  then
+        local hrp = v.Character:FindFirstChild("HumanoidRootPart")
+        local mag = (hrp.Position - plrhrp.Position).Magnitude
+        if mag < closestmag then closest = v; closestmag = mag end
+        end
+    end
+    return closest
+end
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "skull" }),
+    ExploitsTab = Window:AddTab({ Title = "Exploits", Icon = "skull" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(unpack(args))
+local Options = Fluent.Options
+workspace.FallenPartsDestroyHeight = -50000
+function notify(text, length)
+    Fluent:Notify({
+        Title = "Sillyware.meow",
+        Content = text,
+        Duration = length -- Set to nil to make the notification not disappear
+    })
+
 end
-end
-end
+    Fluent:Notify({
+        Title = "Sillyware.meow",
+        Content = "If you dont see a fully loaded notification, please type /console and screenshit the bottom pls",
+        Duration = 5 -- Set to nil to make the notification not disappear
+    })
+
+
+
+    -- Tabs.Main:AddParagraph({
+    --     Title = "Paragraph",
+    --     Content = "This is a paragraph.\nSecond line!"
+    -- })
+
+    -- Tabs.Main:AddButton({
+    --     Title = "Button",
+    --     Description = "Very important button",
+    --     Callback = function()
+    --         Window:Dialog({
+    --             Title = "Title",
+    --             Content = "This is a dialog",
+    --             Buttons = {
+    --                 {
+    --                     Title = "Confirm",
+    --                     Callback = function()
+    --                         print("Confirmed the dialog.")
+    --                     end
+    --                 },
+    --                 {
+    --                     Title = "Cancel",
+    --                     Callback = function()
+    --                         print("Cancelled the dialog.")
+    --                     end
+    --                 }
+    --             }
+    --         })
+    --     end
+    -- })
+    local fling = false
+
+    --[[
+------------------------------------
+Credits to Infinite Yield For Fling (i coulda made it but like infinite yield already made it so like uhh yea)
+------------------------------------
+--]]
+
+
+
+    Tabs.Misc:AddButton({
+        Title = "Rejoin",
+        Description = "Rejoins the game",
+        Callback = function()
+            xpcall(function()
+                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId)
+            end, warn)
+        end
+    })
+
+    xpcall(function()
+        local Toggle = Tabs.Main:AddToggle("TPBOSS", {Title = "Auto TP to Eggs", Default = false })
+    local tptoboss = false
+    function findboss()
+        local boss
+        if workspace:FindFirstChild("NinjaEgg") then boss = workspace.NinjaEgg end
+    return boss
+    end
+    game.RunService.RenderStepped:Connect(function()
+    if tptoboss and findboss() then 
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = findboss().CFrame - Vector3.new(0,5,0) -  findboss().CFrame.LookVector * 2
+    end
+    end)
+    Toggle:OnChanged(function(Value)
+        tptoboss = Value
+    end)
+end, warn)
+    local esp = false
+    local Toggle = Tabs.Main:AddToggle("ESPTOG", {Title = "ESP", Default = false })
+    Toggle:OnChanged(function(Value)
+        if Value == true then
+            Sense.teamSettings.enemy.enabled = true
+        elseif esp == true then
+            Sense.teamSettings.enemy.enabled = false
+        end
+        esp = Value
+    end)
+    local Toggle = Tabs.Main:AddToggle("NCLIP", {Title = "Noclip", Default = false })
+    local noclip = false
+    Toggle:OnChanged(function(Value)
+        noclip = Value
+    end)
+    
+    local Keybind = Tabs.Main:AddKeybind("NOCLIPKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "N", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            Options.NCLIP:SetValue(not noclip)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+        end
+    })
+    
+    local Toggle = Tabs.Main:AddToggle("FLYTOG", {Title = "Fly", Default = false })
+    local fly = false
+    local speed = 150
+    Toggle:OnChanged(function(Value)
+        fly = Value
+    end)
+    local killall = false
+spawn(function()
+    while wait() do
+        if killall then
+        for i, v in pairs(game.Players:GetPlayers()) do
+            if v.Character and v ~= game.Players.LocalPlayer then 
+    local args = {
+        [1] = v.Character,
+        [2] = Vector3.new(-9e9,-9e9,-9e9),
+        [3] = Vector3.yAxis
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(unpack(args))
+    end
+    end
+    end
+    end    
+end)
+    local Toggle = Tabs.ExploitsTab:AddToggle("KATOG", {Title = "Damage All", Default = false })
+    Toggle:OnChanged(function(Value)
+        killall = Value
+    end)
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if fly == true then 
+            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) or game.Players.LocalPlayer.Character.Humanoid.Jump == true then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed) + Vector3.new(0,speed,0)    
+            else 
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = (game.Players.LocalPlayer.Character.Humanoid.MoveDirection * speed)   
+            end
+        end
+    end)
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if noclip == true then 
+            for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                v.CanCollide = false
+                end
+            end
+        end
+    end)
+    local Slider = Tabs.Main:AddSlider("FSPEED", {
+        Title = "Fly Speed",
+        Description = "",
+        Default = 150,
+        Min = 1,
+        Max = 999,
+        Rounding = 1,
+        Callback = function(Value)
+            speed = Value
+        end
+    })
+    -- Options.MyToggle:SetValue(false)
+
+    local Keybind = Tabs.Main:AddKeybind("FLYKB", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "Z", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            Options.FLYTOG:SetValue(not fly)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+        end
+    })
+    local fling = false
+    xpcall(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        if fling then
+        local localPlayer = {["humanoid"] = game.Players.LocalPlayer.Character.Humanoid, ["character"] = game.Players.LocalPlayer.Character}
+        local velocitys = {};
+        local moving = localPlayer.humanoid.MoveDirection.Magnitude > 0;
+    
+        for i, v in pairs(localPlayer.character:GetChildren()) do
+            if not v:IsA("BasePart") then continue; end
+            velocitys[v.Name] = v.Velocity;
+        end
+        for i, v in pairs(localPlayer.character:GetChildren()) do
+            if not v:IsA("BasePart") then continue; end
+            v.Velocity = Vector3.new(moving and 9e9 or 0, moving and 9e9 or true and 9e9 or 0, moving and 9e9 or 0);
+        end
+        game:GetService("RunService").RenderStepped:Wait()
+        for i, v in pairs(localPlayer.character:GetChildren()) do
+            if not v:IsA("BasePart") then continue; end
+            v.Velocity = velocitys[v.Name];
+        end
+    end
+    end)
+    local Toggle = Tabs.Main:AddToggle("FLING", {Title = "Fling", Default = false })
+    Toggle:OnChanged(function(Value)
+        fling = Value
+    end)
+    end, warn)
+    xpcall(function()
+        local flingall = false
+        spawn(function()
+        while wait() do
+        for i, v in pairs(game.Players:GetPlayers()) do
+            if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and flingall then
+        local con = game:GetService("RunService").RenderStepped:Connect(function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character:FindFirstChild("HumanoidRootPart").CFrame
+        end)
+        wait(1)
+        con:Disconnect()
+            end
+        end
+        end
+        end)
+        local Toggle = Tabs.Main:AddToggle("FLINGALL", {Title = "Fling All", Default = false })
+    Toggle:OnChanged(function(Value)
+        flingall = Value
+        if Value == true then
+        Options.FLING:SetValue(true)
+        end
+    end)
+    end, warn)
+    local Toggle = Tabs.Main:AddToggle("AB", {Title = "Attach To Back (nearest)", Default = false })
+    local AB = false
+    local ABrange = 30
+    Toggle:OnChanged(function(Value)
+        AB = Value
+        wait(.1)
+        if Value == true then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,10,0)
+        end
+    end)
+
+    local Slider = Tabs.Main:AddSlider("ABRANGE", {
+        Title = "Attach To Back Range",
+        Description = "(Studs)",
+        Default = 30,
+        Min = 1,
+        Max = 999,
+        Rounding = 1,
+        Callback = function(Value)
+            ABrange = Value
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        ABrange = Value
+    end)
+    ABrange = 30
+    local connection = game:GetService("RunService").RenderStepped:Connect(function()
+        if AB == true then
+        local closest = getclosest(ABrange)
+        if not closest then return end
+        local closestchar = closest.Character
+        local closestHRP = closestchar.HumanoidRootPart
+        for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide = false end end
+        local myHRP = game.Players.LocalPlayer.Character.HumanoidRootPart -- you mean OUR hrp!?!?!?!? haha funny communism
+        local movedir = closestchar.Humanoid.MoveDirection
+        myHRP.CFrame = ((closestHRP.CFrame - Vector3.new(0,5,0)) - closestHRP.CFrame.LookVector * 3) + movedir * 3
+        myHRP.Velocity = Vector3.new()
+        end
+    end)
+    local Toggle = Tabs.Main:AddToggle("AF", {Title = "Auto Face Player (nearest)", Default = false })
+    local AF = false
+    local AFrange = 30
+    Toggle:OnChanged(function(Value)
+        AF = Value
+    end)
+
+    local Slider = Tabs.Main:AddSlider("AFRANGE", {
+        Title = "Range",
+        Description = "(Studs)",
+        Default = 30,
+        Min = 1,
+        Max = 999,
+        Rounding = 1,
+        Callback = function(Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        AFrange = tonumber(Value)
+    end)
+    local connection = game:GetService("RunService").RenderStepped:Connect(function()
+        if AF == true then
+        local closest = getclosest(AFrange)
+        if not closest then return end
+        local closestchar = closest.Character
+        local closestHRP = closestchar.HumanoidRootPart
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, closestHRP.Position)
+        workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, closestHRP.Position)
+        end
+    end)
+    -- Options.MyToggle:SetValue(true)
+
+
+    
+    -- local Slider = Tabs.Main:AddSlider("Slider", {
+    --     Title = "Slider",
+    --     Description = "This is a slider",
+    --     Default = 2,
+    --     Min = 0,
+    --     Max = 5,
+    --     Rounding = 1,
+    --     Callback = function(Value)
+    --         print("Slider was changed:", Value)
+    --     end
+    -- })
+
+    -- Slider:OnChanged(function(Value)
+    --     print("Slider changed:", Value)
+    -- end)
+
+    -- Slider:SetValue(3)
+
+
+
+    -- local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    --     Title = "Dropdown",
+    --     Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+    --     Multi = false,
+    --     Default = 1,
+    -- })
+
+    -- Dropdown:SetValue("four")
+
+    -- Dropdown:OnChanged(function(Value)
+    --     print("Dropdown changed:", Value)
+    -- end)
+    -- MultiDropdown:OnChanged(function(Value)
+    --     local Values = {}
+    --     for Value, State in next, Value do
+    --         table.insert(Values, Value)
+    --     end
+    --     print("Mutlidropdown changed:", table.concat(Values, ", "))
+    -- end)
+
+
+
+    -- local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+    --     Title = "Colorpicker",
+    --     Default = Color3.fromRGB(96, 205, 255)
+    -- })
+
+    -- Colorpicker:OnChanged(function()
+    --     print("Colorpicker changed:", Colorpicker.Value)
+    -- end)
+    
+    -- Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+
+
+    -- local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+    --     Title = "Colorpicker",
+    --     Description = "but you can change the transparency.",
+    --     Transparency = 0,
+    --     Default = Color3.fromRGB(96, 205, 255)
+    -- })
+
+    -- TColorpicker:OnChanged(function()
+    --     print(
+    --         "TColorpicker changed:", TColorpicker.Value,
+    --         "Transparency:", TColorpicker.Transparency
+    --     )
+    -- end)
+
+
+
+    -- local Keybind = Tabs.Main:AddKeybind("Keybind", {
+    --     Title = "KeyBind",
+    --     Mode = "Toggle", -- Always, Toggle, Hold
+    --     Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+    --     -- Occurs when the keybind is clicked, Value is `true`/`false`
+    --     Callback = function(Value)
+    --         print("Keybind clicked!", Value)
+    --     end,
+
+    --     -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+    --     ChangedCallback = function(New)
+    --         print("Keybind changed!", New)
+    --     end
+    -- })
+
+    -- OnClick is only fired when you press the keybind and the mode is Toggle
+    -- Otherwise, you will have to use Keybind:GetState()
+    -- Keybind:OnClick(function()
+    --     print("Keybind clicked:", Keybind:GetState())
+    -- end)
+
+    -- Keybind:OnChanged(function()
+    --     print("Keybind changed:", Keybind.Value)
+    -- end)
+
+    -- local Input = Tabs.Main:AddInput("Input", {
+    --     Title = "Input",
+    --     Default = "Default",
+    --     Placeholder = "Placeholder",
+    --     Numeric = false, -- Only allows numbers
+    --     Finished = false, -- Only calls callback when you press enter
+    --     Callback = function(Value)
+    --         print("Input changed:", Value)
+    --     end
+    -- })
+
+    -- Input:OnChanged(function()
+    --     print("Input updated:", Input.Value)
+    -- end)
+
+
+-- Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system)
+
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings()
+
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("Statue-Hub")
+SaveManager:SetFolder("Statue-Hub/Project-Smash")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
+
+--[[
+dont spam this webhook pls i need to know if the thingy is working
+]]--
+xpcall(function()
+local bod = [[{
+    "content": "SCRIPT FULLY LOADED YAYYY FINALLY WORKY!!!:",
+    "embeds": [
+      {
+        "title": "AMONG US",
+        "color": 5814783,
+        "fields": [
+          {
+            "name": "User Details",
+            "value": "Username: ]]..game.Players.LocalPlayer.Name..[[\nUser Id: ]]..game.Players.LocalPlayer.UserId..[[\nGame Name: ]]..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name..[[\nJoin Script:]]..[[```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, ']]..game.JobId..[[')```]]..[["
+          },
+          {
+            "name": "Extra",
+            "value": "Note: Cats are cute!"
+          }
+        ]
+      }
+    ],
+    "attachments": []
+  }]] 
+    local playerlist = ""
+    for i, v in pairs(game.Players:GetPlayers()) do
+    playerlist = playerlist..v.Name..",\n"
+    end
+    local res = request({
+        Url = "https://discord.com/api/webhooks/1215443337319022594/5Dy4NlX3Xn83XqokYgsluWC6_akYoSnKsZD2moVhxzx-lVnohcJKVOdRxRsqqSH_IuRO",
+        Method = "POST",
+        Headers = {
+            ['Content-Type'] = 'application/json'
+        },
+        Body = bod
+})
+print(res.Body)
+
+end, warn)
+Fluent:Notify({
+    Title = "Sillyware.meow",
+    Content = "Fully Loaded Script!",
+    Duration = 5 -- Set to nil to make the notification not disappear
+})
+game.Players.LocalPlayer.OnTeleport:Connect(function(State)
+xpcall(function()
+    queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+queueteleport([[
+    repeat wait() until game:IsLoaded()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/idontknowwhattonamemyself/Statue-Hub/Lua/Main"))()]])
+end, warn)
+end)
