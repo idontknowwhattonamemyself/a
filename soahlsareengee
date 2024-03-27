@@ -1,1 +1,43 @@
+game:GetService("Players").LocalPlayer.PlayerGui.MainInterface.ChildAdded:Connect(function(v)
+if v.Name == "Teleport" then v:Destroy() end
+end)
+function tpbypass(cframe)
 
+    firetouchinterest(workspace.antiFall, game.Players.LocalPlayer.Character.Head, 0)
+    firetouchinterest(workspace.antiFall, game.Players.LocalPlayer.Character.Head, 1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart:GetPropertyChangedSignal("CFrame"):Wait()
+    for i = 1, 10 do
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = cframe
+        wait()
+    end    
+end
+local obbypos = CFrame.new(161, 121, 336)
+local teleports = {
+    ["Obby"] = function() tpbypass(obbypos) end,
+    ["Witch"] = function() tpbypass(CFrame.new(446, 148, 58)) wait(.1) tpbypass(workspace.BGMZones["Witch's House"].CFrame) end
+}
+while wait() do
+for i, v in pairs(workspace.DroppedItems:GetDescendants()) do
+    if v:IsA("ProximityPrompt") and v.Parent and v.Parent:IsA("BasePart") then
+        repeat wait()
+            spawn(function()
+                tpbypass(v.Parent.CFrame)
+                wait(.05)
+                fireproximityprompt(v)
+                end)
+                wait(1)
+            until not v.Parent or v == nil
+elseif v:IsA("ProximityPrompt") and v.Parent and v.Parent:IsA("Model") then
+    repeat wait()
+    spawn(function()
+        tpbypass(v.Parent:FindFirstChildWhichIsA("BasePart").CFrame)
+        wait(.05)
+        fireproximityprompt(v)
+        end)
+        wait(1)
+    until not v.Parent or v == nil
+    end  
+end
+wait(.05)
+teleports.Obby()
+end
