@@ -1,0 +1,4 @@
+while wait() do
+game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("CarMinigameService"):WaitForChild("RE"):WaitForChild("AwardPoints"):FireServer()
+wait(6)
+end
